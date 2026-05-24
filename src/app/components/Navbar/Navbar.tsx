@@ -16,7 +16,7 @@ const navLinks = [
   "Construction Cases",
   "Investor",
   "News",
-  "About Zoomlion",
+  "About ",
   "Contact",
 ];
 
@@ -128,7 +128,7 @@ export default function Navbar() {
             hasActiveState ? "text-[#002253]" : "text-white",
           ].join(" ")}
         >
-          Zoomlion
+          CPL
         </div>
 
         {/* Desktop nav links */}
@@ -139,7 +139,7 @@ export default function Navbar() {
               (serviceOpen && link === "Service") ||
               (investorOpen && link === "Investor") ||
               (newsOpen && link === "News") ||
-              (aboutOpen && link === "About Zoomlion") ||
+              (aboutOpen && link === "About ") ||
               (contactOpen && link === "Contact");
 
             return (
@@ -174,7 +174,7 @@ export default function Navbar() {
                     setInvestorOpen(false);
                     setAboutOpen(false);
                     setContactOpen(false);
-                  } else if (link === "About Zoomlion") {
+                  } else if (link === "About ") {
                     setAboutOpen(true);
                     setMegaOpen(false);
                     setServiceOpen(false);
@@ -362,7 +362,7 @@ export default function Navbar() {
                     Service Support
                   </p>
                   <ul className="space-y-3">
-                    {["ZOOMLION Services", "Service Network"].map((link) => (
+                    {[" Services", "Service Network"].map((link) => (
                       <li key={link}>
                         <a
                           href="#"
@@ -400,7 +400,7 @@ export default function Navbar() {
               <div className="mt-8 flex items-center justify-end">
                 <div className="inline-flex items-center bg-[#002253] px-5 py-2.5 rounded-full shadow-lg shadow-[#002253]/20">
                   <span className="text-white text-xs font-bold tracking-[0.25em] uppercase">
-                    Zoomlion
+                    
                   </span>
                 </div>
               </div>
@@ -441,7 +441,7 @@ export default function Navbar() {
           </span>
           <span className="w-px h-6 bg-gray-300 flex-shrink-0" />
           {[
-            "ZOOMLION Services",
+            " Services",
             "Services Offered",
             "Service Network",
             "Parts Network",
@@ -521,7 +521,7 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* ── About Zoomlion subnav (Frosted Full-width) ──────── */}
+      {/* ── About  subnav (Frosted Full-width) ──────── */}
       <div
         className={[
           "hidden lg:block w-full overflow-hidden transition-all duration-[350ms] ease-out backdrop-blur-xl",
@@ -539,7 +539,7 @@ export default function Navbar() {
           ].join(" ")}
         >
           <span className="text-lg font-bold text-[#002253] whitespace-nowrap">
-            About Zoomlion
+            About 
           </span>
           <span className="w-px h-6 bg-gray-300 flex-shrink-0" />
           {[
