@@ -64,7 +64,7 @@ CSS custom properties (`--background`, `--foreground`) are defined in `:root` in
 ### Navbar (`src/app/components/Navbar/Navbar.tsx`)
 - `'use client'` — uses `useState`, `useRef`, `useEffect`
 - Fixed at top, `z-50`, transparent by default; transitions to white when any menu is open or on `group-hover`
-- Logo: "ZOOMLION" text left, nav links center, icons (search, Global, grid) right
+- Logo: "CPL" text left, nav links center, icons (search, Global, grid) right
 - All text/icons are white by default; turn dark when navbar is active (`isActive = megaOpen || serviceOpen || investorOpen || newsOpen || aboutOpen || contactOpen || mobileOpen`)
 - Tailwind `group` on `<header>` drives white-state color changes via `group-hover:` variants
 - **State**: `megaOpen`, `activeCategory`, `serviceOpen`, `investorOpen`, `newsOpen`, `aboutOpen`, `contactOpen`, `mobileOpen`, `mobileProdOpen`
@@ -74,15 +74,15 @@ CSS custom properties (`--background`, `--foreground`) are defined in `:root` in
 - **Products mega menu** (desktop only, `hidden lg:block`):
   - Opens on `onMouseEnter` of Products link; `max-h-[600px]` / `max-h-0` transition (400ms)
   - Left column `w-72`: 6 product categories with photo thumbnails (`/images/Nav-Photos/p1–p6.png`); active row is `green-600`; tracked by `activeCategory` state
-  - Right column: `bg-gray-50` (no grid overlay); sections: SERVICE SUPPORT (2 links), SERVICE HOTLINE (5 country numbers at `text-base`); green ZOOMLION brand box at bottom
+  - Right column: `bg-gray-50` (no grid overlay); sections: SERVICE SUPPORT (2 links), SERVICE HOTLINE (5 country numbers at `text-base`); green CPL brand box at bottom
   - Bottom bar: "Inquiry" (gray pill) + "Online consultation" (green pill) buttons
-- **Subnav dropdowns** (Service, Investor, News, About Zoomlion, Contact) — desktop only, full-width white bars, 60px tall, `ease-out` 350ms:
+- **Subnav dropdowns** (Service, Investor, News, About CPL, Contact) — desktop only, full-width white bars, 60px tall, `ease-out` 350ms:
   - Each has a bold heading + vertical divider + nav links in a flex row
   - Positioned via large fixed `pl-[]` padding to visually align under their respective nav link
-  - Service: `lg:pl-[620px]` — ZOOMLION Services | Services Offered | Service Network | Parts Network
+  - Service: `lg:pl-[620px]` — CPL Services | Services Offered | Service Network | Parts Network
   - Investor: `lg:pl-[730px]` — Stock Chart | Announcements | Financial Reports
   - News: `lg:pl-[800px]` — Press Release | Events | Video
-  - About Zoomlion: `lg:pl-[580px]` — Company Profile | Technology & Innovation | Social Responsibility | Career
+  - About CPL: `lg:pl-[580px]` — Company Profile | Technology & Innovation | Social Responsibility | Career
   - Contact: `lg:pl-[880px]` — Contact Us
 - **Responsive / mobile** (`lg:hidden` / `hidden lg:*`):
   - Below `lg`: center links and right icons hidden; hamburger button shown on right
