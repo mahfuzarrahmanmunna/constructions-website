@@ -214,7 +214,6 @@ const ExploreProducts = () => {
             <SwiperSlide key={product.id}>
               <ProductCard
                 product={product}
-                // Alternate layout: Index 0 (Normal), Index 1 (Reverse), etc.
                 isReverse={index % 2 !== 0}
               />
             </SwiperSlide>
@@ -226,3 +225,4 @@ const ExploreProducts = () => {
 };
 
 export default ExploreProducts;
+
