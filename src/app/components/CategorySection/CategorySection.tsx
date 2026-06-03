@@ -14,64 +14,52 @@ const categories: Category[] = [
   // Row 1
   {
     name: "Concrete Machinery",
-    image:
-      "/category/1st.png",
+    image: "/category/1st.png",
   },
   {
     name: "Excavator",
-    image:
-      "/category/2nd.png",
+    image: "/category/2nd.png",
   },
   {
     name: "Crane",
-    image:
-      "/category/3rd.png",
+    image: "/category/3rd.png",
   },
   {
     name: "Port Machinery",
-    image:
-      "/category/4th.png",
+    image: "/category/4th.png",
   },
   {
     name: "Road Machinery",
-    image:
-      "/category/5th.png",
+    image: "/category/5th.png",
   },
   {
     name: "Mining & Tunneling",
-    image:
-      "/category/6th.png",
+    image: "/category/6th.png",
   },
   // Row 2
   {
     name: "Truck",
-    image:
-      "/category/7th.png",
+    image: "/category/7th.png",
   },
   {
     name: "Piling Machinery",
-    image:
-      "/category/8th.png",
+    image: "/category/8th.png",
   },
   {
     name: "Fire-fighting Equipment",
-    image:
-      "/category/9th.png",
+    image: "/category/9th.png",
   },
   {
     name: "Mobile Crusher",
-    image:
-      "/category/10th.png",
+    image: "/category/10th.png",
   },
   {
     name: "Hydrogen Energy",
-    image:
-      "/category/11th.png",
+    image: "/category/11th.png",
   },
   {
     name: "Petroleum Equipment",
-    image:
-      "/category/12th.png",
+    image: "/category/12th.png",
   },
 ];
 
@@ -94,11 +82,30 @@ const ArrowRightIcon = () => (
 );
 
 export default function CategorySection() {
-  // Slice to first 12 items to match the 2-row layout
+  // Slice to first 12 items
   const displayCategories = categories.slice(0, 12);
+
+  // --- Mobile Logic: Chunk data into groups of 4 (2 cols x 2 rows) ---
+  const chunkSize = 4;
+  const mobileChunks = [];
+  for (let i = 0; i < displayCategories.length; i += chunkSize) {
+    mobileChunks.push(displayCategories.slice(i, i + chunkSize));
+  }
 
   return (
     <section className="w-full bg-white py-16 px-4 md:px-8 border-b border-gray-200">
+      <style jsx global>{`
+        /* Hide scrollbar for Chrome, Safari and Opera */
+        .no-scrollbar::-webkit-scrollbar {
+          display: none;
+        }
+        /* Hide scrollbar for IE, Edge and Firefox */
+        .no-scrollbar {
+          -ms-overflow-style: none; /* IE and Edge */
+          scrollbar-width: none; /* Firefox */
+        }
+      `}</style>
+
       <div className="max-w-7xl mx-auto">
         {/* Section Header */}
         <div className="flex flex-col md:flex-row justify-between items-end mb-10 md:mb-12">
@@ -114,21 +121,57 @@ export default function CategorySection() {
           </div>
         </div>
 
-        {/* Category Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-x-6 gap-y-10">
+        {/* 
+           MOBILE VIEW (Swiper)
+           - visible on mobile (< md)
+           - Hidden on desktop
+        */}
+        <div className="flex overflow-x-auto snap-x snap-mandatory gap-4 pb-4 no-scrollbar md:hidden -mx-4 px-4">
+          {mobileChunks.map((chunk, chunkIndex) => (
+            <div
+              key={chunkIndex}
+              className="min-w-full grid grid-cols-2 grid-rows-2 gap-x-4 gap-y-8 snap-start px-2"
+            >
+              {chunk.map((cat, index) => (
+                <Link
+                  key={`${chunkIndex}-${index}`}
+                  href="/details"
+                  className="group flex flex-col items-center text-center"
+                >
+                  {/* Image Container */}
+                  <div className="relative w-full aspect-[4/3] rounded-lg overflow-hidden flex items-center justify-center transition-colors duration-300 bg-gray-100 group-hover:bg-[#E55503]">
+                    <img
+                      src={cat.image}
+                      alt={cat.name}
+                      className="w-[75%] h-[75%] object-contain transition-all duration-500 ease-out mix-blend-multiply grayscale opacity-80 group-hover:mix-blend-normal group-hover:scale-110 group-hover:grayscale-0 group-hover:opacity-100 group-hover:drop-shadow-2xl"
+                      loading="lazy"
+                    />
+                  </div>
+
+                  {/* Text Label */}
+                  <h3 className="text-xs font-bold text-[#002253] group-hover:text-[#E55503] transition-colors duration-300 uppercase tracking-wide leading-tight h-10 flex items-center justify-center mt-2">
+                    {cat.name}
+                  </h3>
+                </Link>
+              ))}
+            </div>
+          ))}
+        </div>
+
+        {/* 
+           DESKTOP VIEW (Grid)
+           - Hidden on mobile
+           - visible on desktop (>= md)
+        */}
+        <div className="hidden md:grid grid-cols-3 lg:grid-cols-6 gap-x-6 gap-y-10">
           {displayCategories.map((cat, index) => (
             <Link
               key={index}
               href="/details"
               className="group flex flex-col items-center text-center"
             >
-              {/* 
-                Image Container 
-                1. bg-gray-100: Initial Gray Background
-                2. group-hover:bg-[#E55503]: Changes to Orange on hover
-                3. Flex/Center: Centers the image like an icon
-              */}
-              <div className="relative w-full aspect-[4/3]  rounded-lg overflow-hidden flex items-center justify-center transition-colors duration-300 ">
+              {/* Image Container */}
+              <div className="relative w-full aspect-[4/3] rounded-lg overflow-hidden flex items-center justify-center transition-colors duration-300 bg-gray-100 group-hover:bg-[#E55503]">
                 <img
                   src={cat.image}
                   alt={cat.name}
