@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import React from "react";
 
 // --- Types ---
@@ -116,9 +117,9 @@ export default function CategorySection() {
         {/* Category Grid */}
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-x-6 gap-y-10">
           {displayCategories.map((cat, index) => (
-            <a
+            <Link
               key={index}
-              href="#"
+              href="/details"
               className="group flex flex-col items-center text-center"
             >
               {/* 
@@ -140,7 +141,7 @@ export default function CategorySection() {
               <h3 className="text-xs md:text-sm font-bold text-[#002253] group-hover:text-[#E55503] transition-colors duration-300 uppercase tracking-wide leading-tight h-10 flex items-center justify-center">
                 {cat.name}
               </h3>
-            </a>
+            </Link>
           ))}
         </div>
 
