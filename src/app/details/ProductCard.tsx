@@ -12,10 +12,10 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     <div className="group bg-white rounded-xl overflow-hidden shadow-lg border border-gray-100 hover:shadow-2xl hover:border-[#E55503]/30 transition-all duration-300 flex flex-col h-full">
       {/* Image Container */}
       <div className="relative overflow-hidden h-64 w-full bg-gray-100">
-        <Image
+        <img
           src={product.image}
           alt={product.title}
-          fill
+          
           className="object-cover group-hover:scale-105 transition-transform duration-500"
         />
         <div className="absolute top-4 right-4 bg-[#002253] text-white text-xs font-bold px-3 py-1 rounded-sm uppercase tracking-wide">

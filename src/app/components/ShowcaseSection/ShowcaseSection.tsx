@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import React from "react";
 
 // --- Strict Color Palette (From your request) ---
@@ -24,21 +25,21 @@ const showcaseItems = [
     title: "Large Excavator",
     description: "Powerful, Speedy & Fuel Efficient",
     image:
-      "https://images.unsplash.com/photo-1563199238-d50f86158e3c?q=80&w=800&auto=format&fit=crop", // Large excavator reference
+      "/featured/largeexcuvator.jpg", // Large excavator reference
   },
   {
     id: 3,
     title: "Truck Crane",
     description: "High Mobility & Precision Lifting",
     image:
-      "https://images.unsplash.com/photo-1504307651254-35680f356dfd?q=80&w=800&auto=format&fit=crop", // Crane reference
+      "/featured/crainetrack.avif", // Crane reference
   },
   {
     id: 4,
     title: "All Terrain Crane",
     description: "Heavy Duty Operations",
     image:
-      "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?q=80&w=800&auto=format&fit=crop", // Construction site/Crane reference
+      "/featured/allcraine.avif", // Construction site/Crane reference
   },
 ];
 
@@ -100,7 +101,7 @@ export default function ShowcaseSection() {
 
                 {/* Hover Button (Optional) */}
                 <div className="mt-4 opacity-0 transform translate-y-4 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
-                  <button className="text-white cursor-pointer text-sm font-bold uppercase tracking-wider flex items-center gap-2 hover:text-[#FF8B28]">
+                  <Link href="/soluations-for-cpl" className="text-white cursor-pointer text-sm font-bold uppercase tracking-wider flex items-center gap-2 hover:text-[#FF8B28]">
                     Learn More
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -116,7 +117,7 @@ export default function ShowcaseSection() {
                       <line x1="5" y1="12" x2="19" y2="12"></line>
                       <polyline points="12 5 19 12 12 19"></polyline>
                     </svg>
-                  </button>
+                  </Link>
                 </div>
               </div>
             </div>

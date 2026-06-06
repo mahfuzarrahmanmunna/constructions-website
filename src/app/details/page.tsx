@@ -58,7 +58,7 @@ const products: Product[] = [
     id: "below-45",
     title: "Below 45T",
     description: "Compact and efficient for urban environments.",
-    image: "https://picsum.photos/seed/cpl1/600/400.jpg",
+    image: "/featured/below45.jfif",
     specs: [
       { label: "Max Lifting Capacity", value: "25T - 45T" },
       { label: "Max Boom Length", value: "38m - 44m" },
@@ -69,7 +69,7 @@ const products: Product[] = [
     id: "mid-range",
     title: "50 - 90T",
     description: "The perfect balance of power and versatility.",
-    image: "https://picsum.photos/seed/cpl2/600/400.jpg",
+    image: "/featured/90T.jpg",
     specs: [
       { label: "Max Lifting Capacity", value: "50T - 90T" },
       { label: "Max Boom Length", value: "48m - 62m" },
@@ -80,7 +80,7 @@ const products: Product[] = [
     id: "over-90",
     title: "Over 90T",
     description: "Heavy-duty performance for major projects.",
-    image: "https://picsum.photos/seed/cpl3/600/400.jpg",
+    image: "/featured/crainetrack.avif",
     specs: [
       { label: "Max Lifting Capacity", value: "100T - 130T" },
       { label: "Max Boom Length", value: "70m - 80m" },
