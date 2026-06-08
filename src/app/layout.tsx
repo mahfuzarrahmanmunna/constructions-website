@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, DM_Serif_Display, Outfit } from "next/font/google";
 import "./globals.css";
 import Script from "next/script"; // Imported to inject JSON-LD
 import Navbar from "./components/Navbar/Navbar";
@@ -15,7 +15,23 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+<<<<<<< HEAD
+const dmSerifDisplay = DM_Serif_Display({
+  variable: "--font-dm-serif",
+  subsets: ["latin"],
+  weight: ["400"],
+  style: ["normal", "italic"],
+});
+
+const outfit = Outfit({
+  variable: "--font-outfit",
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+});
+
+=======
 // --- 1. SEO METADATA CONFIGURATION ---
+>>>>>>> e744e01ef013b23bfee7166daead6b12f5121465
 export const metadata: Metadata = {
   // Set your production domain here to help with relative URLs
   metadataBase: new URL("https://www.your-website-domain.com"),
@@ -121,7 +137,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${dmSerifDisplay.variable} ${outfit.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         {/* Injecting Structured Data for Search Engines */}

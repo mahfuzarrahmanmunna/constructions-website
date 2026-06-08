@@ -1,5 +1,9 @@
 "use client";
 
+<<<<<<< HEAD
+import { usePathname } from 'next/navigation'
+import { useState, useRef, useEffect } from 'react'
+=======
 import { useState, useRef, useEffect } from "react";
 
 // --- Color Palette Constants ---
@@ -9,6 +13,7 @@ const COLORS = {
   orangeDark: "#E55503", // Pantone 1655 C
   orangeLight: "#FF8B28", // Pantone 1495 C
 };
+>>>>>>> e744e01ef013b23bfee7166daead6b12f5121465
 
 const navLinks = [
   "Products",
@@ -41,6 +46,18 @@ const hotlines = [
 ];
 
 export default function Navbar() {
+<<<<<<< HEAD
+  const pathname = usePathname()
+  const [megaOpen, setMegaOpen]             = useState(false)
+  const [activeCategory, setActiveCategory] = useState(categories[0].name)
+  const [serviceOpen, setServiceOpen]       = useState(false)
+  const [investorOpen, setInvestorOpen]     = useState(false)
+  const [newsOpen, setNewsOpen]             = useState(false)
+  const [aboutOpen, setAboutOpen]           = useState(false)
+  const [contactOpen, setContactOpen]       = useState(false)
+  const [mobileOpen, setMobileOpen]         = useState(false)
+  const [mobileProdOpen, setMobileProdOpen] = useState(false)
+=======
   const [isScrolled, setIsScrolled] = useState(false);
   const [megaOpen, setMegaOpen] = useState(false);
   const [activeCategory, setActiveCategory] = useState(categories[0].name);
@@ -51,6 +68,7 @@ export default function Navbar() {
   const [contactOpen, setContactOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileProdOpen, setMobileProdOpen] = useState(false);
+>>>>>>> e744e01ef013b23bfee7166daead6b12f5121465
 
   // Scroll Detection
   useEffect(() => {
@@ -101,6 +119,10 @@ export default function Navbar() {
     setMobileProdOpen(false);
   };
 
+if (pathname === '/exploreproduct' || pathname === '/login') {
+    return null
+  }
+
   return (
     <div
       className="fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out"
@@ -123,17 +145,64 @@ export default function Navbar() {
       >
         {/* Logo */}
         <div
+<<<<<<< HEAD
+        className={[
+          'text-2xl font-bold tracking-[0.2em] uppercase select-none transition-colors duration-300',
+          isActive ? 'text-secondary' : 'text-white group-hover:text-secondary',
+        ].join(' ')}
+      >
+        Zoomlion
+=======
           className={[
             "text-2xl font-bold tracking-[0.2em] uppercase select-none transition-colors duration-300",
             hasActiveState ? "text-[#002253]" : "text-white",
           ].join(" ")}
         >
           CPL
+>>>>>>> e744e01ef013b23bfee7166daead6b12f5121465
         </div>
 
         {/* Desktop nav links */}
         <nav className="hidden lg:flex items-center gap-8">
           {navLinks.map((link) => {
+<<<<<<< HEAD
+            const linkClass = [
+              'text-base font-medium tracking-wide whitespace-nowrap transition-colors duration-300',
+              megaOpen
+                ? link === 'Products'  ? 'text-primary' : 'text-secondary-light hover:text-secondary'
+                : serviceOpen
+                ? link === 'Service'   ? 'text-primary' : 'text-secondary-light hover:text-secondary'
+                : investorOpen
+                ? link === 'Investor'  ? 'text-primary' : 'text-secondary-light hover:text-secondary'
+                : newsOpen
+                ? link === 'News'            ? 'text-primary' : 'text-secondary-light hover:text-secondary'
+                : aboutOpen
+                ? link === 'About Zoomlion'  ? 'text-primary' : 'text-secondary-light hover:text-secondary'
+                : contactOpen
+                ? link === 'Contact'          ? 'text-primary' : 'text-secondary-light hover:text-secondary'
+                : link === 'Products' || link === 'Service' || link === 'Construction Cases' || link === 'Investor' || link === 'News' || link === 'About Zoomlion' || link === 'Contact'
+                ? 'text-white/85 group-hover:text-secondary-light hover:text-white group-hover:hover:text-primary'
+                : 'text-white/85 group-hover:text-secondary-light hover:text-white group-hover:hover:text-secondary',
+            ].join(' ')
+
+            const handleEnter = () => {
+              if      (link === 'Products') { setMegaOpen(true);     setServiceOpen(false);  setInvestorOpen(false); setNewsOpen(false) }
+              else if (link === 'Service')  { setServiceOpen(true);  setMegaOpen(false);     setInvestorOpen(false); setNewsOpen(false) }
+              else if (link === 'Investor') { setInvestorOpen(true); setMegaOpen(false);     setServiceOpen(false);  setNewsOpen(false) }
+              else if (link === 'News')           { setNewsOpen(true);    setMegaOpen(false); setServiceOpen(false); setInvestorOpen(false); setAboutOpen(false) }
+              else if (link === 'About Zoomlion') { setAboutOpen(true);   setMegaOpen(false); setServiceOpen(false); setInvestorOpen(false); setNewsOpen(false);  setContactOpen(false) }
+              else if (link === 'Contact')        { setContactOpen(true); setMegaOpen(false); setServiceOpen(false); setInvestorOpen(false); setNewsOpen(false);  setAboutOpen(false) }
+              else                                { setMegaOpen(false);   setServiceOpen(false); setInvestorOpen(false); setNewsOpen(false); setAboutOpen(false); setContactOpen(false) }
+            }
+
+            if (link === 'Service') {
+              return (
+                <a key="Service" href="#" onMouseEnter={handleEnter} className={linkClass}>
+                  Service
+                </a>
+              )
+            }
+=======
             const isCurrent =
               (megaOpen && link === "Products") ||
               (serviceOpen && link === "Service") ||
@@ -141,6 +210,7 @@ export default function Navbar() {
               (newsOpen && link === "News") ||
               (aboutOpen && link === "About ") ||
               (contactOpen && link === "Contact");
+>>>>>>> e744e01ef013b23bfee7166daead6b12f5121465
 
             return (
               <button
@@ -220,10 +290,17 @@ export default function Navbar() {
 
         {/* Desktop right icons */}
         <div
+<<<<<<< HEAD
+        className={[
+          'hidden lg:flex items-center gap-5 transition-colors duration-300',
+          isActive ? 'text-secondary' : 'text-white group-hover:text-secondary',
+        ].join(' ')}
+=======
           className={[
             "hidden lg:flex items-center gap-5 transition-colors duration-300",
             hasActiveState ? "text-[#002253]" : "text-white",
           ].join(" ")}
+>>>>>>> e744e01ef013b23bfee7166daead6b12f5121465
         >
           <button
             aria-label="Search"
@@ -267,10 +344,14 @@ export default function Navbar() {
 
         {/* Mobile hamburger */}
         <button
+<<<<<<< HEAD
+          className={['lg:hidden transition-colors duration-300', isActive ? 'text-secondary' : 'text-white'].join(' ')}
+=======
           className={[
             "lg:hidden transition-colors duration-300",
             hasActiveState ? "text-[#002253]" : "text-white",
           ].join(" ")}
+>>>>>>> e744e01ef013b23bfee7166daead6b12f5121465
           onClick={() => setMobileOpen((v) => !v)}
           aria-label="Toggle menu"
         >
@@ -330,6 +411,14 @@ export default function Navbar() {
                     key={cat.name}
                     onMouseEnter={() => setActiveCategory(cat.name)}
                     className={[
+<<<<<<< HEAD
+                      'flex items-center gap-3 px-5 py-3 cursor-pointer transition-colors duration-150 rounded-sm',
+                      isActivecat ? 'bg-primary' : 'hover:bg-gray-50',
+                    ].join(' ')}
+                  >
+                    <img src={cat.image} alt={cat.name} className="h-10 w-auto object-contain flex-shrink-0" />
+                    <span className={['text-sm font-medium leading-tight', isActivecat ? 'text-white' : 'text-secondary'].join(' ')}>
+=======
                       "flex items-center gap-3 px-5 py-3 cursor-pointer transition-all duration-200 rounded-l-lg border-l-4",
                       isActivecat
                         ? "bg-gradient-to-r from-[#E55503]/5 to-transparent border-[#E55503] text-[#002253]"
@@ -347,6 +436,7 @@ export default function Navbar() {
                         isActivecat ? "text-[#E55503]" : "text-gray-600",
                       ].join(" ")}
                     >
+>>>>>>> e744e01ef013b23bfee7166daead6b12f5121465
                       {cat.name}
                     </span>
                   </div>
@@ -358,6 +448,13 @@ export default function Navbar() {
             <div className="flex-1 flex flex-col justify-between py-8 px-12">
               <div className="flex gap-20">
                 <div>
+<<<<<<< HEAD
+                  <p className="text-sm font-bold tracking-[0.18em] text-secondary-light uppercase mb-3">Service Support</p>
+                  <ul className="space-y-2">
+                    {['ZOOMLION Services', 'Service Network'].map((link) => (
+                      <li key={link}>
+                        <a href="#" className="text-base text-secondary-light hover:text-primary transition-colors duration-150 font-medium">{link}</a>
+=======
                   <p className="text-xs font-bold tracking-[0.2em] text-gray-400 uppercase mb-4">
                     Service Support
                   </p>
@@ -371,11 +468,20 @@ export default function Navbar() {
                           <span className="w-1.5 h-1.5 rounded-full bg-gray-300 group-hover:bg-[#E55503] transition-colors"></span>
                           {link}
                         </a>
+>>>>>>> e744e01ef013b23bfee7166daead6b12f5121465
                       </li>
                     ))}
                   </ul>
                 </div>
                 <div>
+<<<<<<< HEAD
+                  <p className="text-sm font-bold tracking-[0.18em] text-secondary-light uppercase mb-3">Service Hotline</p>
+                  <ul className="space-y-2">
+                    {hotlines.map(({ country, number }) => (
+                      <li key={country} className="flex items-center gap-3">
+                        <span className="w-24 text-sm font-semibold tracking-wide text-secondary-light">{country}</span>
+                        <span className="text-base text-secondary font-medium tabular-nums">{number}</span>
+=======
                   <p className="text-xs font-bold tracking-[0.2em] text-gray-400 uppercase mb-4">
                     Service Hotline
                   </p>
@@ -391,28 +497,43 @@ export default function Navbar() {
                         <span className="text-base text-[#002253] font-semibold tabular-nums group-hover:text-[#E55503] transition-colors">
                           {number}
                         </span>
+>>>>>>> e744e01ef013b23bfee7166daead6b12f5121465
                       </li>
                     ))}
                   </ul>
                 </div>
               </div>
+<<<<<<< HEAD
+              <div className="mt-6">
+                <div className="inline-flex items-center bg-primary px-4 py-2">
+                  <span className="text-white text-xs font-bold tracking-[0.25em] uppercase">Zoomlion</span>
+=======
 
               <div className="mt-8 flex items-center justify-end">
                 <div className="inline-flex items-center bg-[#002253] px-5 py-2.5 rounded-full shadow-lg shadow-[#002253]/20">
                   <span className="text-white text-xs font-bold tracking-[0.25em] uppercase">
                     
                   </span>
+>>>>>>> e744e01ef013b23bfee7166daead6b12f5121465
                 </div>
               </div>
             </div>
           </div>
 
           {/* Bottom action buttons */}
+<<<<<<< HEAD
+          <div className="flex items-center gap-3 border-t border-gray-100 py-5">
+            <button className="px-6 py-2.5 rounded-full bg-secondary/5 text-secondary text-sm font-medium hover:bg-secondary/10 transition-colors duration-200">
+              Inquiry
+            </button>
+            <button className="px-6 py-2.5 rounded-full bg-primary text-white text-sm font-medium hover:bg-primary-light transition-colors duration-200">
+=======
           <div className="flex items-center gap-4 border-t border-gray-100 py-6 bg-white/30 backdrop-blur-sm rounded-b-2xl mb-2">
             <button className="px-8 py-3 rounded-full border border-[#002253] text-[#002253] text-sm font-bold hover:bg-[#002253] hover:text-white transition-all duration-300 shadow-sm">
               Inquiry
             </button>
             <button className="px-8 py-3 rounded-full bg-[#E55503] text-white text-sm font-bold hover:bg-[#FF8B28] transition-all duration-300 shadow-md shadow-[#E55503]/30">
+>>>>>>> e744e01ef013b23bfee7166daead6b12f5121465
               Online consultation
             </button>
           </div>
@@ -428,6 +549,16 @@ export default function Navbar() {
             : "max-h-0 pointer-events-none",
         ].join(" ")}
       >
+<<<<<<< HEAD
+        <div className={['flex items-center gap-8 pl-[350px] pr-10 lg:pl-[620px] lg:pr-20 h-[60px] transition-[opacity,transform] duration-[350ms] ease-out', serviceOpen ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-3'].join(' ')}>
+          <span className="text-base font-bold text-secondary whitespace-nowrap">Service</span>
+          <span className="w-px h-5 bg-gray-300 flex-shrink-0" />
+          {['ZOOMLION Services', 'Services Offered', 'Service Network', 'Parts Network'].map((item) => (
+            <a
+              key={item}
+              href="#"
+              className="text-base text-secondary-light hover:text-primary transition-colors duration-200 whitespace-nowrap"
+=======
         <div
           className={[
             "flex items-center gap-10 px-20 h-[70px] transition-[opacity,transform] duration-[350ms] ease-out",
@@ -450,6 +581,7 @@ export default function Navbar() {
               key={item}
               href="#"
               className="text-base text-[#224B88] hover:text-[#E55503] transition-colors duration-200 whitespace-nowrap font-medium"
+>>>>>>> e744e01ef013b23bfee7166daead6b12f5121465
             >
               {item}
             </a>
@@ -466,6 +598,16 @@ export default function Navbar() {
             : "max-h-0 pointer-events-none",
         ].join(" ")}
       >
+<<<<<<< HEAD
+        <div className={['flex items-center gap-8 pl-[850px] pr-10 lg:pl-[730px] lg:pr-20 h-[60px] transition-[opacity,transform] duration-[350ms] ease-out', investorOpen ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-3'].join(' ')}>
+          <span className="text-base font-bold text-secondary whitespace-nowrap">Investor</span>
+          <span className="w-px h-5 bg-gray-300 flex-shrink-0" />
+          {['Stock Chart', 'Announcements', 'Financial Reports'].map((item) => (
+            <a
+              key={item}
+              href="#"
+              className="text-base text-secondary-light hover:text-primary transition-colors duration-200 whitespace-nowrap"
+=======
         <div
           className={[
             "flex items-center gap-10 px-20 h-[70px] transition-[opacity,transform] duration-[350ms] ease-out",
@@ -483,6 +625,7 @@ export default function Navbar() {
               key={item}
               href="#"
               className="text-base text-[#224B88] hover:text-[#E55503] transition-colors duration-200 whitespace-nowrap font-medium"
+>>>>>>> e744e01ef013b23bfee7166daead6b12f5121465
             >
               {item}
             </a>
@@ -499,6 +642,16 @@ export default function Navbar() {
             : "max-h-0 pointer-events-none",
         ].join(" ")}
       >
+<<<<<<< HEAD
+        <div className={['flex items-center gap-8 pl-[960px] pr-10 lg:pl-[800px] lg:pr-20 h-[60px] transition-[opacity,transform] duration-[350ms] ease-out', newsOpen ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-3'].join(' ')}>
+          <span className="text-base font-bold text-secondary whitespace-nowrap">News</span>
+          <span className="w-px h-5 bg-gray-300 flex-shrink-0" />
+          {['Press Release', 'Events', 'Video'].map((item) => (
+            <a
+              key={item}
+              href="#"
+              className="text-base text-secondary-light hover:text-primary transition-colors duration-200 whitespace-nowrap"
+=======
         <div
           className={[
             "flex items-center gap-10 px-20 h-[70px] transition-[opacity,transform] duration-[350ms] ease-out",
@@ -514,6 +667,7 @@ export default function Navbar() {
               key={item}
               href="#"
               className="text-base text-[#224B88] hover:text-[#E55503] transition-colors duration-200 whitespace-nowrap font-medium"
+>>>>>>> e744e01ef013b23bfee7166daead6b12f5121465
             >
               {item}
             </a>
@@ -530,6 +684,16 @@ export default function Navbar() {
             : "max-h-0 pointer-events-none",
         ].join(" ")}
       >
+<<<<<<< HEAD
+        <div className={['flex items-center gap-8 pl-[1040px] pr-10 lg:pl-[580px] lg:pr-20 h-[60px] transition-[opacity,transform] duration-[350ms] ease-out', aboutOpen ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-3'].join(' ')}>
+          <span className="text-base font-bold text-secondary whitespace-nowrap">About Zoomlion</span>
+          <span className="w-px h-5 bg-gray-300 flex-shrink-0" />
+          {['Company Profile', 'Technology & Innovation', 'Social Responsibility', 'Career'].map((item) => (
+            <a
+              key={item}
+              href="#"
+              className="text-base text-secondary-light hover:text-primary transition-colors duration-200 whitespace-nowrap"
+=======
         <div
           className={[
             "flex items-center gap-10 px-20 h-[70px] transition-[opacity,transform] duration-[350ms] ease-out",
@@ -552,6 +716,7 @@ export default function Navbar() {
               key={item}
               href="#"
               className="text-base text-[#224B88] hover:text-[#E55503] transition-colors duration-200 whitespace-nowrap font-medium"
+>>>>>>> e744e01ef013b23bfee7166daead6b12f5121465
             >
               {item}
             </a>
@@ -568,6 +733,16 @@ export default function Navbar() {
             : "max-h-0 pointer-events-none",
         ].join(" ")}
       >
+<<<<<<< HEAD
+        <div className={['flex items-center gap-8 pl-[1180px] pr-10 lg:pl-[880px] lg:pr-20 h-[60px] transition-[opacity,transform] duration-[350ms] ease-out', contactOpen ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-3'].join(' ')}>
+          <span className="text-base font-bold text-secondary whitespace-nowrap">Contact</span>
+          <span className="w-px h-5 bg-gray-300 flex-shrink-0" />
+          {['Contact Us'].map((item) => (
+            <a
+              key={item}
+              href="#"
+              className="text-base text-secondary-light hover:text-primary transition-colors duration-200 whitespace-nowrap"
+=======
         <div
           className={[
             "flex items-center gap-10 px-20 h-[70px] transition-[opacity,transform] duration-[350ms] ease-out",
@@ -585,6 +760,7 @@ export default function Navbar() {
               key={item}
               href="#"
               className="text-base text-[#224B88] hover:text-[#E55503] transition-colors duration-200 whitespace-nowrap font-medium"
+>>>>>>> e744e01ef013b23bfee7166daead6b12f5121465
             >
               {item}
             </a>
@@ -606,7 +782,11 @@ export default function Navbar() {
             <div key={link}>
               <button
                 onClick={() => setMobileProdOpen((v) => !v)}
+<<<<<<< HEAD
+                className="w-full flex items-center justify-between px-6 py-4 text-secondary font-medium border-b border-gray-100 hover:bg-gray-50 transition-colors"
+=======
                 className="w-full flex items-center justify-between px-6 py-4 text-[#002253] font-semibold border-b border-gray-100 hover:bg-gray-50 transition-colors"
+>>>>>>> e744e01ef013b23bfee7166daead6b12f5121465
               >
                 <span>Products</span>
                 <svg
@@ -637,6 +817,10 @@ export default function Navbar() {
                     key={cat.name}
                     className="flex items-center gap-3 px-8 py-4 border-b border-gray-100 hover:bg-white transition-colors cursor-pointer group"
                   >
+<<<<<<< HEAD
+                    <img src={cat.image} alt={cat.name} className="h-8 w-auto object-contain flex-shrink-0" />
+                    <span className="text-sm text-secondary font-medium">{cat.name}</span>
+=======
                     <img
                       src={cat.image}
                       alt={cat.name}
@@ -645,6 +829,7 @@ export default function Navbar() {
                     <span className="text-sm text-[#224B88] font-medium group-hover:text-[#E55503] transition-colors">
                       {cat.name}
                     </span>
+>>>>>>> e744e01ef013b23bfee7166daead6b12f5121465
                   </div>
                 ))}
               </div>
@@ -654,7 +839,11 @@ export default function Navbar() {
               key={link}
               href="#"
               onClick={closeMobile}
+<<<<<<< HEAD
+              className="block px-6 py-4 text-secondary font-medium border-b border-gray-100 hover:bg-gray-50 transition-colors"
+=======
               className="block px-6 py-4 text-[#002253] font-semibold border-b border-gray-100 hover:bg-gray-50 hover:text-[#E55503] transition-colors"
+>>>>>>> e744e01ef013b23bfee7166daead6b12f5121465
             >
               {link}
             </a>
