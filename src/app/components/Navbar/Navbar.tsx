@@ -1,5 +1,6 @@
 'use client'
 
+import { usePathname } from 'next/navigation'
 import { useState, useRef, useEffect } from 'react'
 
 const navLinks = [
@@ -30,6 +31,7 @@ const hotlines = [
 ]
 
 export default function Navbar() {
+  const pathname = usePathname()
   const [megaOpen, setMegaOpen]             = useState(false)
   const [activeCategory, setActiveCategory] = useState(categories[0].name)
   const [serviceOpen, setServiceOpen]       = useState(false)
@@ -54,6 +56,10 @@ export default function Navbar() {
     setMobileProdOpen(false)
   }
 
+if (pathname === '/exploreproduct' || pathname === '/login') {
+    return null
+  }
+
   return (
     <div
       className="fixed top-0 left-0 right-0 z-50"
@@ -70,12 +76,12 @@ export default function Navbar() {
       >
         {/* Logo */}
         <div
-          className={[
-            'text-2xl font-bold tracking-[0.2em] uppercase select-none transition-colors duration-300',
-            isActive ? 'text-gray-900' : 'text-white group-hover:text-gray-900',
-          ].join(' ')}
-        >
-          Zoomlion
+        className={[
+          'text-2xl font-bold tracking-[0.2em] uppercase select-none transition-colors duration-300',
+          isActive ? 'text-secondary' : 'text-white group-hover:text-secondary',
+        ].join(' ')}
+      >
+        Zoomlion
         </div>
 
         {/* Desktop nav links */}
@@ -84,20 +90,20 @@ export default function Navbar() {
             const linkClass = [
               'text-base font-medium tracking-wide whitespace-nowrap transition-colors duration-300',
               megaOpen
-                ? link === 'Products'  ? 'text-green-600' : 'text-gray-700 hover:text-gray-900'
+                ? link === 'Products'  ? 'text-primary' : 'text-secondary-light hover:text-secondary'
                 : serviceOpen
-                ? link === 'Service'   ? 'text-green-600' : 'text-gray-700 hover:text-gray-900'
+                ? link === 'Service'   ? 'text-primary' : 'text-secondary-light hover:text-secondary'
                 : investorOpen
-                ? link === 'Investor'  ? 'text-green-600' : 'text-gray-700 hover:text-gray-900'
+                ? link === 'Investor'  ? 'text-primary' : 'text-secondary-light hover:text-secondary'
                 : newsOpen
-                ? link === 'News'            ? 'text-green-600' : 'text-gray-700 hover:text-gray-900'
+                ? link === 'News'            ? 'text-primary' : 'text-secondary-light hover:text-secondary'
                 : aboutOpen
-                ? link === 'About Zoomlion'  ? 'text-green-600' : 'text-gray-700 hover:text-gray-900'
+                ? link === 'About Zoomlion'  ? 'text-primary' : 'text-secondary-light hover:text-secondary'
                 : contactOpen
-                ? link === 'Contact'          ? 'text-green-600' : 'text-gray-700 hover:text-gray-900'
+                ? link === 'Contact'          ? 'text-primary' : 'text-secondary-light hover:text-secondary'
                 : link === 'Products' || link === 'Service' || link === 'Construction Cases' || link === 'Investor' || link === 'News' || link === 'About Zoomlion' || link === 'Contact'
-                ? 'text-white/85 group-hover:text-gray-700 hover:text-white group-hover:hover:text-green-600'
-                : 'text-white/85 group-hover:text-gray-700 hover:text-white group-hover:hover:text-gray-900',
+                ? 'text-white/85 group-hover:text-secondary-light hover:text-white group-hover:hover:text-primary'
+                : 'text-white/85 group-hover:text-secondary-light hover:text-white group-hover:hover:text-secondary',
             ].join(' ')
 
             const handleEnter = () => {
@@ -128,10 +134,10 @@ export default function Navbar() {
 
         {/* Desktop right icons */}
         <div
-          className={[
-            'hidden lg:flex items-center gap-5 transition-colors duration-300',
-            isActive ? 'text-gray-800' : 'text-white group-hover:text-gray-800',
-          ].join(' ')}
+        className={[
+          'hidden lg:flex items-center gap-5 transition-colors duration-300',
+          isActive ? 'text-secondary' : 'text-white group-hover:text-secondary',
+        ].join(' ')}
         >
           <button aria-label="Search" className="hover:opacity-60 transition-opacity">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -153,7 +159,7 @@ export default function Navbar() {
 
         {/* Mobile hamburger */}
         <button
-          className={['lg:hidden transition-colors duration-300', isActive ? 'text-gray-900' : 'text-white'].join(' ')}
+          className={['lg:hidden transition-colors duration-300', isActive ? 'text-secondary' : 'text-white'].join(' ')}
           onClick={() => setMobileOpen((v) => !v)}
           aria-label="Toggle menu"
         >
@@ -198,11 +204,11 @@ export default function Navbar() {
                     onMouseEnter={() => setActiveCategory(cat.name)}
                     className={[
                       'flex items-center gap-3 px-5 py-3 cursor-pointer transition-colors duration-150 rounded-sm',
-                      isActivecat ? 'bg-green-600' : 'hover:bg-gray-50',
+                      isActivecat ? 'bg-primary' : 'hover:bg-gray-50',
                     ].join(' ')}
                   >
                     <img src={cat.image} alt={cat.name} className="h-10 w-auto object-contain flex-shrink-0" />
-                    <span className={['text-sm font-medium leading-tight', isActivecat ? 'text-white' : 'text-gray-700'].join(' ')}>
+                    <span className={['text-sm font-medium leading-tight', isActivecat ? 'text-white' : 'text-secondary'].join(' ')}>
                       {cat.name}
                     </span>
                   </div>
@@ -214,29 +220,29 @@ export default function Navbar() {
             <div className="flex-1 flex flex-col justify-between py-7 px-10 bg-gray-50">
               <div className="flex gap-16">
                 <div>
-                  <p className="text-sm font-bold tracking-[0.18em] text-gray-400 uppercase mb-3">Service Support</p>
+                  <p className="text-sm font-bold tracking-[0.18em] text-secondary-light uppercase mb-3">Service Support</p>
                   <ul className="space-y-2">
                     {['ZOOMLION Services', 'Service Network'].map((link) => (
                       <li key={link}>
-                        <a href="#" className="text-base text-gray-700 hover:text-green-600 transition-colors duration-150 font-medium">{link}</a>
+                        <a href="#" className="text-base text-secondary-light hover:text-primary transition-colors duration-150 font-medium">{link}</a>
                       </li>
                     ))}
                   </ul>
                 </div>
                 <div>
-                  <p className="text-sm font-bold tracking-[0.18em] text-gray-400 uppercase mb-3">Service Hotline</p>
+                  <p className="text-sm font-bold tracking-[0.18em] text-secondary-light uppercase mb-3">Service Hotline</p>
                   <ul className="space-y-2">
                     {hotlines.map(({ country, number }) => (
                       <li key={country} className="flex items-center gap-3">
-                        <span className="w-24 text-sm font-semibold tracking-wide text-gray-400">{country}</span>
-                        <span className="text-base text-gray-700 font-medium tabular-nums">{number}</span>
+                        <span className="w-24 text-sm font-semibold tracking-wide text-secondary-light">{country}</span>
+                        <span className="text-base text-secondary font-medium tabular-nums">{number}</span>
                       </li>
                     ))}
                   </ul>
                 </div>
               </div>
               <div className="mt-6">
-                <div className="inline-flex items-center bg-green-600 px-4 py-2">
+                <div className="inline-flex items-center bg-primary px-4 py-2">
                   <span className="text-white text-xs font-bold tracking-[0.25em] uppercase">Zoomlion</span>
                 </div>
               </div>
@@ -246,10 +252,10 @@ export default function Navbar() {
 
           {/* Bottom action buttons */}
           <div className="flex items-center gap-3 border-t border-gray-100 py-5">
-            <button className="px-6 py-2.5 rounded-full bg-gray-100 text-gray-700 text-sm font-medium hover:bg-gray-200 transition-colors duration-200">
+            <button className="px-6 py-2.5 rounded-full bg-secondary/5 text-secondary text-sm font-medium hover:bg-secondary/10 transition-colors duration-200">
               Inquiry
             </button>
-            <button className="px-6 py-2.5 rounded-full bg-green-600 text-white text-sm font-medium hover:bg-green-700 transition-colors duration-200">
+            <button className="px-6 py-2.5 rounded-full bg-primary text-white text-sm font-medium hover:bg-primary-light transition-colors duration-200">
               Online consultation
             </button>
           </div>
@@ -265,13 +271,13 @@ export default function Navbar() {
         ].join(' ')}
       >
         <div className={['flex items-center gap-8 pl-[350px] pr-10 lg:pl-[620px] lg:pr-20 h-[60px] transition-[opacity,transform] duration-[350ms] ease-out', serviceOpen ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-3'].join(' ')}>
-          <span className="text-base font-bold text-gray-900 whitespace-nowrap">Service</span>
+          <span className="text-base font-bold text-secondary whitespace-nowrap">Service</span>
           <span className="w-px h-5 bg-gray-300 flex-shrink-0" />
           {['ZOOMLION Services', 'Services Offered', 'Service Network', 'Parts Network'].map((item) => (
             <a
               key={item}
               href="#"
-              className="text-base text-gray-600 hover:text-green-600 transition-colors duration-200 whitespace-nowrap"
+              className="text-base text-secondary-light hover:text-primary transition-colors duration-200 whitespace-nowrap"
             >
               {item}
             </a>
@@ -287,13 +293,13 @@ export default function Navbar() {
         ].join(' ')}
       >
         <div className={['flex items-center gap-8 pl-[850px] pr-10 lg:pl-[730px] lg:pr-20 h-[60px] transition-[opacity,transform] duration-[350ms] ease-out', investorOpen ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-3'].join(' ')}>
-          <span className="text-base font-bold text-gray-900 whitespace-nowrap">Investor</span>
+          <span className="text-base font-bold text-secondary whitespace-nowrap">Investor</span>
           <span className="w-px h-5 bg-gray-300 flex-shrink-0" />
           {['Stock Chart', 'Announcements', 'Financial Reports'].map((item) => (
             <a
               key={item}
               href="#"
-              className="text-base text-gray-600 hover:text-green-600 transition-colors duration-200 whitespace-nowrap"
+              className="text-base text-secondary-light hover:text-primary transition-colors duration-200 whitespace-nowrap"
             >
               {item}
             </a>
@@ -309,13 +315,13 @@ export default function Navbar() {
         ].join(' ')}
       >
         <div className={['flex items-center gap-8 pl-[960px] pr-10 lg:pl-[800px] lg:pr-20 h-[60px] transition-[opacity,transform] duration-[350ms] ease-out', newsOpen ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-3'].join(' ')}>
-          <span className="text-base font-bold text-gray-900 whitespace-nowrap">News</span>
+          <span className="text-base font-bold text-secondary whitespace-nowrap">News</span>
           <span className="w-px h-5 bg-gray-300 flex-shrink-0" />
           {['Press Release', 'Events', 'Video'].map((item) => (
             <a
               key={item}
               href="#"
-              className="text-base text-gray-600 hover:text-green-600 transition-colors duration-200 whitespace-nowrap"
+              className="text-base text-secondary-light hover:text-primary transition-colors duration-200 whitespace-nowrap"
             >
               {item}
             </a>
@@ -331,13 +337,13 @@ export default function Navbar() {
         ].join(' ')}
       >
         <div className={['flex items-center gap-8 pl-[1040px] pr-10 lg:pl-[580px] lg:pr-20 h-[60px] transition-[opacity,transform] duration-[350ms] ease-out', aboutOpen ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-3'].join(' ')}>
-          <span className="text-base font-bold text-gray-900 whitespace-nowrap">About Zoomlion</span>
+          <span className="text-base font-bold text-secondary whitespace-nowrap">About Zoomlion</span>
           <span className="w-px h-5 bg-gray-300 flex-shrink-0" />
           {['Company Profile', 'Technology & Innovation', 'Social Responsibility', 'Career'].map((item) => (
             <a
               key={item}
               href="#"
-              className="text-base text-gray-600 hover:text-green-600 transition-colors duration-200 whitespace-nowrap"
+              className="text-base text-secondary-light hover:text-primary transition-colors duration-200 whitespace-nowrap"
             >
               {item}
             </a>
@@ -353,13 +359,13 @@ export default function Navbar() {
         ].join(' ')}
       >
         <div className={['flex items-center gap-8 pl-[1180px] pr-10 lg:pl-[880px] lg:pr-20 h-[60px] transition-[opacity,transform] duration-[350ms] ease-out', contactOpen ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-3'].join(' ')}>
-          <span className="text-base font-bold text-gray-900 whitespace-nowrap">Contact</span>
+          <span className="text-base font-bold text-secondary whitespace-nowrap">Contact</span>
           <span className="w-px h-5 bg-gray-300 flex-shrink-0" />
           {['Contact Us'].map((item) => (
             <a
               key={item}
               href="#"
-              className="text-base text-gray-600 hover:text-green-600 transition-colors duration-200 whitespace-nowrap"
+              className="text-base text-secondary-light hover:text-primary transition-colors duration-200 whitespace-nowrap"
             >
               {item}
             </a>
@@ -380,7 +386,7 @@ export default function Navbar() {
               {/* Products toggle */}
               <button
                 onClick={() => setMobileProdOpen((v) => !v)}
-                className="w-full flex items-center justify-between px-6 py-4 text-gray-800 font-medium border-b border-gray-100 hover:bg-gray-50 transition-colors"
+                className="w-full flex items-center justify-between px-6 py-4 text-secondary font-medium border-b border-gray-100 hover:bg-gray-50 transition-colors"
               >
                 <span>Products</span>
                 <svg
@@ -404,7 +410,7 @@ export default function Navbar() {
                     className="flex items-center gap-3 px-8 py-3 border-b border-gray-100 hover:bg-gray-100 transition-colors cursor-pointer"
                   >
                     <img src={cat.image} alt={cat.name} className="h-8 w-auto object-contain flex-shrink-0" />
-                    <span className="text-sm text-gray-700 font-medium">{cat.name}</span>
+                    <span className="text-sm text-secondary font-medium">{cat.name}</span>
                   </div>
                 ))}
               </div>
@@ -414,7 +420,7 @@ export default function Navbar() {
               key={link}
               href="#"
               onClick={closeMobile}
-              className="block px-6 py-4 text-gray-800 font-medium border-b border-gray-100 hover:bg-gray-50 transition-colors"
+              className="block px-6 py-4 text-secondary font-medium border-b border-gray-100 hover:bg-gray-50 transition-colors"
             >
               {link}
             </a>

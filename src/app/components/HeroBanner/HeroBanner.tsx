@@ -15,7 +15,7 @@ const slides = [
       'World-class construction solutions with unmatched quality and precision — turning architectural visions into lasting realities.',
     primaryCta: 'Get a Free Quote',
     secondaryCta: 'Our Projects',
-    accent: '#f97316',
+    accent: '#E55503',
     image: '/images/image1.png',
   },
   {
@@ -25,7 +25,7 @@ const slides = [
       'Our expert renovation teams breathe new life into existing structures — restoring beauty, improving function, and adding lasting value.',
     primaryCta: 'Explore Projects',
     secondaryCta: 'Learn More',
-    accent: '#f59e0b',
+    accent: '#FF8B28',
     image: '/images/image2.png',
   },
   {
@@ -35,7 +35,7 @@ const slides = [
       'From highways to high-rises, we engineer infrastructure that communities depend on — built to last for generations.',
     primaryCta: 'View Our Work',
     secondaryCta: 'Contact Us',
-    accent: '#ea580c',
+    accent: '#224B88',
     image: '/images/image3.png',
   },
 ]
@@ -80,7 +80,7 @@ export default function HeroBanner() {
             <div
               className="absolute inset-0 z-[1]"
               style={{
-                background: 'linear-gradient(to right, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.45) 55%, rgba(0,0,0,0.15) 100%)',
+                background: 'linear-gradient(to right, rgba(0,34,83,0.84) 0%, rgba(0,34,83,0.58) 55%, rgba(0,34,83,0.18) 100%)',
               }}
             />
 
@@ -119,7 +119,7 @@ export default function HeroBanner() {
                   />
 
                   <p
-                    className="mb-10 max-w-xl text-lg leading-relaxed text-zinc-300 md:text-xl"
+                    className="mb-10 max-w-xl text-lg leading-relaxed text-white/80 md:text-xl"
                     data-swiper-parallax="-200"
                   >
                     {slide.subtitle}
@@ -147,7 +147,7 @@ export default function HeroBanner() {
         ))}
       </Swiper>
 
-      <div className="absolute bottom-10 right-6 z-20 text-xs font-medium tracking-widest text-white/40 md:right-12">
+      <div className="absolute bottom-10 right-6 z-20 text-xs font-medium tracking-widest text-primary-light/60 md:right-12">
         SCROLL TO EXPLORE
       </div>
     </section>
