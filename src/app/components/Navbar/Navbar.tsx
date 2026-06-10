@@ -128,7 +128,7 @@ export default function Navbar() {
               : "text-white hover:text-secondary",
           ].join(" ")}
         >
-          Zoomlion
+          CPL
         </div>
 
         {/* Desktop nav links */}
@@ -370,7 +370,7 @@ export default function Navbar() {
                     Service Support
                   </p>
                   <ul className="space-y-2">
-                    {["ZOOMLION Services", "Service Network"].map((link) => (
+                    {["CPL Services", "Service Network"].map((link) => (
                       <li key={link}>
                         <a
                           href="#"
@@ -403,7 +403,7 @@ export default function Navbar() {
               <div className="mt-6">
                 <div className="inline-flex items-center bg-primary px-4 py-2">
                   <span className="text-white text-xs font-bold tracking-[0.25em] uppercase">
-                    Zoomlion
+                    CPL
                   </span>
                 </div>
               </div>
@@ -444,7 +444,7 @@ export default function Navbar() {
           </span>
           <span className="w-px h-5 bg-gray-300 flex-shrink-0" />
           {[
-            "ZOOMLION Services",
+            "CPL Services",
             "Services Offered",
             "Service Network",
             "Parts Network",
@@ -542,7 +542,7 @@ export default function Navbar() {
           ].join(" ")}
         >
           <span className="text-base font-bold text-secondary whitespace-nowrap">
-            About Zoomlion
+            About CPL
           </span>
           <span className="w-px h-5 bg-gray-300 flex-shrink-0" />
           {[
