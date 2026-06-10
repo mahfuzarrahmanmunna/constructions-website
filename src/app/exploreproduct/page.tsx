@@ -218,7 +218,7 @@ export default function ExploreProductPage() {
         <div className="mx-auto flex min-h-[620px] w-full max-w-7xl items-center px-6 pb-8 md:min-h-[680px] md:px-12 md:pb-16 lg:px-20">
           <div className="max-w-3xl">
             <p className="mb-5 text-sm font-bold uppercase tracking-[0.24em] text-primary-light">
-              Zoomlion Product Fleet
+              CPL Product Fleet
             </p>
             <h1 className="text-4xl font-bold leading-[1.05] text-white sm:text-5xl md:text-6xl lg:text-7xl">
               Explore machinery for every build stage.
