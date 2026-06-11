@@ -1,0 +1,66 @@
+import mongoose from "mongoose";
+
+const InquirySchema =
+  new mongoose.Schema(
+    {
+      productCategory: {
+        type: String,
+        required: true,
+      },
+
+      productType: {
+        type: String,
+        required: true,
+      },
+
+      equipmentModel: {
+        type: String,
+        required: true,
+      },
+
+      projectLocation: {
+        type: String,
+        required: true,
+      },
+
+      purchaseTimeframe: {
+        type: String,
+        required: true,
+      },
+
+      specifics: {
+        type: String,
+      },
+
+      name: {
+        type: String,
+        required: true,
+      },
+
+      companyName: {
+        type: String,
+      },
+
+      phone: {
+        type: String,
+        required: true,
+      },
+
+      email: {
+        type: String,
+        required: true,
+      },
+    },
+    {
+      timestamps: true,
+    }
+  );
+
+const Inquiry =
+  mongoose.models.Inquiry ||
+  mongoose.model(
+    "Inquiry",
+    InquirySchema
+  );
+
+export default Inquiry;
