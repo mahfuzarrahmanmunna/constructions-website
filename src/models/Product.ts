@@ -41,10 +41,20 @@ const ProductSchema = new mongoose.Schema(
         value: String,
       },
     ],
-
     galleryImages: [String],
     galleryVideos: [String],
+    
+    price: {
+      type: Number,
+      default: 0,
+    },
+    sortOrder: {
+      type: Number,
+      default: 0,
+    },
   },
+
+  
   {
     timestamps: true,
   }
