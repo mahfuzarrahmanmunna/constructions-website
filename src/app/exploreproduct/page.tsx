@@ -3,210 +3,221 @@ import {
   ArrowRight,
   CheckCircle2,
   ClipboardCheck,
-  Factory,
-  FileText,
-  Gauge,
-  Mail,
-  Phone,
+  HardHat,
+  MapPin,
   ShieldCheck,
-  Wrench,
+  Timer,
+  UserCheck,
+  Zap,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
 import SectionNav from "./SectionNav";
 
-type ProductFamily = {
+type ProjectCase = {
   name: string;
+  location: string;
   image: string;
   description: string;
   metrics: {
-    power: string;
-    use: string;
+    duration: string;
+    area: string;
   };
   highlights: string[];
 };
 
-type Feature = {
+type Expertise = {
   title: string;
   description: string;
   icon: LucideIcon;
 };
 
-const productFamilies: ProductFamily[] = [
+const projectCases: ProjectCase[] = [
   {
-    name: "Earthmoving Machinery",
-    image: "/images/Nav-Photos/p1.png",
+    name: "Marina Bay Commercial Complex",
+    location: "Dubai, UAE",
+    image: "/images/works-urban.png",
     description:
-      "Excavators, loaders, and site-prep machines built for high-output ground work.",
+      "A mixed-use development featuring high-rise towers and retail podiums, utilizing our fleet of tower cranes and hoisting machinery.",
     metrics: {
-      power: "74-298 kW",
-      use: "Digging and loading",
+      duration: "24 Months",
+      area: "120,000 m²",
     },
     highlights: [
-      "High-flow hydraulic systems",
-      "Reinforced frames for rough sites",
-      "Cabins designed for long shifts",
+      "Zero-accident safety record",
+      "On-time concrete delivery",
+      "Complex steel erection",
     ],
   },
   {
-    name: "MEWPs",
-    image: "/images/Nav-Photos/p2.png",
+    name: "National Highway Expansion",
+    location: "Jakarta, Indonesia",
+    image: "/images/works-infra.png",
     description:
-      "Mobile elevated work platforms for maintenance, steel work, and facade access.",
+      "Large-scale civil engineering project for road widening and bridge construction, deployed with earthmoving and mobile cranes.",
     metrics: {
-      power: "6-48 m",
-      use: "Access and lift",
+      duration: "36 Months",
+      area: "85 km",
     },
     highlights: [
-      "Stable electric drive options",
-      "Compact turning radius",
-      "Platform controls with smooth response",
+      "Rough terrain mobility",
+      "High-volume earthmoving",
+      "Sustainable drainage systems",
     ],
   },
   {
-    name: "Mobile Crane Machinery",
-    image: "/images/Nav-Photos/p3.png",
+    name: "Solar Field Installation",
+    location: "Riyadh, Saudi Arabia",
+    image: "/images/works-energy.png",
     description:
-      "Road-ready cranes for structural lifts, logistics yards, and heavy installation.",
+      "Renewable energy project requiring precise placement of solar panels using MEWPs and compact machinery for rough terrain.",
     metrics: {
-      power: "25-220 t",
-      use: "Heavy lifting",
+      duration: "14 Months",
+      area: "50 Hectares",
     },
     highlights: [
-      "Load moment protection",
-      "Fast setup outriggers",
-      "Telescopic boom configurations",
+      "Electric drive efficiency",
+      "Desert environment durability",
+      "Modular assembly",
     ],
   },
   {
-    name: "Construction Hoisting Machinery",
-    image: "/images/Nav-Photos/p4.png",
+    name: "Deep Water Port Logistics",
+    location: "Ho Chi Minh City, Vietnam",
+    image: "/images/works-port.png",
     description:
-      "Tower cranes and hoists that keep vertical projects supplied and moving.",
+      "Port construction involving heavy piling work and warehousing structures, supported by heavy-duty crawler cranes.",
     metrics: {
-      power: "1-25 t",
-      use: "Vertical transport",
+      duration: "18 Months",
+      area: "40,000 m²",
     },
     highlights: [
-      "Precise hoisting control",
-      "Modular mast sections",
-      "Operator visibility packages",
+      "Heavy lift logistics",
+      "Corrosion resistant specs",
+      "24/7 operation cycles",
     ],
   },
   {
-    name: "Concrete Machinery",
-    image: "/images/Nav-Photos/p5.png",
+    name: "Urban Metro Rail System",
+    location: "Bangkok, Thailand",
+    image: "/images/works-metro.png",
     description:
-      "Batching, pumping, and placing equipment for reliable concrete delivery.",
+      "Underground station excavation and structural support using specialized concrete machinery and hoists.",
     metrics: {
-      power: "50-180 m3/h",
-      use: "Concrete placement",
+      duration: "48 Months",
+      area: "15 Stations",
     },
     highlights: [
-      "Steady pump pressure",
-      "Wear-resistant delivery parts",
-      "Easy access maintenance points",
+      "Confined space expertise",
+      "Low-noise concrete pumps",
+      "High-precision hoisting",
     ],
   },
   {
-    name: "Agricultural Machinery",
-    image: "/images/Nav-Photos/p6.png",
+    name: "Luxury Residential Estate",
+    location: "Moscow, Russia",
+    image: "/images/works-residential.png",
     description:
-      "Field machinery for land preparation, harvesting, transport, and support work.",
+      "Gated community development with landscaping and villa construction, managed with a fleet of compact loaders.",
     metrics: {
-      power: "70-240 hp",
-      use: "Field operations",
+      duration: "20 Months",
+      area: "35,000 m²",
     },
     highlights: [
-      "Efficient drivetrain mapping",
-      "Comfort-focused operator cabins",
-      "Attachment-ready platforms",
+      "Minimal site disturbance",
+      "Rapid deployment",
+      "Winter operation capability",
     ],
   },
 ];
 
-const features: Feature[] = [
+const expertise: Expertise[] = [
   {
-    title: "Matched To Site Conditions",
+    title: "Global Execution",
     description:
-      "Shortlist equipment by lift height, cycle load, terrain, transport limits, and operating window.",
-    icon: ClipboardCheck,
+      "Proven track record delivering complex projects across diverse terrains and regulatory environments in 5 key regions.",
+    icon: MapPin,
   },
   {
-    title: "Durable Power Systems",
+    title: "Safety First Culture",
     description:
-      "Select hydraulic, electric, or diesel platforms with the reserve capacity your crews need.",
-    icon: Gauge,
+      "Rigorous training programs and ISO-certified safety protocols ensure crew welfare and project continuity.",
+    icon: HardHat,
   },
   {
-    title: "Fleet Support Ready",
+    title: "Precision Logistics",
     description:
-      "Maintenance access, parts planning, operator training, and commissioning are considered from day one.",
-    icon: Wrench,
+      "Advanced planning for equipment transport, site setup, and parts supply to minimize downtime.",
+    icon: Timer,
   },
   {
-    title: "Safer Daily Operation",
+    title: "Technical Support",
     description:
-      "Built-in protection systems and visibility details help crews work with control in demanding environments.",
-    icon: ShieldCheck,
+      "On-site engineering support and fleet monitoring to optimize machine performance and fuel efficiency.",
+    icon: Zap,
   },
 ];
 
 const comparisonRows = [
   {
-    label: "Primary role",
-    compact: "Targeted daily site work",
-    heavyDuty: "Long-cycle, high-load production",
+    label: "Project Scale",
+    residential: "Single unit to Estate",
+    commercial: "Office to Mixed-use",
+    industrial: "Plant to Infrastructure",
   },
   {
-    label: "Best fit",
-    compact: "Urban projects, rental fleets, restricted access",
-    heavyDuty: "Infrastructure, industrial yards, large civil sites",
+    label: "Machinery Focus",
+    residential: "Compact, low-noise",
+    commercial: "High-reach, MEWPs",
+    industrial: "Heavy-duty, high-cycle",
   },
   {
-    label: "Planning focus",
-    compact: "Maneuverability, transport, fast deployment",
-    heavyDuty: "Capacity, uptime, attachments, fuel strategy",
+    label: "Timeline Sensitivity",
+    residential: "Seasonal, occupancy",
+    commercial: "Strict handover dates",
+    industrial: "Continuous operation",
   },
   {
-    label: "Support package",
-    compact: "Operator onboarding and routine service kits",
-    heavyDuty: "Preventive service plans and parts forecasting",
+    label: "Key Challenge",
+    residential: "Site access & neighborhood",
+    commercial: "Urban logistics",
+    industrial: "Harsh environments",
   },
 ];
 
 const galleryItems = [
   {
-    image: "/images/image1.png",
-    title: "Urban Build Support",
+    image: "/images/gallery-crane.png",
+    title: "Heavy Lifting Operations",
     description:
-      "Equipment packages for high-rise sites, access routes, and staged material movement.",
+      "Crawler cranes in action during the structural phase of a major industrial plant.",
   },
   {
-    image: "/images/image2.png",
-    title: "Renovation And Retrofit",
+    image: "/images/gallery-concrete.png",
+    title: "Concrete Pouring",
     description:
-      "Compact lifting, access, and concrete solutions for active properties.",
+      "High-capacity pumps ensuring continuous supply for high-rise foundation work.",
   },
   {
-    image: "/images/image3.png",
-    title: "Infrastructure Delivery",
+    image: "/images/gallery-team.png",
+    title: "Site Management",
     description:
-      "Heavy-duty fleets for bridges, highways, utilities, and industrial construction.",
+      "Expert site engineers coordinating logistics for a complex infrastructure project.",
   },
 ];
 
 const inputClass =
   "min-h-12 w-full border border-white/20 bg-white/10 px-4 text-sm text-white outline-none transition placeholder:text-white/60 focus:border-primary-light focus:bg-white/20";
 
-export default function ExploreProductPage() {
+export default function OurWorksPage() {
   return (
     <main className="min-h-screen bg-white text-secondary">
+      {/* Hero Section */}
       <section className="relative isolate overflow-hidden bg-secondary pt-8 text-white md:pt-16">
         <div className="absolute inset-0 -z-10">
           <Image
-            src="/images/image3.png"
-            alt=""
+            src="/images/image3.png" // Reusing hero image or replace with specific construction hero
+            alt="Construction Site"
             fill
             preload
             sizes="100vw"
@@ -218,38 +229,39 @@ export default function ExploreProductPage() {
         <div className="mx-auto flex min-h-[620px] w-full max-w-7xl items-center px-6 pb-8 md:min-h-[680px] md:px-12 md:pb-16 lg:px-20">
           <div className="max-w-3xl">
             <p className="mb-5 text-sm font-bold uppercase tracking-[0.24em] text-primary-light">
-              CPL Product Fleet
+              CPL Construction Cases
             </p>
             <h1 className="text-4xl font-bold leading-[1.05] text-white sm:text-5xl md:text-6xl lg:text-7xl">
-              Explore machinery for every build stage.
+              Building the future with precision and power.
             </h1>
             <p className="mt-5 max-w-2xl text-base leading-7 text-white/80 md:mt-6 md:text-xl md:leading-8">
-              Compare construction equipment by job type, capacity, site access,
-              and support needs before you commit a machine to the project.
+              Explore our portfolio of completed projects across infrastructure,
+              commercial, and energy sectors. See how our machinery fleet
+              delivers results in demanding environments.
             </p>
 
             <div className="mt-8 flex flex-wrap gap-3 sm:gap-4 md:mt-9">
               <a
-                href="#features"
+                href="#projects"
                 className="inline-flex min-h-12 items-center gap-2 bg-primary px-4 text-sm font-bold text-white shadow-[0_10px_28px_rgba(229,85,3,0.32)] transition hover:bg-primary-light focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-light focus-visible:ring-offset-2 focus-visible:ring-offset-secondary sm:px-6"
               >
-                View Equipment
+                View Projects
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </a>
               <a
-                href="#quote"
+                href="#contact"
                 className="inline-flex min-h-12 items-center gap-2 border border-white/25 bg-white/10 px-4 text-sm font-bold text-white backdrop-blur transition hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-secondary sm:px-6"
               >
-                Request Quote
-                <FileText className="h-4 w-4" aria-hidden="true" />
+                Start Your Project
+                <HardHat className="h-4 w-4" aria-hidden="true" />
               </a>
             </div>
 
             <dl className="mt-9 grid max-w-2xl grid-cols-3 gap-3 border-y border-white/20 py-5 md:mt-12 md:gap-4 md:py-6">
               {[
-                ["6", "Product families"],
-                ["24/7", "Service planning"],
-                ["3", "Project scopes"],
+                ["150+", "Projects Completed"],
+                ["5", "Countries Active"],
+                ["10+", "Years Experience"],
               ].map(([value, label]) => (
                 <div key={label}>
                   <dt className="text-2xl font-bold text-white md:text-3xl">
@@ -267,37 +279,38 @@ export default function ExploreProductPage() {
 
       <SectionNav />
 
+      {/* Projects Grid Section */}
       <section
-        id="features"
+        id="projects"
         className="scroll-mt-20 bg-white py-20 md:scroll-mt-24 md:py-24"
       >
         <div className="mx-auto w-full max-w-7xl px-6 md:px-12 lg:px-20">
           <div className="grid gap-10 lg:grid-cols-[0.74fr_1fr] lg:items-end">
             <div>
               <p className="text-sm font-bold uppercase tracking-[0.22em] text-primary">
-                Product Families
+                Featured Projects
               </p>
               <h2 className="mt-4 text-4xl font-bold tracking-tight text-secondary md:text-5xl">
-                Choose by task, terrain, and capacity.
+                Proven success across diverse sectors.
               </h2>
             </div>
             <p className="max-w-3xl text-base leading-7 text-secondary-light md:text-lg">
-              Each category is organized around practical project decisions: how
-              the machine moves, what it lifts or places, how quickly it
-              deploys, and what kind of service package keeps it productive.
+              From urban high-rises to remote infrastructure, our fleet adapts
+              to the specific demands of every site. Explore how we match
+              equipment to engineering challenges.
             </p>
           </div>
 
           <div className="mt-12 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-            {productFamilies.map((product) => (
+            {projectCases.map((project) => (
               <article
-                key={product.name}
+                key={project.name}
                 className="group border border-slate-200 bg-white p-5 shadow-sm transition hover:-translate-y-1 hover:border-primary-light hover:shadow-[0_18px_46px_rgba(15,23,42,0.12)]"
               >
                 <div className="flex min-h-[170px] items-center justify-center bg-slate-50 p-4">
                   <Image
-                    src={product.image}
-                    alt={product.name}
+                    src={project.image}
+                    alt={project.name}
                     width={420}
                     height={240}
                     sizes="(min-width: 1280px) 29vw, (min-width: 768px) 45vw, 90vw"
@@ -305,33 +318,39 @@ export default function ExploreProductPage() {
                   />
                 </div>
                 <div className="mt-5">
-                  <h3 className="text-xl font-bold text-secondary">
-                    {product.name}
-                  </h3>
-                  <p className="mt-3 min-h-16 text-sm leading-6 text-secondary-light">
-                    {product.description}
+                  <div className="flex items-start justify-between gap-2">
+                    <h3 className="text-xl font-bold text-secondary">
+                      {project.name}
+                    </h3>
+                    <MapPin className="mt-1 h-4 w-4 flex-none text-secondary-light" />
+                  </div>
+                  <p className="text-sm text-secondary-light">
+                    {project.location}
+                  </p>
+                  <p className="mt-3 min-h-[3rem] text-sm leading-6 text-secondary-light">
+                    {project.description}
                   </p>
                 </div>
                 <dl className="mt-5 grid grid-cols-2 border-y border-slate-200 py-4 text-sm">
                   <div>
                     <dt className="text-xs font-bold uppercase tracking-[0.14em] text-secondary-light">
-                      Range
+                      Duration
                     </dt>
                     <dd className="mt-1 font-bold text-secondary">
-                      {product.metrics.power}
+                      {project.metrics.duration}
                     </dd>
                   </div>
                   <div>
                     <dt className="text-xs font-bold uppercase tracking-[0.14em] text-secondary-light">
-                      Use
+                      Scale
                     </dt>
                     <dd className="mt-1 font-bold text-secondary">
-                      {product.metrics.use}
+                      {project.metrics.area}
                     </dd>
                   </div>
                 </dl>
                 <ul className="mt-5 space-y-3">
-                  {product.highlights.map((highlight) => (
+                  {project.highlights.map((highlight) => (
                     <li
                       key={highlight}
                       className="flex gap-3 text-sm leading-6 text-secondary"
@@ -347,24 +366,46 @@ export default function ExploreProductPage() {
               </article>
             ))}
           </div>
+        </div>
+      </section>
 
-          <div className="mt-14 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
-            {features.map((feature) => {
-              const Icon = feature.icon;
+      {/* Expertise/Features Section */}
+      <section
+        id="expertise"
+        className="scroll-mt-20 border-y border-slate-200 bg-slate-50 py-20 md:scroll-mt-24 md:py-24"
+      >
+        <div className="mx-auto w-full max-w-7xl px-6 md:px-12 lg:px-20">
+          <div className="max-w-3xl">
+            <p className="text-sm font-bold uppercase tracking-[0.22em] text-primary">
+              Why CPL
+            </p>
+            <h2 className="mt-4 text-4xl font-bold tracking-tight text-secondary md:text-5xl">
+              Expertise that drives every project forward.
+            </h2>
+            <p className="mt-5 text-base leading-7 text-secondary-light md:text-lg">
+              We don't just supply machinery; we provide operational excellence.
+              Our teams integrate with your engineering workflows to guarantee
+              safety and efficiency.
+            </p>
+          </div>
+
+          <div className="mt-12 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
+            {expertise.map((item) => {
+              const Icon = item.icon;
 
               return (
                 <article
-                  key={feature.title}
+                  key={item.title}
                   className="border border-slate-200 bg-slate-50 p-6"
                 >
                   <div className="mb-5 flex h-11 w-11 items-center justify-center bg-secondary text-white">
                     <Icon className="h-5 w-5" aria-hidden="true" />
                   </div>
                   <h3 className="text-lg font-bold text-secondary">
-                    {feature.title}
+                    {item.title}
                   </h3>
                   <p className="mt-3 text-sm leading-6 text-secondary-light">
-                    {feature.description}
+                    {item.description}
                   </p>
                 </article>
               );
@@ -373,48 +414,59 @@ export default function ExploreProductPage() {
         </div>
       </section>
 
+      {/* Comparison Table Section */}
       <section
-        id="compare"
-        className="scroll-mt-20 border-y border-slate-200 bg-slate-50 py-20 md:scroll-mt-24 md:py-24"
+        id="scope"
+        className="scroll-mt-20 bg-white py-20 md:scroll-mt-24 md:py-24"
       >
         <div className="mx-auto w-full max-w-7xl px-6 md:px-12 lg:px-20">
           <div className="max-w-3xl">
             <p className="text-sm font-bold uppercase tracking-[0.22em] text-primary">
-              Scope And Compare
+              Sector Capabilities
             </p>
             <h2 className="mt-4 text-4xl font-bold tracking-tight text-secondary md:text-5xl">
-              Match the machine class to the work package.
+              Adapting fleet strategies by sector.
             </h2>
             <p className="mt-5 text-base leading-7 text-secondary-light md:text-lg">
-              A productive fleet is not just bigger. It is sized correctly for
-              access, duty cycle, crew capability, and the cost of idle time.
+              Different project types demand different equipment configurations.
+              Here is how we approach residential, commercial, and industrial
+              builds.
             </p>
           </div>
 
           <div className="mt-12 overflow-hidden border border-slate-200 bg-white">
-            <div className="grid bg-secondary text-sm font-bold uppercase tracking-[0.16em] text-white md:grid-cols-[0.7fr_1fr_1fr]">
+            <div className="grid bg-secondary text-sm font-bold uppercase tracking-[0.16em] text-white md:grid-cols-[0.7fr_1fr_1fr_1fr]">
               <div className="border-b border-white/20 px-5 py-4 md:border-b-0 md:border-r">
                 Factor
               </div>
               <div className="border-b border-white/20 px-5 py-4 md:border-b-0 md:border-r">
-                Compact Fleet
+                Residential
               </div>
-              <div className="px-5 py-4">Heavy-Duty Fleet</div>
+              <div className="border-b border-white/20 px-5 py-4 md:border-b-0 md:border-r">
+                Commercial
+              </div>
+              <div className="px-5 py-4">Industrial</div>
             </div>
 
-            {comparisonRows.map((row) => (
+            {comparisonRows.map((row, index) => (
               <div
                 key={row.label}
-                className="grid border-t border-slate-200 text-sm leading-6 text-secondary-light md:grid-cols-[0.7fr_1fr_1fr]"
+                className={[
+                  "grid border-t border-slate-200 text-sm leading-6 text-secondary-light md:grid-cols-[0.7fr_1fr_1fr_1fr]",
+                  index % 2 === 0 ? "bg-white" : "bg-slate-50",
+                ].join(" ")}
               >
                 <div className="bg-secondary/5 px-5 py-5 font-bold text-secondary md:border-r md:border-slate-200">
                   {row.label}
                 </div>
                 <div className="border-t border-slate-200 px-5 py-5 md:border-r md:border-t-0 md:border-slate-200">
-                  {row.compact}
+                  {row.residential}
+                </div>
+                <div className="border-t border-slate-200 px-5 py-5 md:border-r md:border-t-0 md:border-slate-200">
+                  {row.commercial}
                 </div>
                 <div className="border-t border-slate-200 px-5 py-5 md:border-t-0">
-                  {row.heavyDuty}
+                  {row.industrial}
                 </div>
               </div>
             ))}
@@ -422,24 +474,24 @@ export default function ExploreProductPage() {
         </div>
       </section>
 
+      {/* Gallery Section */}
       <section
         id="gallery"
-        className="scroll-mt-20 bg-white py-20 md:scroll-mt-24 md:py-24"
+        className="scroll-mt-20 bg-slate-50 py-20 md:scroll-mt-24 md:py-24"
       >
         <div className="mx-auto w-full max-w-7xl px-6 md:px-12 lg:px-20">
           <div className="grid gap-10 lg:grid-cols-[0.74fr_1fr] lg:items-end">
             <div>
               <p className="text-sm font-bold uppercase tracking-[0.22em] text-primary">
-                Gallery
+                Site Gallery
               </p>
               <h2 className="mt-4 text-4xl font-bold tracking-tight text-secondary md:text-5xl">
-                See where each fleet earns its place.
+                Machines in their element.
               </h2>
             </div>
             <p className="max-w-3xl text-base leading-7 text-secondary-light md:text-lg">
-              Product selection changes from dense city construction to
-              industrial work. Start with the project setting, then narrow the
-              configuration around production targets.
+              A visual tour of our active sites and completed milestones. See
+              the power of our fleet up close.
             </p>
           </div>
 
@@ -471,22 +523,23 @@ export default function ExploreProductPage() {
         </div>
       </section>
 
+      {/* Contact Form Section */}
       <section
-        id="quote"
+        id="contact"
         className="scroll-mt-20 bg-secondary py-20 text-white md:scroll-mt-24 md:py-24"
       >
         <div className="mx-auto grid w-full max-w-7xl gap-12 px-6 md:px-12 lg:grid-cols-[0.86fr_1fr] lg:px-20">
           <div>
             <p className="text-sm font-bold uppercase tracking-[0.22em] text-primary-light">
-              Request A Quote
+              Start Your Project
             </p>
             <h2 className="mt-4 text-4xl font-bold tracking-tight text-white md:text-5xl">
-              Send the scope. Get a fleet recommendation.
+              Ready to build? Let's discuss the machinery.
             </h2>
             <p className="mt-5 text-base leading-7 text-white/70 md:text-lg">
-              Share the project type, target date, lift or production range, and
-              jobsite constraints. The team can prepare a practical equipment
-              shortlist for your review.
+              Tell us about your upcoming project, timeline, and site
+              conditions. Our team will recommend the optimal fleet
+              configuration for your needs.
             </p>
 
             <div className="mt-10 grid gap-4 sm:grid-cols-2">
@@ -494,13 +547,13 @@ export default function ExploreProductPage() {
                 href="tel:+80096665466"
                 className="flex min-h-20 items-center gap-4 border border-white/20 bg-white/10 p-4 transition hover:bg-white/20"
               >
-                <Phone
+                <UserCheck
                   className="h-5 w-5 flex-none text-primary-light"
                   aria-hidden="true"
                 />
                 <span>
                   <span className="block text-xs font-bold uppercase tracking-[0.16em] text-white/50">
-                    Hotline
+                    Project Hotline
                   </span>
                   <span className="mt-1 block font-bold text-white">
                     800-9666-5466
@@ -508,19 +561,19 @@ export default function ExploreProductPage() {
                 </span>
               </a>
               <a
-                href="mailto:sales@example.com"
+                href="mailto:projects@example.com"
                 className="flex min-h-20 items-center gap-4 border border-white/20 bg-white/10 p-4 transition hover:bg-white/20"
               >
-                <Mail
+                <ClipboardCheck
                   className="h-5 w-5 flex-none text-primary-light"
                   aria-hidden="true"
                 />
                 <span>
                   <span className="block text-xs font-bold uppercase tracking-[0.16em] text-white/50">
-                    Email
+                    Email Projects
                   </span>
                   <span className="mt-1 block font-bold text-white">
-                    sales@example.com
+                    projects@example.com
                   </span>
                 </span>
               </a>
@@ -533,7 +586,7 @@ export default function ExploreProductPage() {
               <input
                 className={inputClass}
                 name="name"
-                placeholder="Project contact"
+                placeholder="Project manager name"
               />
             </label>
             <label className="grid gap-2 text-sm font-bold text-white/80">
@@ -541,7 +594,7 @@ export default function ExploreProductPage() {
               <input
                 className={inputClass}
                 name="company"
-                placeholder="Company name"
+                placeholder="Construction firm"
               />
             </label>
             <label className="grid gap-2 text-sm font-bold text-white/80">
@@ -554,17 +607,20 @@ export default function ExploreProductPage() {
               />
             </label>
             <label className="grid gap-2 text-sm font-bold text-white/80">
-              Product Family
-              <select className={inputClass} name="product">
-                {productFamilies.map((product) => (
-                  <option
-                    key={product.name}
-                    value={product.name}
-                    className="text-secondary"
-                  >
-                    {product.name}
-                  </option>
-                ))}
+              Project Type
+              <select className={inputClass} name="type">
+                <option value="residential" className="text-secondary">
+                  Residential
+                </option>
+                <option value="commercial" className="text-secondary">
+                  Commercial
+                </option>
+                <option value="industrial" className="text-secondary">
+                  Industrial
+                </option>
+                <option value="infrastructure" className="text-secondary">
+                  Infrastructure
+                </option>
               </select>
             </label>
             <label className="grid gap-2 text-sm font-bold text-white/80 md:col-span-2">
@@ -572,15 +628,15 @@ export default function ExploreProductPage() {
               <textarea
                 className={`${inputClass} min-h-32 resize-y py-3`}
                 name="details"
-                placeholder="Capacity, location, timeline, and site constraints"
+                placeholder="Location, timeline, equipment requirements..."
               />
             </label>
             <button
               type="submit"
               className="inline-flex min-h-12 items-center justify-center gap-2 bg-primary px-6 text-sm font-bold text-white transition hover:bg-primary-light focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-light focus-visible:ring-offset-2 focus-visible:ring-offset-secondary md:col-span-2"
             >
-              Send Request
-              <Factory className="h-4 w-4" aria-hidden="true" />
+              Submit Inquiry
+              <Zap className="h-4 w-4" aria-hidden="true" />
             </button>
           </form>
         </div>
