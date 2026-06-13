@@ -221,6 +221,7 @@ const exportPDF = () => {
     startY: 30,
 
     head: [[
+      "No",
 
       "Name",
 
@@ -238,6 +239,7 @@ const exportPDF = () => {
 
     body: inquiries.map(
       (item: any) => [
+        inquiries.indexOf(item) + 1,
 
         item.name,
 
@@ -280,7 +282,7 @@ return (
 
               
 
-            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
+            <div className="flex flex-col text-black sm:flex-row items-start sm:items-center gap-3">
               <select
                 defaultValue=""
                 onChange={(e) => {
@@ -381,7 +383,7 @@ return (
 
               </div>
 
-              <div className="space-y-2 text-sm">
+              <div className="space-y-2 text-sm text-gray-700">
 
                 <p>
                   <span className="font-medium">
@@ -417,7 +419,7 @@ return (
 
               </div>
 
-              <div className="mt-4">
+              <div className="mt-4 text-black">
 
                 <select
                   value={item.status || "New"}
@@ -548,7 +550,7 @@ return (
                       "
                     >
                        {/* Number */}
-                    <td className="px-3 py-4">
+                    <td className="px-3 text-[#002253] py-4">
                       {index + 1}
                     </td>
 
@@ -570,7 +572,7 @@ return (
 
                       {/* Contact */}
                       <td className="px-3 py-4">
-                        <p className="truncate">
+                        <p className="truncate text-sm text-gray-700">
                           {item.email}
                         </p>
 
@@ -580,7 +582,7 @@ return (
                       </td>
                       {/* Product */}
                       <td className="px-3 py-4">
-                      <p className="font-medium capitalize truncate">
+                      <p className="font-medium text-black capitalize truncate">
                         {item.productCategory}
                       </p>
 
@@ -635,7 +637,7 @@ return (
                       </td>
 
                       {/* Date */}
-                      <td className="px-3 py-4 text-center">
+                      <td className="px-3 py-4 text-gray-700 text-center">
 
                         <p className="text-sm">
                           {new Date(
@@ -657,9 +659,10 @@ return (
                         <div className="flex justify-center gap-2">
 
                           <button
-                            onClick={() =>
-                              setSelectedInquiry(item)
-                            }
+                            onClick={() => {
+                              console.log(item);
+                              setSelectedInquiry(item);
+                            }}
                             className="
                             px-3
                             py-1
@@ -703,6 +706,7 @@ return (
               </table>
 
             </div>
+
               {selectedInquiry && (
                 <div
                   className="
@@ -772,7 +776,7 @@ return (
                             Customer Information
                           </h3>
 
-                          <div className="space-y-2">
+                          <div className="space-y-2 text-black">
                             <p>
                               <strong>Name:</strong>{" "}
                               {selectedInquiry.name}
@@ -801,7 +805,7 @@ return (
                             Product Information
                           </h3>
 
-                          <div className="space-y-2">
+                          <div className="space-y-2  text-black">
                             <p>
                               <strong>Category:</strong>{" "}
                               {selectedInquiry.productCategory}
@@ -833,7 +837,7 @@ return (
                               Project Location
                             </p>
 
-                            <p>
+                            <p className="text-black">
                               {
                                 selectedInquiry.projectLocation
                               }
@@ -845,7 +849,7 @@ return (
                               Purchase Timeframe
                             </p>
 
-                            <p>
+                            <p className="text-black">
                               {
                                 selectedInquiry.purchaseTimeframe
                               }
@@ -865,6 +869,7 @@ return (
                           border
                           rounded-xl
                           p-4
+                          text-black
                           bg-slate-50
                           "
                         >
