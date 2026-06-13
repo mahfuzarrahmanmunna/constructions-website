@@ -60,7 +60,7 @@ useEffect(() => {
 
     <div className="p-6">
 
-      <h1 className="text-3xl font-bold mb-6">
+      <h1 className="text-3xl font-bold mb-6 text-[#002253]">
         Dashboard Overview
       </h1>
 
@@ -207,7 +207,7 @@ useEffect(() => {
                       <p
                         className="
                         text-sm
-                        text-gray-500
+                        text-[#002253]
                         truncate
                         "
                       >
@@ -224,7 +224,7 @@ useEffect(() => {
                       Product
                     </p>
 
-                    <p className="font-medium truncate">
+                    <p className="font-medium truncate text-[#002253]">
                       {item.productCategory}
                     </p>
                   </div>
@@ -235,7 +235,7 @@ useEffect(() => {
                       Phone
                     </p>
 
-                    <p className="truncate">
+                    <p className="truncate text-[#002253]">
                       {item.phone}
                     </p>
                   </div>

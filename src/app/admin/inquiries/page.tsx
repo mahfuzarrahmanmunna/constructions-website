@@ -815,23 +815,23 @@ return (
                           </h3>
 
                           <div className="space-y-2">
-                            <p>
+                            <p className="text-[#002253]">
                               <strong>Name:</strong>{" "}
                               {selectedInquiry.name}
                             </p>
 
-                            <p>
+                            <p className="text-[#002253]">
                               <strong>Company:</strong>{" "}
                               {selectedInquiry.companyName ||
                                 "N/A"}
                             </p>
 
-                            <p>
+                            <p className="text-[#002253]">
                               <strong>Email:</strong>{" "}
                               {selectedInquiry.email}
                             </p>
 
-                            <p>
+                            <p className="text-[#002253]">
                               <strong>Phone:</strong>{" "}
                               {selectedInquiry.phone}
                             </p>
@@ -844,17 +844,17 @@ return (
                           </h3>
 
                           <div className="space-y-2">
-                            <p>
+                            <p className="text-[#002253]">
                               <strong>Category:</strong>{" "}
                               {selectedInquiry.productCategory}
                             </p>
 
-                            <p>
+                            <p className="text-[#002253]">
                               <strong>Type:</strong>{" "}
                               {selectedInquiry.productType}
                             </p>
 
-                            <p>
+                            <p className="text-[#002253]">
                               <strong>Equipment:</strong>{" "}
                               {selectedInquiry.equipmentModel}
                             </p>
@@ -875,7 +875,7 @@ return (
                               Project Location
                             </p>
 
-                            <p>
+                            <p  className="text-[#002253]">
                               {
                                 selectedInquiry.projectLocation
                               }
@@ -887,7 +887,7 @@ return (
                               Purchase Timeframe
                             </p>
 
-                            <p>
+                            <p className="text-[#002253]">
                               {
                                 selectedInquiry.purchaseTimeframe
                               }
@@ -908,6 +908,7 @@ return (
                           rounded-xl
                           p-4
                           bg-slate-50
+                          text-[#002253]
                           "
                         >
                           {selectedInquiry.specifics ||
