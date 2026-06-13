@@ -10,6 +10,7 @@ import {
   MapPin,
   FileText,
 } from "lucide-react";
+import toast from "react-hot-toast";
 
 // --- Color Palette Constants ---
 const COLORS = {
@@ -104,7 +105,7 @@ export default function RequestQuoteForm() {
     equipmentModel: "",
     projectLocation: "",
     purchaseTimeframe: "",
-    moreSpecifics: "",
+    specifics: "",
     name: "",
     companyName: "",
     phone: "",
@@ -131,6 +132,7 @@ export default function RequestQuoteForm() {
     e.preventDefault();
 
     setLoading(true);
+    toast.loading("Submitting your quote request...");
 
     try {
       const response = await fetch("/api/inquiries", {
@@ -144,7 +146,7 @@ export default function RequestQuoteForm() {
       const data = await response.json();
 
       if (data.success) {
-        alert("Quote submitted!");
+        toast.success("Quote submitted successfully!");
 
         setFormData({
           productCategory: "",
@@ -152,7 +154,7 @@ export default function RequestQuoteForm() {
           equipmentModel: "",
           projectLocation: "",
           purchaseTimeframe: "",
-          moreSpecifics: "",
+          specifics: "",
           name: "",
           companyName: "",
           phone: "",
@@ -162,7 +164,7 @@ export default function RequestQuoteForm() {
       }
     } catch (error) {
       console.error(error);
-      alert("Something went wrong");
+      toast.error("Something went wrong");
     } finally {
       setLoading(false);
     }
@@ -280,12 +282,12 @@ export default function RequestQuoteForm() {
             <div className="mt-6">
               <FormField
                 label="More Specifics"
-                name="moreSpecifics"
+                name="specifics"
                 required={false}
               >
                 <textarea
-                  name="moreSpecifics"
-                  value={formData.moreSpecifics}
+                  name="specifics"
+                  value={formData.specifics}
                   onChange={handleChange}
                   rows={4}
                   placeholder="Please describe your specific requirements, terrain conditions, or any additional details..."
