@@ -50,6 +50,15 @@ const InquirySchema =
         type: String,
         required: true,
       },
+      status: {
+        type: String,
+        enum: [
+          "New",
+          "In Progress",
+          "Closed",
+        ],
+        default: "New",
+      },
     },
     {
       timestamps: true,
