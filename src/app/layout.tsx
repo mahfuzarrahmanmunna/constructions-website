@@ -2,8 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, DM_Serif_Display, Outfit } from "next/font/google";
 import "./globals.css";
 import Script from "next/script"; // Imported to inject JSON-LD
-import Navbar from "./components/Navbar/Navbar";
-import Footer from "./components/Footer/Footer";
+import ToastProvider from "./components/ToastProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -142,9 +141,8 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        <Navbar />
         {children}
-        <Footer/>
+        <ToastProvider />
       </body>
     </html>
   );
