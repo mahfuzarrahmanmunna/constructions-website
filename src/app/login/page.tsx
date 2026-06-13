@@ -1,6 +1,15 @@
 "use client";
 import React, { useState } from "react";
 import "./App.css";
+import {
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  signInWithPopup,
+  sendPasswordResetEmail,
+  updateProfile,
+} from "firebase/auth";
+
+import { auth, googleProvider } from "@/lib/firebase";
 
 const EyeIcon = () => (
   <svg
@@ -85,17 +94,100 @@ function AuthForm() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (
+    e: React.FormEvent<HTMLFormElement>
+    ) => {
     e.preventDefault();
+
     setIsLoading(true);
-    setTimeout(() => {
-      setIsLoading(false);
+
+    try {
       if (isLogin) {
-        alert(`Welcome back, ${formData.email}!`);
-      } else {
-        alert(`Registration successful! Welcome, ${formData.name}.`);
+        await signInWithEmailAndPassword(
+          auth,
+          formData.email,
+          formData.password
+        );
+
+      alert("Login successful!");
+    } else {
+      if (formData.password !== formData.confirmPassword) {
+        alert("Passwords do not match");
+        return;
       }
-    }, 1500);
+
+      const userCredential =
+        await createUserWithEmailAndPassword(
+          auth,
+          formData.email,
+          formData.password
+        );
+
+      await updateProfile(userCredential.user, {
+        displayName: formData.name,
+      });
+
+      alert("Account created successfully!");
+      }
+    } catch (error) {
+    console.error(error);
+
+    if (error instanceof Error) {
+      alert(error.message);
+    } else {
+      alert("Authentication failed");
+    }
+    }finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleGoogleLogin = async () => {
+    try {
+      setIsLoading(true);
+
+      const result = await signInWithPopup(
+        auth,
+        googleProvider
+      );
+
+      console.log(result.user);
+
+      alert(`Welcome ${result.user.displayName}`);
+    } catch (error) {
+    console.error(error);
+
+    if (error instanceof Error) {
+      alert(error.message);
+    } else {
+      alert("Authentication failed");
+    }
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleForgotPassword = async () => {
+    if (!formData.email) {
+      alert("Please enter your email address first.");
+      return;
+    }
+
+    try {
+      await sendPasswordResetEmail(auth, formData.email);
+
+      alert(
+        "Password reset email sent. Please check your inbox."
+      );
+    } catch (error) {
+      console.error(error);
+
+      if (error instanceof Error) {
+        alert(error.message);
+      } else {
+        alert("Failed to send reset email.");
+      }
+    }
   };
 
   const handleTabSwitch = (loginState: boolean) => {
@@ -303,7 +395,13 @@ function AuthForm() {
                 className="forgot-password text-right mt-[-0.625rem] mb-6 opacity-0 animate-slideUp"
                 style={{ animationDelay: "0.2s" }}
               >
-                <a href="#forgot" className="text-[0.8rem] font-medium text-[#6b6b6b] no-underline transition-colors duration-200 hover:text-primary">Forgot password?</a>
+                <button
+                  type="button"
+                  onClick={handleForgotPassword}
+                  className="forgot-password-btn"
+                >
+                  Forgot password?
+                </button>
               </div>
             )}
 
@@ -329,7 +427,9 @@ function AuthForm() {
             <span className="flex-1 h-px bg-[rgba(255,255,255,0.06)]" />
           </div>
 
-          <div
+          <button
+            type="button"
+            onClick={handleGoogleLogin}
             className="social-btn flex items-center justify-center gap-2.5 w-full py-3 bg-transparent border border-[rgba(255,255,255,0.06)] rounded-lg font-outfit text-[0.9rem] font-medium text-[#a3a3a3] cursor-pointer transition-all duration-250 opacity-0 animate-slideUp hover:border-[rgba(255,255,255,0.12)] hover:bg-[rgba(255,255,255,0.03)] hover:text-[#f5f5f5] active:scale-95"
             style={{ animationDelay: "0.35s" }}
           >
@@ -337,7 +437,7 @@ function AuthForm() {
             <span>
               {isLogin ? "Sign in with Google" : "Sign up with Google"}
             </span>
-          </div>
+          </button>
         </div>
       </div>
     </div>

@@ -2,7 +2,6 @@
 
 import React, { useState } from "react";
 import {
-  ChevronDown,
   Check,
   User,
   Building,
@@ -113,6 +112,8 @@ export default function RequestQuoteForm() {
     privacyPolicy: false,
   });
 
+  const [loading, setLoading] = useState(false);
+
   const handleChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
@@ -126,10 +127,45 @@ export default function RequestQuoteForm() {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Form Submitted:", formData);
-    // Add your submission logic here
+
+    setLoading(true);
+
+    try {
+      const response = await fetch("/api/inquiries", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        alert("Quote submitted!");
+
+        setFormData({
+          productCategory: "",
+          productType: "",
+          equipmentModel: "",
+          projectLocation: "",
+          purchaseTimeframe: "",
+          moreSpecifics: "",
+          name: "",
+          companyName: "",
+          phone: "",
+          email: "",
+          privacyPolicy: false,
+        });
+      }
+    } catch (error) {
+      console.error(error);
+      alert("Something went wrong");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -148,7 +184,9 @@ export default function RequestQuoteForm() {
         </div>
 
         {/* Form Content */}
-        <form onSubmit={handleSubmit} className="p-8 md:p-12 space-y-10">
+        <form 
+          onSubmit={handleSubmit} noValidate
+          className="p-8 md:p-12 space-y-10">
           {/* 1. Equipment Section */}
           <div>
             <h3 className="text-lg font-bold text-[#002253] mb-6 border-b-2 border-gray-100 pb-2 flex items-center gap-2">
@@ -345,9 +383,14 @@ export default function RequestQuoteForm() {
 
             <button
               type="submit"
+              disabled={loading}
+              style={{
+                position: "relative",
+                zIndex: 9999,
+              }}
               className="w-full md:w-auto px-10 py-3.5 bg-[#E55503] text-white font-bold uppercase tracking-wider rounded-lg shadow-lg shadow-[#E55503]/30 hover:bg-[#FF8B28] hover:shadow-[#FF8B28]/40 transform hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center gap-2"
             >
-              Send
+              {loading ? "Sending..." : "Send"}
               <svg
                 width="20"
                 height="20"
