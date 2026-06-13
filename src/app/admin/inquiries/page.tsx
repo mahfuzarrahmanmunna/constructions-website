@@ -776,24 +776,29 @@ return (
                             Customer Information
                           </h3>
 
+<<<<<<< HEAD
                           <div className="space-y-2 text-black">
                             <p>
+=======
+                          <div className="space-y-2">
+                            <p className="text-[#002253]">
+>>>>>>> 67407bfeb8dd8a258a41368b8376872afbbfc88e
                               <strong>Name:</strong>{" "}
                               {selectedInquiry.name}
                             </p>
 
-                            <p>
+                            <p className="text-[#002253]">
                               <strong>Company:</strong>{" "}
                               {selectedInquiry.companyName ||
                                 "N/A"}
                             </p>
 
-                            <p>
+                            <p className="text-[#002253]">
                               <strong>Email:</strong>{" "}
                               {selectedInquiry.email}
                             </p>
 
-                            <p>
+                            <p className="text-[#002253]">
                               <strong>Phone:</strong>{" "}
                               {selectedInquiry.phone}
                             </p>
@@ -805,18 +810,23 @@ return (
                             Product Information
                           </h3>
 
+<<<<<<< HEAD
                           <div className="space-y-2  text-black">
                             <p>
+=======
+                          <div className="space-y-2">
+                            <p className="text-[#002253]">
+>>>>>>> 67407bfeb8dd8a258a41368b8376872afbbfc88e
                               <strong>Category:</strong>{" "}
                               {selectedInquiry.productCategory}
                             </p>
 
-                            <p>
+                            <p className="text-[#002253]">
                               <strong>Type:</strong>{" "}
                               {selectedInquiry.productType}
                             </p>
 
-                            <p>
+                            <p className="text-[#002253]">
                               <strong>Equipment:</strong>{" "}
                               {selectedInquiry.equipmentModel}
                             </p>
@@ -837,7 +847,11 @@ return (
                               Project Location
                             </p>
 
+<<<<<<< HEAD
                             <p className="text-black">
+=======
+                            <p  className="text-[#002253]">
+>>>>>>> 67407bfeb8dd8a258a41368b8376872afbbfc88e
                               {
                                 selectedInquiry.projectLocation
                               }
@@ -849,7 +863,11 @@ return (
                               Purchase Timeframe
                             </p>
 
+<<<<<<< HEAD
                             <p className="text-black">
+=======
+                            <p className="text-[#002253]">
+>>>>>>> 67407bfeb8dd8a258a41368b8376872afbbfc88e
                               {
                                 selectedInquiry.purchaseTimeframe
                               }
@@ -871,6 +889,7 @@ return (
                           p-4
                           text-black
                           bg-slate-50
+                          text-[#002253]
                           "
                         >
                           {selectedInquiry.specifics ||
