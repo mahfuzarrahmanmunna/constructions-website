@@ -26,52 +26,31 @@ const slides = [
     badge: "Premium Construction",
     title: "Building Tomorrow's\nSkylines Today",
     subtitle:
-<<<<<<< HEAD
       'World-class construction solutions with unmatched quality and precision — turning architectural visions into lasting realities.',
     primaryCta: 'Get a Free Quote',
     secondaryCta: 'Our Projects',
     accent: '#E55503',
     image: '/images/image1.png',
-=======
-      "World-class construction solutions with unmatched quality and precision — turning architectural visions into lasting realities.",
-    primaryCta: "Get a Free Quote",
-    secondaryCta: "Our Projects",
-    image: "/images/image1.png",
->>>>>>> e744e01ef013b23bfee7166daead6b12f5121465
   },
   {
     badge: "Expert Renovation",
     title: "Transforming Spaces,\nElevating Lives",
     subtitle:
-<<<<<<< HEAD
       'Our expert renovation teams breathe new life into existing structures — restoring beauty, improving function, and adding lasting value.',
     primaryCta: 'Explore Projects',
     secondaryCta: 'Learn More',
     accent: '#FF8B28',
     image: '/images/image2.png',
-=======
-      "Our expert renovation teams breathe new life into existing structures — restoring beauty, improving function, and adding lasting value.",
-    primaryCta: "Explore Projects",
-    secondaryCta: "Learn More",
-    image: "/images/image2.png",
->>>>>>> e744e01ef013b23bfee7166daead6b12f5121465
   },
   {
     badge: "Infrastructure Excellence",
     title: "Strong Foundations,\nGreater Futures",
     subtitle:
-<<<<<<< HEAD
       'From highways to high-rises, we engineer infrastructure that communities depend on — built to last for generations.',
     primaryCta: 'View Our Work',
     secondaryCta: 'Contact Us',
     accent: '#224B88',
     image: '/images/image3.png',
-=======
-      "From highways to high-rises, we engineer infrastructure that communities depend on — built to last for generations.",
-    primaryCta: "View Our Work",
-    secondaryCta: "Contact Us",
-    image: "/images/image3.png",
->>>>>>> e744e01ef013b23bfee7166daead6b12f5121465
   },
 ];
 
@@ -119,7 +98,6 @@ export default function HeroBanner() {
               data-swiper-parallax="-23%"
             />
 
-<<<<<<< HEAD
             {/* Dark gradient shader overlay */}
             <div
               className="absolute inset-0 z-[1]"
@@ -127,18 +105,6 @@ export default function HeroBanner() {
                 background: 'linear-gradient(to right, rgba(0,34,83,0.84) 0%, rgba(0,34,83,0.58) 55%, rgba(0,34,83,0.18) 100%)',
               }}
             />
-=======
-            {/* Gradient Overlay: Mix of Brand Navy and Black for depth */}
-            <div className="absolute inset-0 z-[1] pointer-events-none">
-              <div
-                className="w-full h-full"
-                style={{
-                  background:
-                    "linear-gradient(to right, #002253d9 0%, #00225366 40%, rgba(0,0,0,0.2) 100%)",
-                }}
-              />
-            </div>
->>>>>>> e744e01ef013b23bfee7166daead6b12f5121465
 
             {/* Content Layer */}
             <div className="relative z-[2] flex h-full items-center">
@@ -181,11 +147,7 @@ export default function HeroBanner() {
 
                   {/* Subtitle with Parallax */}
                   <p
-<<<<<<< HEAD
                     className="mb-10 max-w-xl text-lg leading-relaxed text-white/80 md:text-xl"
-=======
-                    className="max-w-2xl text-lg leading-relaxed text-gray-200 md:text-xl font-light"
->>>>>>> e744e01ef013b23bfee7166daead6b12f5121465
                     data-swiper-parallax="-200"
                   >
                     {slide.subtitle}
@@ -248,15 +210,8 @@ export default function HeroBanner() {
         `}</style>
       </Swiper>
 
-<<<<<<< HEAD
       <div className="absolute bottom-10 right-6 z-20 text-xs font-medium tracking-widest text-primary-light/60 md:right-12">
         SCROLL TO EXPLORE
-=======
-      {/* Scroll Indicator */}
-      <div className="absolute bottom-10 right-6 z-20 flex flex-col items-center gap-2 text-xs font-medium tracking-[0.2em] text-white/50 md:right-12 animate-bounce">
-        <span>SCROLL</span>
-        <div className="w-[1px] h-12 bg-gradient-to-b from-white/50 to-transparent" />
->>>>>>> e744e01ef013b23bfee7166daead6b12f5121465
       </div>
     </section>
   );

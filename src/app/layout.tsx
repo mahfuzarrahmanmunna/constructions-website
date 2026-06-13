@@ -15,7 +15,6 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-<<<<<<< HEAD
 const dmSerifDisplay = DM_Serif_Display({
   variable: "--font-dm-serif",
   subsets: ["latin"],
@@ -29,9 +28,6 @@ const outfit = Outfit({
   weight: ["300", "400", "500", "600", "700"],
 });
 
-=======
-// --- 1. SEO METADATA CONFIGURATION ---
->>>>>>> e744e01ef013b23bfee7166daead6b12f5121465
 export const metadata: Metadata = {
   // Set your production domain here to help with relative URLs
   metadataBase: new URL("https://www.your-website-domain.com"),
@@ -148,7 +144,7 @@ export default function RootLayout({
         />
         <Navbar />
         {children}
-        <Footer/>
+        <Footer />
       </body>
     </html>
   );
