@@ -44,7 +44,7 @@ export default function CategoryFormModal({ initialData, onClose, onSaved }: Pro
     e.preventDefault();
     setSaving(true);
 
-    const url = isEdit ? `api/categories/${initialData._id}` : "/api/categories";
+    const url = isEdit ? `/api/categories/${initialData._id}` : "ategories";
     const method = isEdit ? "PUT" : "POST";
 
     const request = fetch(url, {

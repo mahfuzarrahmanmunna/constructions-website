@@ -14,20 +14,36 @@ export default function CategoriesPage() {
   const [editingCategory, setEditingCategory] = useState<any>(null);
 
   const fetchCategories = async () => {
-    setLoading(true);
-    try {
-      const res = await fetch("api/categories");
-      const data = await res.json();
-      setCategories(Array.isArray(data) ? data : []);
-    } catch {
-      toast.error("Failed to load categories");
-    } finally {
-      setLoading(false);
-    }
+    const res = await fetch("/api/categories");
+    const data = await res.json();
+    setCategories(Array.isArray(data) ? data : []);
   };
 
   useEffect(() => {
-    fetchCategories();
+    let active = true;
+
+    const loadCategories = async () => {
+      await Promise.resolve();
+      if (!active) return;
+
+      setLoading(true);
+      try {
+        await fetchCategories();
+      } catch {
+        if (active) {
+          toast.error("Failed to load categories");
+        }
+      } finally {
+        if (active) {
+          setLoading(false);
+        }
+      }
+    };
+
+    loadCategories();
+    return () => {
+      active = false;
+    };
   }, []);
 
   const handleAdd = () => {
@@ -53,7 +69,7 @@ export default function CategoriesPage() {
 
     if (!result.isConfirmed) return;
 
-    const request = fetch(`api/categories/${id}`, { method: "DELETE" }).then(async (res) => {
+    const request = fetch(`/api/categories/${id}`, { method: "DELETE" }).then(async (res) => {
       if (!res.ok) throw new Error("Failed to delete category");
       return res.json();
     });
