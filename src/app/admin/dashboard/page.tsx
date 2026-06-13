@@ -91,19 +91,19 @@ useEffect(() => {
         />
       </div>
 
-       <div className="grid grid-cols-1 2xl:grid-cols-12 gap-6 mt-6">
+       <div className="grid grid-cols-1 xl:grid-cols-12 gap-6 mt-6">
 
         {/* Recent Inquiries */}
-        <div
-          className="
-          2xl:col-span-8
-          bg-white
-          rounded-xl
-          shadow
-          p-4
-          md:p-6
-          "
-        >
+          <div
+            className="
+            xl:col-span-8
+            bg-white
+            rounded-xl
+            shadow
+            p-4
+            md:p-6
+            "
+          >
 
           <div className="flex justify-between items-center mb-6">
 
@@ -129,7 +129,7 @@ useEffect(() => {
             <div
               className="
               hidden lg:grid
-              lg:grid-cols-[minmax(250px,2fr)_minmax(120px,1fr)_minmax(180px,1fr)_100px]
+              lg:grid-cols-[2fr_1fr_1fr_140px]
               gap-6
               px-4
               pb-3
@@ -153,8 +153,8 @@ useEffect(() => {
                   className="
                   grid
                   grid-cols-1
-                  lg:grid-cols-[minmax(250px,2fr)_minmax(120px,1fr)_minmax(180px,1fr)_100px]
-                  gap-6
+                  lg:grid-cols-[2fr_1fr_1fr_140px]
+                  gap-4
                   items-center
                   p-4
                   rounded-xl
@@ -194,23 +194,11 @@ useEffect(() => {
 
                     <div className="min-w-0">
 
-                      <h3
-                        className="
-                        font-semibold
-                        text-[#002253]
-                        truncate
-                        "
-                      >
+                      <h3 className="font-semibold text-base text-[#002253] truncate">
                         {item.name}
                       </h3>
 
-                      <p
-                        className="
-                        text-sm
-                        text-gray-500
-                        truncate
-                        "
-                      >
+                      <p className="text-xs text-gray-500 truncate">
                         {item.email}
                       </p>
 
@@ -220,7 +208,7 @@ useEffect(() => {
 
                   {/* Product */}
                   <div className="min-w-0">
-                    <p className="text-xs text-gray-500">
+                    <p className="font-sm text-base truncate">
                       Product
                     </p>
 
@@ -235,7 +223,7 @@ useEffect(() => {
                       Phone
                     </p>
 
-                    <p className="truncate">
+                    <p className="text-base truncate">
                       {item.phone}
                     </p>
                   </div>
@@ -249,6 +237,8 @@ useEffect(() => {
                         rounded-full
                         text-xs
                         font-medium
+                        whitespace-nowrap
+
                         ${
                           item.status === "New"
                             ? "bg-blue-100 text-blue-700"
@@ -274,25 +264,18 @@ useEffect(() => {
         {/* Analytics */}
         <div
           className="
-          2xl:col-span-4
-
+          xl:col-span-4
           bg-white
           rounded-xl
           shadow
-
-          min-h-112.5
-          md:min-h-130
-
-          overflow-hidden
+          p-4
           "
         >
-
           <InquiryChart
             totalProducts={dashboardData.totalProducts}
             totalInquiries={dashboardData.totalInquiries}
             totalUsers={80}
           />
-
         </div>
 
       </div>

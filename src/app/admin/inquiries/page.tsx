@@ -496,36 +496,37 @@ return (
           {/* DESKTOP TABLE */}
             <div className="hidden lg:block w-full">
 
-              <table className="w-full text-sm">
+              <table className="w-full table-fixed text-sm">
 
                 <thead className="bg-[#002253] text-white">
 
                   <tr>
 
-                    <th className="px-3 py-4 text-left">
+                    <th className="w-[5%] px-3 py-4 text-left">
                       No:
                     </th>
-                    <th className="px-3 py-4 text-left">
+
+                    <th className="w-[24%] px-3 py-4 text-left">
                       Customer
                     </th>
 
-                    <th className="px-3 py-4 text-left">
+                    <th className="w-[24%] px-3 py-4 text-left">
                       Contact
                     </th>
 
-                    <th className="px-3 py-4 text-left">
+                    <th className="w-[12%] px-3 py-4 text-left">
                       Product
                     </th>
 
-                    <th className="px-3 py-4 text-center">
+                    <th className="w-[12%] px-3 py-4 text-center">
                       Status
                     </th>
 
-                    <th className="px-3 py-4 text-center">
+                    <th className="w-[10%] px-3 py-4 text-center">
                       Date
                     </th>
 
-                    <th className="px-3 py-4 text-center">
+                    <th className="w-[14%] px-3 py-4 text-center">
                       Actions
                     </th>
 
@@ -554,85 +555,42 @@ return (
                       {/* Customer */}
                       <td className=" py-4">
 
-                        <div className="flex items-center gap-3">
-
-                          <div
-                            className="
-                            w-10
-                            h-10
-                            rounded-full
-                            bg-[#002253]
-                            text-white
-                            flex
-                            items-center
-                            justify-center
-                            font-bold
-                            shrink-0
-                            "
-                          >
-                            {item.name?.charAt(0)}
-                          </div>
 
                           <div className="min-w-0">
-
-                            <h3
-                              className="
-                              font-semibold
-                              text-[#002253]
-                              truncate
-                              "
-                            >
+                            <h3 className="font-semibold text-[#002253] truncate">
                               {item.name}
                             </h3>
 
-                            <p
-                              className="
-                              text-xs
-                              text-gray-500
-                              truncate
-                              "
-                            >
+                            <p className="text-xs text-gray-500 truncate">
                               {item.companyName || "No Company"}
                             </p>
-
                           </div>
-
-                        </div>
 
                       </td>
 
                       {/* Contact */}
                       <td className="px-3 py-4">
-
-                        <p
-                          className="
-                          truncate
-                          "
-                        >
+                        <p className="truncate">
                           {item.email}
                         </p>
 
-                        <p className="text-xs text-gray-500">
+                        <p className="text-xs text-gray-500 truncate">
                           {item.phone}
                         </p>
-
                       </td>
-
                       {/* Product */}
                       <td className="px-3 py-4">
+                      <p className="font-medium capitalize truncate">
+                        {item.productCategory}
+                      </p>
 
-                        <p className="font-medium">
-                          {item.productCategory}
-                        </p>
-
-                        <p className="text-xs text-gray-500">
-                          {item.productType}
-                        </p>
-
-                      </td>
+                      <p className="text-xs text-gray-500 truncate">
+                        {item.productType}
+                      </p>
+                    </td>
 
                       {/* Status */}
-                      <td className="px-3 py-4 text-center">
+                      <td className="px-1 py-1 text-center">
 
                         <select
                           value={item.status || "New"}

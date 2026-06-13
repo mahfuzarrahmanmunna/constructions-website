@@ -49,36 +49,43 @@ export default function InquiryChart({
 
       <ResponsiveContainer
         width="100%"
-        height={320}
+        height={250}
       >
         <PieChart>
           <Pie
-            data={data}
-            dataKey="value"
-            nameKey="name"
-            cx="50%"
-            cy="50%"
-            outerRadius={110}
-            label={({ name, percent }) =>
-              `${name} ${(percent * 100).toFixed(0)}%`
-            }
-          >
-            {data.map((_, index) => (
-              <Cell
-                key={index}
-                fill={COLORS[index]}
-              />
-            ))}
-          </Pie>
+          data={data}
+          dataKey="value"
+          nameKey="name"
+          cx="50%"
+          cy="45%"
+          outerRadius={80}
+          innerRadius={40}
+          label={false}
+          isAnimationActive={true}
+          animationBegin={0}
+          animationDuration={1500}
+          animationEasing="ease-out"
+        >
+          {data.map((_, index) => (
+            <Cell
+              key={index}
+              fill={COLORS[index]}
+            />
+          ))}
+        </Pie>
 
           <Tooltip
             formatter={(value) => [
               value,
-              "Count",
+              data.find((entry) => entry.value === value)?.name || "Count",
             ]}
           />
 
-          <Legend />
+          <Legend
+              verticalAlign="bottom"
+              align="center"
+              iconType="square"
+            />
         </PieChart>
       </ResponsiveContainer>
 
