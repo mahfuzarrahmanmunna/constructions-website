@@ -2,6 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import { useState, useRef, useEffect } from "react";
+import Link from "next/link";
 
 const navLinks = [
   "Products",
@@ -204,6 +205,24 @@ export default function Navbar() {
                 >
                   Service
                 </a>
+              );
+            }
+
+            if (link === "Construction Cases") {
+              return (
+                <Link
+                  key="Construction Cases"
+                  href="/ourWorks"
+                  onMouseEnter={handleEnter}
+                  className={[
+                    "text-base font-medium tracking-wide whitespace-nowrap transition-colors duration-300 relative",
+                    hasActiveState
+                      ? "text-[#002253] hover:text-[#E55503]"
+                      : "text-white/90 hover:text-[#FF8B28]",
+                  ].join(" ")}
+                >
+                  Our Works
+                </Link>
               );
             }
 
@@ -652,6 +671,15 @@ export default function Navbar() {
                 ))}
               </div>
             </div>
+          ) : link === "Construction Cases" ? (
+            <Link
+              key={link}
+              href="/ourWorks"
+              onClick={closeMobile}
+              className="block px-6 py-4 text-secondary font-medium border-b border-gray-100 hover:bg-gray-50 transition-colors"
+            >
+              {link}
+            </Link>
           ) : (
             <a
               key={link}
