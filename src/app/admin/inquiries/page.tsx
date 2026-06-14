@@ -775,14 +775,8 @@ return (
                           <h3 className="font-bold text-lg text-[#002253] mb-3">
                             Customer Information
                           </h3>
-
-<<<<<<< HEAD
                           <div className="space-y-2 text-black">
                             <p>
-=======
-                          <div className="space-y-2">
-                            <p className="text-[#002253]">
->>>>>>> 67407bfeb8dd8a258a41368b8376872afbbfc88e
                               <strong>Name:</strong>{" "}
                               {selectedInquiry.name}
                             </p>
@@ -809,14 +803,8 @@ return (
                           <h3 className="font-bold text-lg text-[#002253] mb-3">
                             Product Information
                           </h3>
-
-<<<<<<< HEAD
                           <div className="space-y-2  text-black">
                             <p>
-=======
-                          <div className="space-y-2">
-                            <p className="text-[#002253]">
->>>>>>> 67407bfeb8dd8a258a41368b8376872afbbfc88e
                               <strong>Category:</strong>{" "}
                               {selectedInquiry.productCategory}
                             </p>
@@ -846,12 +834,7 @@ return (
                             <p className="text-gray-500">
                               Project Location
                             </p>
-
-<<<<<<< HEAD
                             <p className="text-black">
-=======
-                            <p  className="text-[#002253]">
->>>>>>> 67407bfeb8dd8a258a41368b8376872afbbfc88e
                               {
                                 selectedInquiry.projectLocation
                               }
@@ -862,12 +845,7 @@ return (
                             <p className="text-gray-500">
                               Purchase Timeframe
                             </p>
-
-<<<<<<< HEAD
                             <p className="text-black">
-=======
-                            <p className="text-[#002253]">
->>>>>>> 67407bfeb8dd8a258a41368b8376872afbbfc88e
                               {
                                 selectedInquiry.purchaseTimeframe
                               }

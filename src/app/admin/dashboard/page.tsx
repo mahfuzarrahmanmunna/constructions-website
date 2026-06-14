@@ -60,11 +60,7 @@ useEffect(() => {
 
     <div className="p-6">
 
-<<<<<<< HEAD
       <h1 className="text-3xl text-black font-bold mb-6">
-=======
-      <h1 className="text-3xl font-bold mb-6 text-[#002253]">
->>>>>>> 67407bfeb8dd8a258a41368b8376872afbbfc88e
         Dashboard Overview
       </h1>
 
@@ -207,18 +203,7 @@ useEffect(() => {
                       <h3 className="font-semibold text-base text-[#002253] truncate">
                         {item.name}
                       </h3>
-
-<<<<<<< HEAD
                       <p className="text-xs text-gray-500 truncate">
-=======
-                      <p
-                        className="
-                        text-sm
-                        text-[#002253]
-                        truncate
-                        "
-                      >
->>>>>>> 67407bfeb8dd8a258a41368b8376872afbbfc88e
                         {item.email}
                       </p>
 
@@ -239,12 +224,7 @@ useEffect(() => {
 
                   {/* Phone */}
                   <div className="min-w-0">
-
-<<<<<<< HEAD
                     <p className=" text-black text-sm">
-=======
-                    <p className="truncate text-[#002253]">
->>>>>>> 67407bfeb8dd8a258a41368b8376872afbbfc88e
                       {item.phone}
                     </p>
                   </div>
