@@ -193,7 +193,7 @@ export default function Navbar() {
               return (
                 <Link
                   key="Service"
-                  href="/services"
+                  href="/service"
                   onMouseEnter={handleEnter}
                   className={[
                     "text-base font-medium tracking-wide whitespace-nowrap transition-colors duration-300",
