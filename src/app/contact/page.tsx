@@ -9,8 +9,10 @@ import {
   Clock,
   Send,
   ArrowRight,
-  CheckCircle,
 } from "lucide-react";
+import { FaYoutube, FaXTwitter, FaFacebook,
+  FaLinkedin,} from "react-icons/fa6";
+import toast from "react-hot-toast";
 
 // --- Color Palette ---
 const COLORS = {
@@ -32,16 +34,28 @@ const hotlines = [
 const contactDetails = {
   headquarters: {
     title: "Headquarters",
-    address: "918 Yinpen Road, Changsha, Hunan, China",
-    phone: "+86 (731) 8567 8000",
-    email: "info@CPL.com",
-    hours: "Mon-Fri: 8:30 AM - 5:30 PM",
+    address: "Bangladesh",
+    phone: "+88 01922 588445 ",
+    email: "azizurseu@gmail.com",
+    hours: "Sat-Thu: 8:00 AM - 6:00 PM",
   },
   social: [
-    { platform: "LinkedIn", link: "#" },
-    { platform: "Twitter", link: "#" },
-    { platform: "Facebook", link: "#" },
-    { platform: "YouTube", link: "#" },
+    {
+      platform: "LinkedIn",
+      link: "https://linkedin.com/company/your-company",
+    },
+    {
+      platform: "Facebook",
+      link: "https://facebook.com/your-page",
+    },
+    {
+      platform: "YouTube",
+      link: "https://youtube.com/@your-channel",
+    },
+    {
+      platform: "Twitter",
+      link: "https://twitter.com/your-handle",
+    },
   ],
 };
 
@@ -62,10 +76,44 @@ export default function ContactPage() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (
+    e: React.FormEvent
+  ) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
-    // Add submission logic here
+
+    try {
+      const res = await fetch(
+        "/api/contact",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type":
+              "application/json",
+          },
+          body: JSON.stringify(
+            formData
+          ),
+        }
+      );
+
+      const data =
+        await res.json();
+
+      if (data.success) {
+        toast.success("Message sent successfully!");
+        setFormData({
+          name: "",
+          email: "",
+          phone: "",
+          subject: "",
+          message: "",
+        });
+      }
+    } catch (error) {
+      console.log(error);
+
+      toast.error("Failed to send message");
+    }
   };
 
   return (
@@ -164,17 +212,40 @@ export default function ContactPage() {
               </div>
 
               <div className="pt-6 border-t border-gray-100 flex gap-4">
-                {contactDetails.social.map((social, idx) => (
-                  <a
-                    key={idx}
-                    href={social.link}
-                    className="w-10 h-10 rounded-full bg-[#002253] hover:bg-[#E55503] text-white flex items-center justify-center transition-colors duration-300"
-                  >
-                    <span className="text-xs font-bold">
-                      {social.platform[0]}
-                    </span>
-                  </a>
-                ))}
+                <a
+                  href="https://linkedin.com/company/your-company"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-12 h-12 rounded-full bg-[#0077B5] text-white flex items-center justify-center hover:scale-110 transition-all"
+                >
+                  <FaLinkedin size={20} />
+                </a>
+
+                <a
+                  href="https://facebook.com/your-page"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-12 h-12 rounded-full bg-[#1877F2] text-white flex items-center justify-center hover:scale-110 transition-all"
+                >
+                  <FaFacebook size={20} />
+                </a>
+
+                <a
+                  href="https://youtube.com/@your-channel"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-12 h-12 rounded-full bg-[#FF0000] text-white flex items-center justify-center hover:scale-110 transition-all"
+                >
+                  <FaYoutube size={20} />
+                </a>
+                <a
+                  href="https://twitter.com/your-handle"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-12 h-12 rounded-full bg-[#1DA1F2] text-white flex items-center justify-center hover:scale-110 transition-all"
+                >
+                  <FaXTwitter size={20} />
+                </a>
               </div>
             </div>
 
@@ -222,7 +293,7 @@ export default function ContactPage() {
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {/* Name */}
-                  <div className="space-y-2">
+                  <div className="space-y-2 text-black">
                     <label className="text-xs font-bold text-gray-500 uppercase tracking-wider">
                       Full Name
                     </label>
@@ -238,7 +309,7 @@ export default function ContactPage() {
                   </div>
 
                   {/* Email */}
-                  <div className="space-y-2">
+                  <div className="space-y-2 text-black">
                     <label className="text-xs font-bold text-gray-500 uppercase tracking-wider">
                       Email Address
                     </label>
@@ -254,7 +325,7 @@ export default function ContactPage() {
                   </div>
 
                   {/* Phone */}
-                  <div className="space-y-2">
+                  <div className="space-y-2 text-black">
                     <label className="text-xs font-bold text-gray-500 uppercase tracking-wider">
                       Phone Number
                     </label>
@@ -263,13 +334,13 @@ export default function ContactPage() {
                       name="phone"
                       value={formData.phone}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#E55503] focus:ring-2 focus:ring-[#E55503]/20 outline-none transition-all"
+                      className="w-full text-gray-500 px-4 py-3 rounded-xl border border-gray-200 focus:border-[#E55503] focus:ring-2 focus:ring-[#E55503]/20 outline-none transition-all"
                       placeholder="+1 (555) 000-0000"
                     />
                   </div>
 
                   {/* Subject */}
-                  <div className="space-y-2">
+                  <div className="space-y-2 text-black">
                     <label className="text-xs font-bold text-gray-500 uppercase tracking-wider">
                       Subject
                     </label>
@@ -279,19 +350,20 @@ export default function ContactPage() {
                       onChange={handleChange}
                       className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#E55503] focus:ring-2 focus:ring-[#E55503]/20 outline-none transition-all bg-white"
                     >
-                      <option value="" disabled>
+                      <option className="text-gray-500"
+                      value="" disabled>
                         Select a topic
                       </option>
-                      <option value="sales">Sales Inquiry</option>
-                      <option value="support">Technical Support</option>
-                      <option value="partnership">Partnership</option>
-                      <option value="other">Other</option>
+                      <option className="text-gray-500" value="sales">Sales Inquiry</option>
+                      <option className="text-gray-500" value="support">Technical Support</option>
+                      <option className="text-gray-500" value="partnership">Partnership</option>
+                      <option className="text-gray-500" value="other">Other</option>
                     </select>
                   </div>
                 </div>
 
                 {/* Message */}
-                <div className="space-y-2">
+                <div className="space-y-2 text-black">
                   <label className="text-xs font-bold text-gray-500 uppercase tracking-wider">
                     Message
                   </label>
