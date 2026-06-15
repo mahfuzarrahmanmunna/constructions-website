@@ -12,6 +12,11 @@ export default function Home() {
       <HeroBanner />
       <GlobalStatsSection/>
       <ExploreProducts/>
+      <BusinessCategorySection/>
+      <ProblemSolveSection/>
+      <CoreServicesSection/>
+      <SecondaryServicesSection/>
+      <WhyChooseSection/>
       <CategorySection/>
       <ShowcaseSection/>
       <RequestQuoteForm/>
