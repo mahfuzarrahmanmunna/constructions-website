@@ -775,25 +775,24 @@ return (
                           <h3 className="font-bold text-lg text-[#002253] mb-3">
                             Customer Information
                           </h3>
-
                           <div className="space-y-2 text-black">
                             <p>
                               <strong>Name:</strong>{" "}
                               {selectedInquiry.name}
                             </p>
 
-                            <p>
+                            <p className="text-[#002253]">
                               <strong>Company:</strong>{" "}
                               {selectedInquiry.companyName ||
                                 "N/A"}
                             </p>
 
-                            <p>
+                            <p className="text-[#002253]">
                               <strong>Email:</strong>{" "}
                               {selectedInquiry.email}
                             </p>
 
-                            <p>
+                            <p className="text-[#002253]">
                               <strong>Phone:</strong>{" "}
                               {selectedInquiry.phone}
                             </p>
@@ -804,19 +803,18 @@ return (
                           <h3 className="font-bold text-lg text-[#002253] mb-3">
                             Product Information
                           </h3>
-
                           <div className="space-y-2  text-black">
                             <p>
                               <strong>Category:</strong>{" "}
                               {selectedInquiry.productCategory}
                             </p>
 
-                            <p>
+                            <p className="text-[#002253]">
                               <strong>Type:</strong>{" "}
                               {selectedInquiry.productType}
                             </p>
 
-                            <p>
+                            <p className="text-[#002253]">
                               <strong>Equipment:</strong>{" "}
                               {selectedInquiry.equipmentModel}
                             </p>
@@ -836,7 +834,6 @@ return (
                             <p className="text-gray-500">
                               Project Location
                             </p>
-
                             <p className="text-black">
                               {
                                 selectedInquiry.projectLocation
@@ -848,7 +845,6 @@ return (
                             <p className="text-gray-500">
                               Purchase Timeframe
                             </p>
-
                             <p className="text-black">
                               {
                                 selectedInquiry.purchaseTimeframe
@@ -871,6 +867,7 @@ return (
                           p-4
                           text-black
                           bg-slate-50
+                          text-[#002253]
                           "
                         >
                           {selectedInquiry.specifics ||

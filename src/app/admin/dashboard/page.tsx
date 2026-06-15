@@ -203,7 +203,6 @@ useEffect(() => {
                       <h3 className="font-semibold text-base text-[#002253] truncate">
                         {item.name}
                       </h3>
-
                       <p className="text-xs text-gray-500 truncate">
                         {item.email}
                       </p>
@@ -218,14 +217,13 @@ useEffect(() => {
                       {item.productName}
                     </p>
 
-                    <p className="font-medium truncate">
+                    <p className="font-medium truncate text-[#002253]">
                       {item.productCategory}
                     </p>
                   </div>
 
                   {/* Phone */}
                   <div className="min-w-0">
-
                     <p className=" text-black text-sm">
                       {item.phone}
                     </p>
