@@ -121,7 +121,9 @@ export default function GlobalStatsSection() {
               {/* Animated Number */}
               <div className="mb-2 relative">
                 <span
-                  ref={(el) => (numbersRef.current[index] = el)}
+                  ref={(el) => {
+                    numbersRef.current[index] = el;
+                  }}
                   data-target={stat.value}
                   data-suffix={stat.suffix}
                   className="text-5xl md:text-6xl font-black text-[#E55503] font-mono tracking-tighter block"

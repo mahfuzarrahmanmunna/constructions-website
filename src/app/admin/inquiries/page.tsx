@@ -15,7 +15,7 @@ export default function InquiriesPage() {
   const [
     inquiries,
     setInquiries,
-  ] = useState([]);
+  ] = useState<any[]>([]);
 
   const [
     selectedInquiry,
@@ -238,8 +238,8 @@ const exportPDF = () => {
     ]],
 
     body: inquiries.map(
-      (item: any) => [
-        inquiries.indexOf(item) + 1,
+      (item: any, index: number) => [
+        index + 1,
 
         item.name,
 
