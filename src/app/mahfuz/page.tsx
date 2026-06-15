@@ -3,6 +3,7 @@ import ContactFloatingMenu from '../components/ContactFloatingMenu/ContactFloati
 import ExploreProducts from '../components/ExploreProducts/ExploreProducts';
 import RequestQuoteForm from '../components/RequestQuoteForm/RequestQuoteForm';
 import CategorySection from '../components/CategorySection/CategorySection';
+import CostEstimatorSection from '../components/CostEstimatorSection/CostEstimatorSection';
 
 const MahfuzPractices = () => {
     return (
@@ -11,6 +12,7 @@ const MahfuzPractices = () => {
             <ExploreProducts/>
             <RequestQuoteForm/>
             <CategorySection/>
+            <CostEstimatorSection/>
         </main>
     );
 };
