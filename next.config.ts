@@ -8,10 +8,6 @@ const nextConfig: NextConfig = {
         hostname: "sanyglobal-img.sany.com.cn",
         pathname: "/**",
       },
-      {
-        protocol: "https",
-        hostname: "picsum.photos",
-      },
     ],
   },
 };
