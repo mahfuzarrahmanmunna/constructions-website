@@ -10,6 +10,7 @@ import {
 } from "firebase/auth";
 
 import { auth, googleProvider } from "@/lib/firebase";
+import toast from "react-hot-toast";
 
 const EyeIcon = () => (
   <svg
@@ -109,10 +110,10 @@ function AuthForm() {
           formData.password
         );
 
-      alert("Login successful!");
+      toast.success(`Welcome back!`);
     } else {
       if (formData.password !== formData.confirmPassword) {
-        alert("Passwords do not match");
+        toast.error("Passwords do not match");
         return;
       }
 
@@ -127,15 +128,15 @@ function AuthForm() {
         displayName: formData.name,
       });
 
-      alert("Account created successfully!");
+      toast.success("Account created successfully!");
       }
     } catch (error) {
     console.error(error);
 
     if (error instanceof Error) {
-      alert(error.message);
+      toast.error(error.message);
     } else {
-      alert("Authentication failed");
+      toast.error ("Authentication failed");
     }
     }finally {
       setIsLoading(false);
@@ -153,14 +154,14 @@ function AuthForm() {
 
       console.log(result.user);
 
-      alert(`Welcome ${result.user.displayName}`);
+      toast.success(`Welcome ${result.user.displayName}`);
     } catch (error) {
     console.error(error);
 
     if (error instanceof Error) {
-      alert(error.message);
+      toast.error(error.message);
     } else {
-      alert("Authentication failed");
+      toast.error("Authentication failed");
     }
     } finally {
       setIsLoading(false);
@@ -169,23 +170,23 @@ function AuthForm() {
 
   const handleForgotPassword = async () => {
     if (!formData.email) {
-      alert("Please enter your email address first.");
+      toast.error("Please enter your email address first.");
       return;
     }
 
     try {
       await sendPasswordResetEmail(auth, formData.email);
 
-      alert(
+      toast.success(
         "Password reset email sent. Please check your inbox."
       );
     } catch (error) {
       console.error(error);
 
       if (error instanceof Error) {
-        alert(error.message);
+        toast.error(error.message);
       } else {
-        alert("Failed to send reset email.");
+        toast.error("Failed to send reset email.");
       }
     }
   };
