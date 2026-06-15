@@ -10,7 +10,7 @@ type Params = {
 
 export async function GET(
   _req: Request,
-  { params }: { params: Params }
+  { params }: { params: Promise<Params> }
 ) {
   try {
     await dbConnect();
