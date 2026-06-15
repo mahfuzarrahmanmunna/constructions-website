@@ -30,7 +30,7 @@ const outfit = Outfit({
 // ... (Keep all your metadata the same) ...
 export const metadata: Metadata = {
   // ... (Your existing metadata) ...
-  metadataBase: new URL("https://www.your-website-domain.com"),
+  metadataBase: new URL("https://constructions-beta.vercel.app"),
   title: {
     default: "TitanMachinery | Premium Excavators & Heavy Equipment",
     template: "%s | TitanMachinery",

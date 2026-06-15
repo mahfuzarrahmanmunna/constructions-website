@@ -60,29 +60,35 @@ useEffect(() => {
 
     <div className="p-6">
 
-      <h1 className="text-3xl font-bold mb-6">
+      <h1 className="text-3xl text-black font-bold mb-6">
         Dashboard Overview
       </h1>
 
       <div className=" grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6">
 
-        <MetricCard
+        <Link href="/admin/products">
+          <MetricCard
           title="Total Products"
           value={dashboardData.totalProducts}
           icon={<Package />}
         />
+        </Link>
 
-        <MetricCard
-          title="Total Inquiries"
-          value={dashboardData.totalInquiries}
-          icon={<FileText />}
-        />
+        <Link href="/admin/inquiries">
+          <MetricCard
+            title="Total Inquiries"
+            value={dashboardData.totalInquiries}
+            icon={<FileText />}
+          />
+        </Link>
 
-        <MetricCard
-          title="Active Users"
-          value={80}
-          icon={<Users />}
-        />
+        <Link href="/admin/users">
+          <MetricCard
+            title="Active Users"
+            value={80}
+            icon={<Users />}
+          />
+        </Link> 
 
         <MetricCard
           title="Website Visits"
@@ -197,7 +203,6 @@ useEffect(() => {
                       <h3 className="font-semibold text-base text-[#002253] truncate">
                         {item.name}
                       </h3>
-
                       <p className="text-xs text-gray-500 truncate">
                         {item.email}
                       </p>
@@ -207,23 +212,19 @@ useEffect(() => {
                   </div>
 
                   {/* Product */}
-                  <div className="min-w-0">
+                  <div className="min-w-0 text-black">
                     <p className="font-sm text-base truncate">
-                      Product
+                      {item.productName}
                     </p>
 
-                    <p className="font-medium truncate">
+                    <p className="font-medium truncate text-[#002253]">
                       {item.productCategory}
                     </p>
                   </div>
 
                   {/* Phone */}
                   <div className="min-w-0">
-                    <p className="text-xs text-gray-500">
-                      Phone
-                    </p>
-
-                    <p className="text-base truncate">
+                    <p className=" text-black text-sm">
                       {item.phone}
                     </p>
                   </div>

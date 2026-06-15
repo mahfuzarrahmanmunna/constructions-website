@@ -3,6 +3,7 @@
 import { usePathname } from "next/navigation";
 import Navbar from "../components/Navbar/Navbar";
 import Footer from "../components/Footer/Footer";
+import MobileBottomNav from "../components/MobileBottomNav/MobileBottomNav";
 
 export default function LayoutWrapper({
   children,
@@ -24,6 +25,7 @@ export default function LayoutWrapper({
       <Navbar />
       {children}
       <Footer />
+      <MobileBottomNav/>
     </>
   );
 }

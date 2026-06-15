@@ -15,15 +15,16 @@ const navLinks = [
 ];
 
 const categories = [
-  { name: "Earthmoving Machinery", image: "/images/Nav-Photos/p1.png" },
-  { name: "MEWPs", image: "/images/Nav-Photos/p2.png" },
-  { name: "Mobile Crane Machinery", image: "/images/Nav-Photos/p3.png" },
+  { name: "Earthmoving Machinery", image: "/images/Nav-Photos/p1.png", slug: "earthmoving" },
+  { name: "MEWPs", image: "/images/Nav-Photos/p2.png", slug: "mewps" },
+  { name: "Mobile Crane Machinery", image: "/images/Nav-Photos/p3.png", slug: "mobile-crane" },
   {
     name: "Construction Hoisting Machinery",
     image: "/images/Nav-Photos/p4.png",
+    slug: "hoisting"
   },
-  { name: "Concrete Machinery", image: "/images/Nav-Photos/p5.png" },
-  { name: "Agricultural Machinery", image: "/images/Nav-Photos/p6.png" },
+  { name: "Concrete Machinery", image: "/images/Nav-Photos/p5.png", slug: "concrete" },
+  { name: "Agricultural Machinery", image: "/images/Nav-Photos/p6.png", slug: "agricultural" },
 ];
 
 const hotlines = [
@@ -60,7 +61,6 @@ export default function Navbar() {
   }, []);
 
   // Unified active state for background changes (Dropdowns Open OR Scrolled)
-  // Fixed: Added isScrolled to this condition
   const hasActiveState =
     isScrolled ||
     megaOpen ||
@@ -121,7 +121,8 @@ export default function Navbar() {
       >
         {/* Logo */}
         {/* Fixed: Replaced isActive with hasActiveState */}
-        <div
+        <Link
+          href="/"
           className={[
             "text-2xl font-bold tracking-[0.2em] uppercase select-none transition-colors duration-300",
             hasActiveState
@@ -130,7 +131,7 @@ export default function Navbar() {
           ].join(" ")}
         >
           CPL
-        </div>
+        </Link>
 
         {/* Desktop nav links */}
         <nav className="hidden lg:flex items-center gap-8">
@@ -190,9 +191,9 @@ export default function Navbar() {
 
             if (link === "Service") {
               return (
-                <a
+                <Link
                   key="Service"
-                  href="#"
+                  href="/service"
                   onMouseEnter={handleEnter}
                   className={[
                     "text-base font-medium tracking-wide whitespace-nowrap transition-colors duration-300",
@@ -204,7 +205,7 @@ export default function Navbar() {
                   ].join(" ")}
                 >
                   Service
-                </a>
+                </Link>
               );
             }
 
@@ -226,9 +227,18 @@ export default function Navbar() {
               );
             }
 
+            // Handling main nav links that open submenus
+            let linkHref = "#";
+            if (link === "Products") linkHref = "/products";
+            if (link === "Investor") linkHref = "/investor";
+            if (link === "News") linkHref = "/news";
+            if (link === "About ") linkHref = "/about";
+            if (link === "Contact") linkHref = "/contact";
+
             return (
-              <button
+              <Link
                 key={link}
+                href={linkHref}
                 onMouseEnter={handleEnter}
                 className={[
                   "text-base font-medium tracking-wide whitespace-nowrap transition-colors duration-300 relative",
@@ -238,13 +248,12 @@ export default function Navbar() {
                 ].join(" ")}
               >
                 {link}
-              </button>
+              </Link>
             );
           })}
         </nav>
 
         {/* Desktop right icons */}
-        {/* Fixed: Replaced isActive with hasActiveState */}
         <div
           className={[
             "hidden lg:flex items-center gap-5 transition-colors duration-300",
@@ -253,7 +262,8 @@ export default function Navbar() {
               : "text-white hover:text-secondary",
           ].join(" ")}
         >
-          <button
+          <Link
+            href="/search"
             aria-label="Search"
             className="hover:text-[#E55503] transition-colors"
           >
@@ -270,17 +280,18 @@ export default function Navbar() {
               <circle cx="11" cy="11" r="8" />
               <line x1="21" y1="21" x2="16.65" y2="16.65" />
             </svg>
-          </button>
+          </Link>
           <span
             className={[
               "w-px h-5 transition-colors duration-300",
               hasActiveState ? "bg-gray-300" : "bg-white/30",
             ].join(" ")}
           />
-          <button className="text-sm font-medium tracking-wide hover:text-[#E55503] transition-colors">
+          <Link href="/global-network" className="text-sm font-medium tracking-wide hover:text-[#E55503] transition-colors">
             Global
-          </button>
-          <button
+          </Link>
+          <Link
+            href="/sitemap"
             aria-label="Menu grid"
             className="hover:text-[#E55503] transition-colors"
           >
@@ -290,7 +301,7 @@ export default function Navbar() {
               <rect x="3" y="14" width="7" height="7" rx="1" />
               <rect x="14" y="14" width="7" height="7" rx="1" />
             </svg>
-          </button>
+          </Link>
         </div>
 
         {/* Mobile hamburger */}
@@ -354,15 +365,16 @@ export default function Navbar() {
               {categories.map((cat) => {
                 const isActivecat = activeCategory === cat.name;
                 return (
-                  <div
+                  // Wrapped in Link. onMouseEnter kept on the outer element or passed to Link
+                  <Link
                     key={cat.name}
+                    href={`/products/${cat.slug}`}
                     onMouseEnter={() => setActiveCategory(cat.name)}
                     className={[
                       "flex items-center gap-3 px-5 py-3 cursor-pointer transition-colors duration-150 rounded-sm",
                       isActivecat ? "bg-primary" : "hover:bg-gray-50",
                     ].join(" ")}
                   >
-                    {/* Image placeholder removed error checking since src is provided in data */}
                     <img
                       src={cat.image}
                       alt={cat.name}
@@ -376,7 +388,7 @@ export default function Navbar() {
                     >
                       {cat.name}
                     </span>
-                  </div>
+                  </Link>
                 );
               })}
             </div>
@@ -389,14 +401,17 @@ export default function Navbar() {
                     Service Support
                   </p>
                   <ul className="space-y-2">
-                    {["CPL Services", "Service Network"].map((link) => (
-                      <li key={link}>
-                        <a
-                          href="#"
+                    {[
+                      { name: "CPL Services", href: "/services" },
+                      { name: "Service Network", href: "/services/network" }
+                    ].map((link) => (
+                      <li key={link.name}>
+                        <Link
+                          href={link.href}
                           className="text-base text-secondary-light hover:text-primary transition-colors duration-150 font-medium"
                         >
-                          {link}
-                        </a>
+                          {link.name}
+                        </Link>
                       </li>
                     ))}
                   </ul>
@@ -411,9 +426,12 @@ export default function Navbar() {
                         <span className="w-24 text-sm font-semibold tracking-wide text-secondary-light">
                           {country}
                         </span>
-                        <span className="text-base text-secondary font-medium tabular-nums">
+                        <a 
+                          href={`tel:${number}`} 
+                          className="text-base text-secondary font-medium tabular-nums hover:text-primary"
+                        >
                           {number}
-                        </span>
+                        </a>
                       </li>
                     ))}
                   </ul>
@@ -431,12 +449,12 @@ export default function Navbar() {
 
           {/* Bottom action buttons */}
           <div className="flex items-center gap-3 border-t border-gray-100 py-5">
-            <button className="px-6 py-2.5 rounded-full bg-secondary/5 text-secondary text-sm font-medium hover:bg-secondary/10 transition-colors duration-200">
+            <Link href="/inquiry" className="px-6 py-2.5 rounded-full bg-secondary/5 text-secondary text-sm font-medium hover:bg-secondary/10 transition-colors duration-200">
               Inquiry
-            </button>
-            <button className="px-6 py-2.5 rounded-full bg-primary text-white text-sm font-medium hover:bg-primary-light transition-colors duration-200">
+            </Link>
+            <Link href="/contact" className="px-6 py-2.5 rounded-full bg-primary text-white text-sm font-medium hover:bg-primary-light transition-colors duration-200">
               Online consultation
-            </button>
+            </Link>
           </div>
         </div>
       </div>
@@ -463,18 +481,18 @@ export default function Navbar() {
           </span>
           <span className="w-px h-5 bg-gray-300 flex-shrink-0" />
           {[
-            "CPL Services",
-            "Services Offered",
-            "Service Network",
-            "Parts Network",
+            { name: "CPL Services", href: "/services" },
+            { name: "Services Offered", href: "/services/offerings" },
+            { name: "Service Network", href: "/services/network" },
+            { name: "Parts Network", href: "/parts" },
           ].map((item) => (
-            <a
-              key={item}
-              href="#"
+            <Link
+              key={item.name}
+              href={item.href}
               className="text-base text-secondary-light hover:text-primary transition-colors duration-200 whitespace-nowrap"
             >
-              {item}
-            </a>
+              {item.name}
+            </Link>
           ))}
         </div>
       </div>
@@ -500,14 +518,18 @@ export default function Navbar() {
             Investor
           </span>
           <span className="w-px h-5 bg-gray-300 flex-shrink-0" />
-          {["Stock Chart", "Announcements", "Financial Reports"].map((item) => (
-            <a
-              key={item}
-              href="#"
+          {[
+            { name: "Stock Chart", href: "/investor/stock-chart" },
+            { name: "Announcements", href: "/investor/announcements" },
+            { name: "Financial Reports", href: "/investor/financial-reports" },
+          ].map((item) => (
+            <Link
+              key={item.name}
+              href={item.href}
               className="text-base text-secondary-light hover:text-primary transition-colors duration-200 whitespace-nowrap"
             >
-              {item}
-            </a>
+              {item.name}
+            </Link>
           ))}
         </div>
       </div>
@@ -531,14 +553,18 @@ export default function Navbar() {
             News
           </span>
           <span className="w-px h-5 bg-gray-300 flex-shrink-0" />
-          {["Press Release", "Events", "Video"].map((item) => (
-            <a
-              key={item}
-              href="#"
+          {[
+            { name: "Press Release", href: "/news/press-releases" },
+            { name: "Events", href: "/news/events" },
+            { name: "Video", href: "/news/videos" },
+          ].map((item) => (
+            <Link
+              key={item.name}
+              href={item.href}
               className="text-base text-secondary-light hover:text-primary transition-colors duration-200 whitespace-nowrap"
             >
-              {item}
-            </a>
+              {item.name}
+            </Link>
           ))}
         </div>
       </div>
@@ -565,18 +591,18 @@ export default function Navbar() {
           </span>
           <span className="w-px h-5 bg-gray-300 flex-shrink-0" />
           {[
-            "Company Profile",
-            "Technology & Innovation",
-            "Social Responsibility",
-            "Career",
+            { name: "Company Profile", href: "/about/company-profile" },
+            { name: "Technology & Innovation", href: "/about/technology" },
+            { name: "Social Responsibility", href: "/about/csr" },
+            { name: "Career", href: "/careers" },
           ].map((item) => (
-            <a
-              key={item}
-              href="#"
+            <Link
+              key={item.name}
+              href={item.href}
               className="text-base text-secondary-light hover:text-primary transition-colors duration-200 whitespace-nowrap"
             >
-              {item}
-            </a>
+              {item.name}
+            </Link>
           ))}
         </div>
       </div>
@@ -602,14 +628,16 @@ export default function Navbar() {
             Contact
           </span>
           <span className="w-px h-5 bg-gray-300 flex-shrink-0" />
-          {["Contact Us"].map((item) => (
-            <a
-              key={item}
-              href="#"
+          {[
+            { name: "Contact Us", href: "/contact" },
+          ].map((item) => (
+            <Link
+              key={item.name}
+              href={item.href}
               className="text-base text-secondary-light hover:text-primary transition-colors duration-200 whitespace-nowrap"
             >
-              {item}
-            </a>
+              {item.name}
+            </Link>
           ))}
         </div>
       </div>
@@ -623,83 +651,99 @@ export default function Navbar() {
             : "max-h-0 opacity-0 pointer-events-none",
         ].join(" ")}
       >
-        {navLinks.map((link) =>
-          link === "Products" ? (
-            <div key={link}>
-              <button
-                onClick={() => setMobileProdOpen((v) => !v)}
-                className="w-full flex items-center justify-between px-6 py-4 text-secondary font-medium border-b border-gray-100 hover:bg-gray-50 transition-colors"
-              >
-                <span>Products</span>
-                <svg
-                  className={[
-                    "transition-transform duration-200 text-[#E55503]",
-                    mobileProdOpen ? "rotate-180" : "",
-                  ].join(" ")}
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
+        {navLinks.map((link) => {
+          if (link === "Products") {
+            return (
+              <div key={link}>
+                <button
+                  onClick={() => setMobileProdOpen((v) => !v)}
+                  className="w-full flex items-center justify-between px-6 py-4 text-secondary font-medium border-b border-gray-100 hover:bg-gray-50 transition-colors"
                 >
-                  <polyline points="6 9 12 15 18 9" />
-                </svg>
-              </button>
-
-              {/* Categories accordion */}
-              <div
-                className={[
-                  "overflow-hidden transition-all duration-300 ease-in-out bg-gray-50/50",
-                  mobileProdOpen ? "max-h-[500px]" : "max-h-0",
-                ].join(" ")}
-              >
-                {categories.map((cat) => (
-                  <div
-                    key={cat.name}
-                    className="flex items-center gap-3 px-8 py-4 border-b border-gray-100 hover:bg-white transition-colors cursor-pointer group"
+                  <span>Products</span>
+                  <svg
+                    className={[
+                      "transition-transform duration-200 text-[#E55503]",
+                      mobileProdOpen ? "rotate-180" : "",
+                    ].join(" ")}
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
                   >
-                    <img
-                      src={cat.image}
-                      alt={cat.name}
-                      className="h-8 w-auto object-contain flex-shrink-0"
-                    />
-                    <span className="text-sm text-secondary font-medium">
-                      {cat.name}
-                    </span>
-                  </div>
-                ))}
+                    <polyline points="6 9 12 15 18 9" />
+                  </svg>
+                </button>
+
+                {/* Categories accordion */}
+                <div
+                  className={[
+                    "overflow-hidden transition-all duration-300 ease-in-out bg-gray-50/50",
+                    mobileProdOpen ? "max-h-[500px]" : "max-h-0",
+                  ].join(" ")}
+                >
+                  {categories.map((cat) => (
+                    <Link
+                      key={cat.name}
+                      href={`/products/${cat.slug}`}
+                      onClick={closeMobile}
+                      className="flex items-center gap-3 px-8 py-4 border-b border-gray-100 hover:bg-white transition-colors cursor-pointer group"
+                    >
+                      <img
+                        src={cat.image}
+                        alt={cat.name}
+                        className="h-8 w-auto object-contain flex-shrink-0"
+                      />
+                      <span className="text-sm text-secondary font-medium">
+                        {cat.name}
+                      </span>
+                    </Link>
+                  ))}
+                </div>
               </div>
-            </div>
-          ) : link === "Construction Cases" ? (
-            <Link
-              key={link}
-              href="/ourWorks"
-              onClick={closeMobile}
-              className="block px-6 py-4 text-secondary font-medium border-b border-gray-100 hover:bg-gray-50 transition-colors"
-            >
-              {link}
-            </Link>
-          ) : (
-            <a
-              key={link}
-              href="#"
-              onClick={closeMobile}
-              className="block px-6 py-4 text-secondary font-medium border-b border-gray-100 hover:bg-gray-50 transition-colors"
-            >
-              {link}
-            </a>
-          ),
-        )}
+            );
+          } else if (link === "Construction Cases") {
+            return (
+              <Link
+                key={link}
+                href="/ourWorks"
+                onClick={closeMobile}
+                className="block px-6 py-4 text-secondary font-medium border-b border-gray-100 hover:bg-gray-50 transition-colors"
+              >
+                {link}
+              </Link>
+            );
+          } else {
+             // Determine link for other items
+            let mobileLinkHref = "#";
+            if (link === "Service") mobileLinkHref = "/services";
+            if (link === "Investor") mobileLinkHref = "/investor";
+            if (link === "News") mobileLinkHref = "/news";
+            if (link === "About ") mobileLinkHref = "/about";
+            if (link === "Contact") mobileLinkHref = "/contact";
+
+            return (
+              <Link
+                key={link}
+                href={mobileLinkHref}
+                onClick={closeMobile}
+                className="block px-6 py-4 text-secondary font-medium border-b border-gray-100 hover:bg-gray-50 transition-colors"
+              >
+                {link}
+              </Link>
+            );
+          }
+        })}
 
         {/* Mobile Buttons */}
         <div className="p-6 space-y-3">
-          <button className="w-full py-3 rounded-full border-2 border-[#002253] text-[#002253] font-bold hover:bg-[#002253] hover:text-white transition-all">
+          <Link href="/inquiry" className="block w-full text-center py-3 rounded-full border-2 border-[#002253] text-[#002253] font-bold hover:bg-[#002253] hover:text-white transition-all">
             Inquiry
-          </button>
-          <button className="w-full py-3 rounded-full bg-[#E55503] text-white font-bold hover:bg-[#FF8B28] shadow-lg shadow-[#E55503]/30 transition-all">
+          </Link>
+          <Link href="/contact" className="block w-full text-center py-3 rounded-full bg-[#E55503] text-white font-bold hover:bg-[#FF8B28] shadow-lg shadow-[#E55503]/30 transition-all">
             Online consultation
-          </button>
+          </Link>
         </div>
       </div>
     </div>
