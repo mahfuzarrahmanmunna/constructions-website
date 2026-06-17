@@ -3,6 +3,7 @@
 import { usePathname } from "next/navigation";
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 // Top Bar Links (Use)
 const useLinks = [
@@ -57,6 +58,7 @@ const hotlines = [
 
 export default function Navbar() {
   const pathname = usePathname();
+  const router = useRouter();
 
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -240,6 +242,7 @@ export default function Navbar() {
           >
             Global
           </Link>
+
           <Link
             href="/sitemap"
             aria-label="Menu grid"
