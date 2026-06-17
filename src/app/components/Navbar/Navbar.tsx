@@ -3,6 +3,7 @@
 import { usePathname } from "next/navigation";
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const navLinks = [
   "Products",
@@ -13,6 +14,7 @@ const navLinks = [
   "About ",
   "Contact",
 ];
+
 
 const categories = [
   { name: "Earthmoving Machinery", image: "/images/Nav-Photos/p1.png", slug: "earthmoving" },
@@ -37,6 +39,7 @@ const hotlines = [
 
 export default function Navbar() {
   const pathname = usePathname();
+  const router = useRouter();
 
   // Fixed: Added isScrolled state
   const [isScrolled, setIsScrolled] = useState(false);
@@ -287,9 +290,25 @@ export default function Navbar() {
               hasActiveState ? "bg-gray-300" : "bg-white/30",
             ].join(" ")}
           />
-          <Link href="/global-network" className="text-sm font-medium tracking-wide hover:text-[#E55503] transition-colors">
-            Global
+          <Link
+            href="/login"
+            className="
+              px-4
+              py-2
+              rounded-full
+              text-sm
+              font-medium
+              border
+              transition-all
+              duration-300
+              hover:scale-105
+              hover:shadow-md
+              whitespace-nowrap
+            "
+          >
+            Login
           </Link>
+
           <Link
             href="/sitemap"
             aria-label="Menu grid"
@@ -722,6 +741,7 @@ export default function Navbar() {
             if (link === "News") mobileLinkHref = "/news";
             if (link === "About ") mobileLinkHref = "/about";
             if (link === "Contact") mobileLinkHref = "/contact";
+            if (link === "Login") mobileLinkHref = "/login";
 
             return (
               <Link
@@ -738,10 +758,68 @@ export default function Navbar() {
 
         {/* Mobile Buttons */}
         <div className="p-6 space-y-3">
-          <Link href="/inquiry" className="block w-full text-center py-3 rounded-full border-2 border-[#002253] text-[#002253] font-bold hover:bg-[#002253] hover:text-white transition-all">
+        <Link
+          href="/login"
+          onClick={(e) => {
+            e.preventDefault();
+
+            closeMobile(); // or setIsOpen(false)
+
+            router.push("/login");
+          }}
+          className="
+            block
+            w-full
+            text-center
+            py-3
+            rounded-full
+            border-2
+            border-[#002253]
+            text-[#002253]
+            font-bold
+          "
+        >
+          Login
+        </Link>
+          <Link
+            href="/inquiry"
+            onClick={closeMobile}
+            className="
+              block
+              w-full
+              text-center
+              py-3
+              rounded-full
+              border-2
+              border-[#002253]
+              text-[#002253]
+              font-bold
+              hover:bg-[#002253]
+              hover:text-white
+              transition-all
+            "
+          >
             Inquiry
           </Link>
-          <Link href="/contact" className="block w-full text-center py-3 rounded-full bg-[#E55503] text-white font-bold hover:bg-[#FF8B28] shadow-lg shadow-[#E55503]/30 transition-all">
+
+          <Link
+            href="/contact"
+            onClick={closeMobile}
+            className="
+              block
+              w-full
+              text-center
+              py-3
+              rounded-full
+              bg-[#E55503]
+              text-white
+              font-bold
+              hover:bg-[#FF8B28]
+              shadow-lg
+              shadow-[#E55503]/30
+              transition-all
+            "
+          >
             Online consultation
           </Link>
         </div>

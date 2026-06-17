@@ -12,6 +12,7 @@ import {
   Globe,
 } from "lucide-react";
 import toast from "react-hot-toast";
+import AdminProfile from "@/components/admin/AdminProfile";
 
 export default function DashboardPage() {
 
@@ -60,10 +61,13 @@ useEffect(() => {
 
     <div className="p-6">
 
-      <h1 className="text-3xl text-black font-bold mb-6">
-        Dashboard Overview
-      </h1>
+      <div className="flex items-center justify-between mb-6">
+        <h1 className="text-3xl text-black font-bold">
+          Dashboard Overview
+        </h1>
 
+        <AdminProfile />
+      </div>
       <div className=" grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6">
 
         <Link href="/admin/products">
