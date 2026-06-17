@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Plus, Pencil, Trash2, GripVertical } from "lucide-react";
 import toast from "react-hot-toast";
 import Swal from "sweetalert2";
@@ -68,7 +68,7 @@ function SortableRow({
         <p className="text-xs text-gray-500">{product.category}</p>
       </td>
       <td className="px-3 py-4 text-center font-mono text-[#002253]">
-        ${product.price?.toLocaleString() ?? 0}
+        {product.price?.toLocaleString() ?? 0}
       </td>
       <td className="px-1 py-3 text-center">
         <div className="flex justify-center gap-2">
@@ -98,7 +98,7 @@ export default function ProductsPage() {
 
   const sensors = useSensors(useSensor(PointerSensor));
 
-  const fetchProducts = async () => {
+  const fetchProducts = useCallback(async () => {
     setLoading(true);
     try {
       const res = await fetch("/api/products");
@@ -109,11 +109,12 @@ export default function ProductsPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     fetchProducts();
-  }, []);
+  }, [fetchProducts]);
 
   const handleAdd = () => {
     setEditingProduct(null);
@@ -211,7 +212,7 @@ export default function ProductsPage() {
                   <th className="px-3 py-4 text-left">No:</th>
                   <th className="px-3 py-4 text-left">Product</th>
                   <th className="px-3 py-4 text-left">Type / Category</th>
-                  <th className="px-3 py-4 text-center">Price</th>
+                  <th className="px-3 py-4 text-center">Price (Tk)</th>
                   <th className="px-3 py-4 text-center">Actions</th>
                 </tr>
               </thead>

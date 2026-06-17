@@ -27,7 +27,19 @@ export async function POST(req: Request) {
 
     return NextResponse.json(category, { status: 201 });
   } catch (error: unknown) {
-    const message = error instanceof Error ? error.message : "Server Error";
+    console.error("CATEGORY CREATE ERROR:", error);
+
+    const message =
+      error instanceof Error ? error.message : "Server Error";
+
+    // ✅ duplicate slug error ধরা
+    if ((error as any)?.code === 11000) {
+      return NextResponse.json(
+        { message: "Slug already exists. Please use a unique slug." },
+        { status: 400 }
+      );
+    }
+
     return NextResponse.json({ message }, { status: 500 });
   }
 }
