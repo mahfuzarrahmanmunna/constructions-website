@@ -5,28 +5,47 @@ import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
-const navLinks = [
-  "Products",
-  "Service",
-  "Construction Cases",
-  "Investor",
-  "News",
-  "About ",
-  "Contact",
+// Top Bar Links (Use)
+const useLinks = [
+  { name: "Projects", href: "/ourWorks" },
+  { name: "Solutions", href: "/solutions" },
+  { name: "Process", href: "/process" },
+  { name: "Coverage", href: "/coverage" },
+  { name: "Insights", href: "/blog" },
+  { name: "Contact", href: "/contact" },
 ];
 
+// Main Navigation Links (Home)
+const mainLinks = ["Home", "About", "Services", "Projects", "Blog", "Contact"];
 
+// Keep Categories for Mega Menu (if used, e.g., under Solutions or Projects)
 const categories = [
-  { name: "Earthmoving Machinery", image: "/images/Nav-Photos/p1.png", slug: "earthmoving" },
+  {
+    name: "Earthmoving Machinery",
+    image: "/images/Nav-Photos/p1.png",
+    slug: "earthmoving",
+  },
   { name: "MEWPs", image: "/images/Nav-Photos/p2.png", slug: "mewps" },
-  { name: "Mobile Crane Machinery", image: "/images/Nav-Photos/p3.png", slug: "mobile-crane" },
+  {
+    name: "Mobile Crane Machinery",
+    image: "/images/Nav-Photos/p3.png",
+    slug: "mobile-crane",
+  },
   {
     name: "Construction Hoisting Machinery",
     image: "/images/Nav-Photos/p4.png",
-    slug: "hoisting"
+    slug: "hoisting",
   },
-  { name: "Concrete Machinery", image: "/images/Nav-Photos/p5.png", slug: "concrete" },
-  { name: "Agricultural Machinery", image: "/images/Nav-Photos/p6.png", slug: "agricultural" },
+  {
+    name: "Concrete Machinery",
+    image: "/images/Nav-Photos/p5.png",
+    slug: "concrete",
+  },
+  {
+    name: "Agricultural Machinery",
+    image: "/images/Nav-Photos/p6.png",
+    slug: "agricultural",
+  },
 ];
 
 const hotlines = [
@@ -41,16 +60,10 @@ export default function Navbar() {
   const pathname = usePathname();
   const router = useRouter();
 
-  // Fixed: Added isScrolled state
   const [isScrolled, setIsScrolled] = useState(false);
 
   const [megaOpen, setMegaOpen] = useState(false);
   const [activeCategory, setActiveCategory] = useState(categories[0].name);
-  const [serviceOpen, setServiceOpen] = useState(false);
-  const [investorOpen, setInvestorOpen] = useState(false);
-  const [newsOpen, setNewsOpen] = useState(false);
-  const [aboutOpen, setAboutOpen] = useState(false);
-  const [contactOpen, setContactOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileProdOpen, setMobileProdOpen] = useState(false);
 
@@ -63,26 +76,14 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Unified active state for background changes (Dropdowns Open OR Scrolled)
-  const hasActiveState =
-    isScrolled ||
-    megaOpen ||
-    serviceOpen ||
-    investorOpen ||
-    newsOpen ||
-    aboutOpen ||
-    contactOpen;
+  // Unified active state for background changes
+  const hasActiveState = isScrolled || megaOpen;
 
   // Debounce close logic
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const startClose = () => {
     closeTimer.current = setTimeout(() => {
       setMegaOpen(false);
-      setServiceOpen(false);
-      setInvestorOpen(false);
-      setNewsOpen(false);
-      setAboutOpen(false);
-      setContactOpen(false);
     }, 150);
   };
   const cancelClose = () => {
@@ -103,9 +104,15 @@ export default function Navbar() {
     setMobileProdOpen(false);
   };
 
-  if (pathname === "/exploreproduct" || pathname === "/login") {
-    return null;
-  }
+  // Determine link styling
+  const getLinkClass = (isActive: boolean) => {
+    return [
+      "text-base font-medium tracking-wide whitespace-nowrap transition-colors duration-300 relative",
+      hasActiveState
+        ? "text-[#002253] hover:text-[#E55503]"
+        : "text-white/90 hover:text-[#FF8B28]",
+    ].join(" ");
+  };
 
   return (
     <div
@@ -113,17 +120,37 @@ export default function Navbar() {
       onMouseLeave={startClose}
       onMouseEnter={cancelClose}
     >
+      {/* ── TOP UTILITY BAR (Use) ──────────────────────────────── */}
+      <div className="bg-[#002253] text-slate-300 text-[11px] uppercase tracking-widest py-2 px-4 lg:px-20 flex justify-between items-center border-b border-white/10">
+        <div className="hidden md:flex items-center gap-4">
+          <span className="text-[#E55503] font-bold">USE:</span>
+          {useLinks.map((link) => (
+            <Link
+              key={link.name}
+              href={link.href}
+              className="hover:text-white transition-colors flex items-center gap-1"
+            >
+              {link.name}
+            </Link>
+          ))}
+        </div>
+        <div className="hidden md:flex items-center gap-4 text-[10px]">
+          <span>© 2024 CPL Group</span>
+          <span className="w-px h-3 bg-white/20"></span>
+          <span>Privacy Policy</span>
+        </div>
+      </div>
+
       {/* ── Header bar ────────────────────────────────── */}
       <header
         className={[
-          "flex items-center justify-between px-6 py-5 lg:px-20 lg:py-6 transition-all duration-500 ease-in-out",
+          "flex items-center justify-between px-6 py-4 lg:px-20 transition-all duration-500 ease-in-out",
           hasActiveState
             ? "bg-white/95 backdrop-blur-xl shadow-[0_4px_30px_rgba(0,34,83,0.08)] border-b border-white/20"
             : "bg-transparent",
         ].join(" ")}
       >
         {/* Logo */}
-        {/* Fixed: Replaced isActive with hasActiveState */}
         <Link
           href="/"
           className={[
@@ -138,104 +165,26 @@ export default function Navbar() {
 
         {/* Desktop nav links */}
         <nav className="hidden lg:flex items-center gap-8">
-          {navLinks.map((link) => {
+          {mainLinks.map((link) => {
             const handleEnter = () => {
-              if (link === "Products") {
+              // In this new structure, we might map "Projects" or "Services" to the Mega Menu
+              // Or just keep them as simple links as per the request.
+              // For now, we will keep them as simple links unless you want the Mega Menu back.
+              // If you hover "Solutions" or "Projects", let's trigger the Mega Menu.
+              if (link === "Projects" || link === "Services") {
                 setMegaOpen(true);
-                setServiceOpen(false);
-                setInvestorOpen(false);
-                setNewsOpen(false);
-                setAboutOpen(false);
-                setContactOpen(false);
-              } else if (link === "Service") {
-                setServiceOpen(true);
-                setMegaOpen(false);
-                setInvestorOpen(false);
-                setNewsOpen(false);
-                setAboutOpen(false);
-                setContactOpen(false);
-              } else if (link === "Investor") {
-                setInvestorOpen(true);
-                setMegaOpen(false);
-                setServiceOpen(false);
-                setNewsOpen(false);
-                setAboutOpen(false);
-                setContactOpen(false);
-              } else if (link === "News") {
-                setNewsOpen(true);
-                setMegaOpen(false);
-                setServiceOpen(false);
-                setInvestorOpen(false);
-                setAboutOpen(false);
-                setContactOpen(false);
-              } else if (link === "About ") {
-                setAboutOpen(true);
-                setMegaOpen(false);
-                setServiceOpen(false);
-                setInvestorOpen(false);
-                setNewsOpen(false);
-                setContactOpen(false);
-              } else if (link === "Contact") {
-                setContactOpen(true);
-                setMegaOpen(false);
-                setServiceOpen(false);
-                setInvestorOpen(false);
-                setNewsOpen(false);
-                setAboutOpen(false);
               } else {
                 setMegaOpen(false);
-                setServiceOpen(false);
-                setInvestorOpen(false);
-                setNewsOpen(false);
-                setAboutOpen(false);
-                setContactOpen(false);
               }
             };
 
-            if (link === "Service") {
-              return (
-                <Link
-                  key="Service"
-                  href="/service"
-                  onMouseEnter={handleEnter}
-                  className={[
-                    "text-base font-medium tracking-wide whitespace-nowrap transition-colors duration-300",
-                    hasActiveState
-                      ? serviceOpen
-                        ? "text-primary"
-                        : "text-secondary hover:text-primary"
-                      : "text-white/90 hover:text-secondary",
-                  ].join(" ")}
-                >
-                  Service
-                </Link>
-              );
-            }
-
-            if (link === "Construction Cases") {
-              return (
-                <Link
-                  key="Construction Cases"
-                  href="/ourWorks"
-                  onMouseEnter={handleEnter}
-                  className={[
-                    "text-base font-medium tracking-wide whitespace-nowrap transition-colors duration-300 relative",
-                    hasActiveState
-                      ? "text-[#002253] hover:text-[#E55503]"
-                      : "text-white/90 hover:text-[#FF8B28]",
-                  ].join(" ")}
-                >
-                  Our Works
-                </Link>
-              );
-            }
-
-            // Handling main nav links that open submenus
-            let linkHref = "#";
-            if (link === "Products") linkHref = "/products";
-            if (link === "Investor") linkHref = "/investor";
-            if (link === "News") linkHref = "/news";
-            if (link === "About ") linkHref = "/about";
+            // Map "Projects" to Construction Cases if needed
+            let linkHref = "/";
+            if (link === "Home") linkHref = "/";
+            if (link === "About") linkHref = "/about";
+            if (link === "Services") linkHref = "/solutions"; // Or /service
+            if (link === "Projects") linkHref = "/ourWorks";
+            if (link === "Blog") linkHref = "/blog";
             if (link === "Contact") linkHref = "/contact";
 
             return (
@@ -243,12 +192,9 @@ export default function Navbar() {
                 key={link}
                 href={linkHref}
                 onMouseEnter={handleEnter}
-                className={[
-                  "text-base font-medium tracking-wide whitespace-nowrap transition-colors duration-300 relative",
-                  hasActiveState
-                    ? "text-[#002253] hover:text-[#E55503]"
-                    : "text-white/90 hover:text-[#FF8B28]",
-                ].join(" ")}
+                className={getLinkClass(
+                  megaOpen && (link === "Projects" || link === "Services"),
+                )}
               >
                 {link}
               </Link>
@@ -291,22 +237,10 @@ export default function Navbar() {
             ].join(" ")}
           />
           <Link
-            href="/login"
-            className="
-              px-4
-              py-2
-              rounded-full
-              text-sm
-              font-medium
-              border
-              transition-all
-              duration-300
-              hover:scale-105
-              hover:shadow-md
-              whitespace-nowrap
-            "
+            href="/global-network"
+            className="text-sm font-medium tracking-wide hover:text-[#E55503] transition-colors"
           >
-            Login
+            Global
           </Link>
 
           <Link
@@ -363,7 +297,7 @@ export default function Navbar() {
         </button>
       </header>
 
-      {/* ── Desktop mega menu (Frosted) ───────────────── */}
+      {/* ── Desktop mega menu (Reused for Projects/Solutions) ───────────────── */}
       <div
         className={[
           "hidden lg:block w-full overflow-hidden transition-all duration-[400ms] ease-out backdrop-blur-xl",
@@ -384,7 +318,6 @@ export default function Navbar() {
               {categories.map((cat) => {
                 const isActivecat = activeCategory === cat.name;
                 return (
-                  // Wrapped in Link. onMouseEnter kept on the outer element or passed to Link
                   <Link
                     key={cat.name}
                     href={`/products/${cat.slug}`}
@@ -421,8 +354,8 @@ export default function Navbar() {
                   </p>
                   <ul className="space-y-2">
                     {[
-                      { name: "CPL Services", href: "/services" },
-                      { name: "Service Network", href: "/services/network" }
+                      { name: "CPL Services", href: "/solutions/services" },
+                      { name: "Service Network", href: "/solutions/network" },
                     ].map((link) => (
                       <li key={link.name}>
                         <Link
@@ -445,8 +378,8 @@ export default function Navbar() {
                         <span className="w-24 text-sm font-semibold tracking-wide text-secondary-light">
                           {country}
                         </span>
-                        <a 
-                          href={`tel:${number}`} 
+                        <a
+                          href={`tel:${number}`}
                           className="text-base text-secondary font-medium tabular-nums hover:text-primary"
                         >
                           {number}
@@ -468,196 +401,19 @@ export default function Navbar() {
 
           {/* Bottom action buttons */}
           <div className="flex items-center gap-3 border-t border-gray-100 py-5">
-            <Link href="/inquiry" className="px-6 py-2.5 rounded-full bg-secondary/5 text-secondary text-sm font-medium hover:bg-secondary/10 transition-colors duration-200">
+            <Link
+              href="/inquiry"
+              className="px-6 py-2.5 rounded-full bg-secondary/5 text-secondary text-sm font-medium hover:bg-secondary/10 transition-colors duration-200"
+            >
               Inquiry
             </Link>
-            <Link href="/contact" className="px-6 py-2.5 rounded-full bg-primary text-white text-sm font-medium hover:bg-primary-light transition-colors duration-200">
+            <Link
+              href="/contact"
+              className="px-6 py-2.5 rounded-full bg-primary text-white text-sm font-medium hover:bg-primary-light transition-colors duration-200"
+            >
               Online consultation
             </Link>
           </div>
-        </div>
-      </div>
-
-      {/* ── Service subnav (Frosted Full-width) ─────────────── */}
-      <div
-        className={[
-          "hidden lg:block w-full overflow-hidden transition-all duration-[350ms] ease-out backdrop-blur-xl",
-          serviceOpen
-            ? "max-h-[80px] bg-white/95 border-b border-gray-100 shadow-[0_4px_20px_rgba(0,0,0,0.05)]"
-            : "max-h-0 pointer-events-none",
-        ].join(" ")}
-      >
-        <div
-          className={[
-            "flex items-center gap-8 pl-[350px] pr-10 lg:pl-[620px] lg:pr-20 h-[60px] transition-[opacity,transform] duration-[350ms] ease-out",
-            serviceOpen
-              ? "opacity-100 translate-y-0"
-              : "opacity-0 -translate-y-3",
-          ].join(" ")}
-        >
-          <span className="text-base font-bold text-secondary whitespace-nowrap">
-            Service
-          </span>
-          <span className="w-px h-5 bg-gray-300 flex-shrink-0" />
-          {[
-            { name: "CPL Services", href: "/services" },
-            { name: "Services Offered", href: "/services/offerings" },
-            { name: "Service Network", href: "/services/network" },
-            { name: "Parts Network", href: "/parts" },
-          ].map((item) => (
-            <Link
-              key={item.name}
-              href={item.href}
-              className="text-base text-secondary-light hover:text-primary transition-colors duration-200 whitespace-nowrap"
-            >
-              {item.name}
-            </Link>
-          ))}
-        </div>
-      </div>
-
-      {/* ── Investor subnav (Frosted Full-width) ─────────────── */}
-      <div
-        className={[
-          "hidden lg:block w-full overflow-hidden transition-all duration-[350ms] ease-out backdrop-blur-xl",
-          investorOpen
-            ? "max-h-[80px] bg-white/95 border-b border-gray-100 shadow-[0_4px_20px_rgba(0,0,0,0.05)]"
-            : "max-h-0 pointer-events-none",
-        ].join(" ")}
-      >
-        <div
-          className={[
-            "flex items-center gap-8 pl-[850px] pr-10 lg:pl-[730px] lg:pr-20 h-[60px] transition-[opacity,transform] duration-[350ms] ease-out",
-            investorOpen
-              ? "opacity-100 translate-y-0"
-              : "opacity-0 -translate-y-3",
-          ].join(" ")}
-        >
-          <span className="text-base font-bold text-secondary whitespace-nowrap">
-            Investor
-          </span>
-          <span className="w-px h-5 bg-gray-300 flex-shrink-0" />
-          {[
-            { name: "Stock Chart", href: "/investor/stock-chart" },
-            { name: "Announcements", href: "/investor/announcements" },
-            { name: "Financial Reports", href: "/investor/financial-reports" },
-          ].map((item) => (
-            <Link
-              key={item.name}
-              href={item.href}
-              className="text-base text-secondary-light hover:text-primary transition-colors duration-200 whitespace-nowrap"
-            >
-              {item.name}
-            </Link>
-          ))}
-        </div>
-      </div>
-
-      {/* ── News subnav (Frosted Full-width) ─────────────────── */}
-      <div
-        className={[
-          "hidden lg:block w-full overflow-hidden transition-all duration-[350ms] ease-out backdrop-blur-xl",
-          newsOpen
-            ? "max-h-[80px] bg-white/95 border-b border-gray-100 shadow-[0_4px_20px_rgba(0,0,0,0.05)]"
-            : "max-h-0 pointer-events-none",
-        ].join(" ")}
-      >
-        <div
-          className={[
-            "flex items-center gap-8 pl-[960px] pr-10 lg:pl-[800px] lg:pr-20 h-[60px] transition-[opacity,transform] duration-[350ms] ease-out",
-            newsOpen ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-3",
-          ].join(" ")}
-        >
-          <span className="text-base font-bold text-secondary whitespace-nowrap">
-            News
-          </span>
-          <span className="w-px h-5 bg-gray-300 flex-shrink-0" />
-          {[
-            { name: "Press Release", href: "/news/press-releases" },
-            { name: "Events", href: "/news/events" },
-            { name: "Video", href: "/news/videos" },
-          ].map((item) => (
-            <Link
-              key={item.name}
-              href={item.href}
-              className="text-base text-secondary-light hover:text-primary transition-colors duration-200 whitespace-nowrap"
-            >
-              {item.name}
-            </Link>
-          ))}
-        </div>
-      </div>
-
-      {/* ── About  subnav (Frosted Full-width) ──────── */}
-      <div
-        className={[
-          "hidden lg:block w-full overflow-hidden transition-all duration-[350ms] ease-out backdrop-blur-xl",
-          aboutOpen
-            ? "max-h-[80px] bg-white/95 border-b border-gray-100 shadow-[0_4px_20px_rgba(0,0,0,0.05)]"
-            : "max-h-0 pointer-events-none",
-        ].join(" ")}
-      >
-        <div
-          className={[
-            "flex items-center gap-8 pl-[1040px] pr-10 lg:pl-[580px] lg:pr-20 h-[60px] transition-[opacity,transform] duration-[350ms] ease-out",
-            aboutOpen
-              ? "opacity-100 translate-y-0"
-              : "opacity-0 -translate-y-3",
-          ].join(" ")}
-        >
-          <span className="text-base font-bold text-secondary whitespace-nowrap">
-            About CPL
-          </span>
-          <span className="w-px h-5 bg-gray-300 flex-shrink-0" />
-          {[
-            { name: "Company Profile", href: "/about/company-profile" },
-            { name: "Technology & Innovation", href: "/about/technology" },
-            { name: "Social Responsibility", href: "/about/csr" },
-            { name: "Career", href: "/careers" },
-          ].map((item) => (
-            <Link
-              key={item.name}
-              href={item.href}
-              className="text-base text-secondary-light hover:text-primary transition-colors duration-200 whitespace-nowrap"
-            >
-              {item.name}
-            </Link>
-          ))}
-        </div>
-      </div>
-
-      {/* ── Contact subnav (Frosted Full-width) ─────────────── */}
-      <div
-        className={[
-          "hidden lg:block w-full overflow-hidden transition-all duration-[350ms] ease-out backdrop-blur-xl",
-          contactOpen
-            ? "max-h-[80px] bg-white/95 border-b border-gray-100 shadow-[0_4px_20px_rgba(0,0,0,0.05)]"
-            : "max-h-0 pointer-events-none",
-        ].join(" ")}
-      >
-        <div
-          className={[
-            "flex items-center gap-8 pl-[1180px] pr-10 lg:pl-[880px] lg:pr-20 h-[60px] transition-[opacity,transform] duration-[350ms] ease-out",
-            contactOpen
-              ? "opacity-100 translate-y-0"
-              : "opacity-0 -translate-y-3",
-          ].join(" ")}
-        >
-          <span className="text-base font-bold text-secondary whitespace-nowrap">
-            Contact
-          </span>
-          <span className="w-px h-5 bg-gray-300 flex-shrink-0" />
-          {[
-            { name: "Contact Us", href: "/contact" },
-          ].map((item) => (
-            <Link
-              key={item.name}
-              href={item.href}
-              className="text-base text-secondary-light hover:text-primary transition-colors duration-200 whitespace-nowrap"
-            >
-              {item.name}
-            </Link>
-          ))}
         </div>
       </div>
 
@@ -670,155 +426,58 @@ export default function Navbar() {
             : "max-h-0 opacity-0 pointer-events-none",
         ].join(" ")}
       >
-        {navLinks.map((link) => {
-          if (link === "Products") {
-            return (
-              <div key={link}>
-                <button
-                  onClick={() => setMobileProdOpen((v) => !v)}
-                  className="w-full flex items-center justify-between px-6 py-4 text-secondary font-medium border-b border-gray-100 hover:bg-gray-50 transition-colors"
-                >
-                  <span>Products</span>
-                  <svg
-                    className={[
-                      "transition-transform duration-200 text-[#E55503]",
-                      mobileProdOpen ? "rotate-180" : "",
-                    ].join(" ")}
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                  >
-                    <polyline points="6 9 12 15 18 9" />
-                  </svg>
-                </button>
-
-                {/* Categories accordion */}
-                <div
-                  className={[
-                    "overflow-hidden transition-all duration-300 ease-in-out bg-gray-50/50",
-                    mobileProdOpen ? "max-h-[500px]" : "max-h-0",
-                  ].join(" ")}
-                >
-                  {categories.map((cat) => (
-                    <Link
-                      key={cat.name}
-                      href={`/products/${cat.slug}`}
-                      onClick={closeMobile}
-                      className="flex items-center gap-3 px-8 py-4 border-b border-gray-100 hover:bg-white transition-colors cursor-pointer group"
-                    >
-                      <img
-                        src={cat.image}
-                        alt={cat.name}
-                        className="h-8 w-auto object-contain flex-shrink-0"
-                      />
-                      <span className="text-sm text-secondary font-medium">
-                        {cat.name}
-                      </span>
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            );
-          } else if (link === "Construction Cases") {
-            return (
+        {/* Mobile Top Bar Links */}
+        <div className="px-6 py-4 bg-[#002253] text-white">
+          <p className="text-xs font-bold tracking-widest text-[#E55503] mb-2">
+            USE
+          </p>
+          <div className="flex flex-wrap gap-4 text-xs uppercase tracking-wider text-slate-300">
+            {useLinks.map((link) => (
               <Link
-                key={link}
-                href="/ourWorks"
+                key={link.name}
+                href={link.href}
                 onClick={closeMobile}
-                className="block px-6 py-4 text-secondary font-medium border-b border-gray-100 hover:bg-gray-50 transition-colors"
+                className="hover:text-white"
               >
-                {link}
+                {link.name}
               </Link>
-            );
-          } else {
-             // Determine link for other items
-            let mobileLinkHref = "#";
-            if (link === "Service") mobileLinkHref = "/services";
-            if (link === "Investor") mobileLinkHref = "/investor";
-            if (link === "News") mobileLinkHref = "/news";
-            if (link === "About ") mobileLinkHref = "/about";
-            if (link === "Contact") mobileLinkHref = "/contact";
-            if (link === "Login") mobileLinkHref = "/login";
+            ))}
+          </div>
+        </div>
 
-            return (
-              <Link
-                key={link}
-                href={mobileLinkHref}
-                onClick={closeMobile}
-                className="block px-6 py-4 text-secondary font-medium border-b border-gray-100 hover:bg-gray-50 transition-colors"
-              >
-                {link}
-              </Link>
-            );
-          }
+        {/* Mobile Main Links */}
+        {mainLinks.map((link) => {
+          let mobileLinkHref = "/";
+          if (link === "Home") mobileLinkHref = "/";
+          if (link === "About") mobileLinkHref = "/about";
+          if (link === "Services") mobileLinkHref = "/solutions";
+          if (link === "Projects") mobileLinkHref = "/ourWorks";
+          if (link === "Blog") mobileLinkHref = "/blog";
+          if (link === "Contact") mobileLinkHref = "/contact";
+
+          return (
+            <Link
+              key={link}
+              href={mobileLinkHref}
+              onClick={closeMobile}
+              className="block px-6 py-4 text-secondary font-medium border-b border-gray-100 hover:bg-gray-50 transition-colors"
+            >
+              {link}
+            </Link>
+          );
         })}
 
         {/* Mobile Buttons */}
         <div className="p-6 space-y-3">
-        <Link
-          href="/login"
-          onClick={(e) => {
-            e.preventDefault();
-
-            closeMobile(); // or setIsOpen(false)
-
-            router.push("/login");
-          }}
-          className="
-            block
-            w-full
-            text-center
-            py-3
-            rounded-full
-            border-2
-            border-[#002253]
-            text-[#002253]
-            font-bold
-          "
-        >
-          Login
-        </Link>
           <Link
             href="/inquiry"
-            onClick={closeMobile}
-            className="
-              block
-              w-full
-              text-center
-              py-3
-              rounded-full
-              border-2
-              border-[#002253]
-              text-[#002253]
-              font-bold
-              hover:bg-[#002253]
-              hover:text-white
-              transition-all
-            "
+            className="block w-full text-center py-3 rounded-full border-2 border-[#002253] text-[#002253] font-bold hover:bg-[#002253] hover:text-white transition-all"
           >
             Inquiry
           </Link>
-
           <Link
             href="/contact"
-            onClick={closeMobile}
-            className="
-              block
-              w-full
-              text-center
-              py-3
-              rounded-full
-              bg-[#E55503]
-              text-white
-              font-bold
-              hover:bg-[#FF8B28]
-              shadow-lg
-              shadow-[#E55503]/30
-              transition-all
-            "
+            className="block w-full text-center py-3 rounded-full bg-[#E55503] text-white font-bold hover:bg-[#FF8B28] shadow-lg shadow-[#E55503]/30 transition-all"
           >
             Online consultation
           </Link>

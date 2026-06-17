@@ -23,32 +23,29 @@ const COLORS = {
 
 const slides = [
   {
-    badge: "Premium Construction",
-    title: "Building Tomorrow's\nSkylines Today",
+    badge: "Building Together. Advancing Without Limits.",
+    title: "Building the Future of Construction; All in One Place.",
     subtitle:
-      'World-class construction solutions with unmatched quality and precision — turning architectural visions into lasting realities.',
-    primaryCta: 'Get a Free Quote',
-    secondaryCta: 'Our Projects',
+      'We provide complete building services, heavy machinery rentals, and top-quality building materials across Bangladesh. We bring everything into one place so you never face project delays.',
+    primaryCta: 'Get a Free Project Estimate',
     accent: '#E55503',
     image: '/images/image1.png',
   },
   {
-    badge: "Expert Renovation",
-    title: "Transforming Spaces,\nElevating Lives",
+    badge: "Building Together. Advancing Without Limits.",
+    title: "Building the Future of Construction; All in One Place.",
     subtitle:
-      'Our expert renovation teams breathe new life into existing structures — restoring beauty, improving function, and adding lasting value.',
-    primaryCta: 'Explore Projects',
-    secondaryCta: 'Learn More',
+      'We provide complete building services, heavy machinery rentals, and top-quality building materials across Bangladesh. We bring everything into one place so you never face project delays.',
+    primaryCta: 'Get a Free Project Estimate',
     accent: '#FF8B28',
     image: '/images/image2.png',
   },
   {
-    badge: "Infrastructure Excellence",
-    title: "Strong Foundations,\nGreater Futures",
+    badge: "Building Together. Advancing Without Limits.",
+    title: "Building the Future of Construction; All in One Place.",
     subtitle:
-      'From highways to high-rises, we engineer infrastructure that communities depend on — built to last for generations.',
-    primaryCta: 'View Our Work',
-    secondaryCta: 'Contact Us',
+      'We provide complete building services, heavy machinery rentals, and top-quality building materials across Bangladesh. We bring everything into one place so you never face project delays.',
+    primaryCta: 'Get a Free Project Estimate',
     accent: '#224B88',
     image: '/images/image3.png',
   },
@@ -153,25 +150,17 @@ export default function HeroBanner() {
                     {slide.subtitle}
                   </p>
 
-                  {/* Buttons with Parallax */}
+                  {/* Button with Parallax */}
                   <div
-                    className="flex flex-wrap gap-5 pt-4"
+                    className="flex pt-4"
                     data-swiper-parallax="-150"
                   >
-                    {/* Primary Button */}
                     <button
                       className="group relative overflow-hidden rounded-full px-10 py-4 text-sm font-bold text-white transition-all duration-300 hover:scale-105 hover:shadow-[0_10px_30px_-10px_rgba(229,85,3,0.5)]"
                       style={{ background: COLORS.orange }}
                     >
                       <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:animate-shimmer" />
                       {slide.primaryCta}
-                    </button>
-
-                    {/* Secondary Button (Frosted) */}
-                    <button className="group rounded-full border border-white/30 bg-white/5 px-10 py-4 text-sm font-semibold text-white backdrop-blur-md transition-all duration-300 hover:bg-white/10 hover:border-white/50 hover:shadow-[0_4px_20px_rgba(0,0,0,0.2)]">
-                      <span className="group-hover:text-[#FF8B28] transition-colors duration-300">
-                        {slide.secondaryCta}
-                      </span>
                     </button>
                   </div>
                 </div>
