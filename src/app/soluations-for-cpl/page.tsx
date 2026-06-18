@@ -280,9 +280,9 @@ export default function CPLPage() {
 
 
       {/* --- CONTACT FORM (Navy/Orange Theme) --- */}
-      <section className="py-24 bg-white">
+      {/* <section className="py-24 bg-white">
        <RequestQuoteForm/>
-      </section>
+      </section> */}
     </main>
   );
 }

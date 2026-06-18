@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
+
 import { motion } from "framer-motion";
 import { primaryServices, secondaryServices } from "./servicesData";
 
@@ -25,7 +26,8 @@ const containerVariants = {
 
 const itemVariants = {
   hidden: { opacity: 0, y: 30 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
+  // FIX: Removed 'ease: "easeOut"' to satisfy TypeScript strict type checking.
+  show: { opacity: 1, y: 0, transition: { duration: 0.5 } },
 };
 
 export default function ServicePage() {

@@ -18,63 +18,75 @@ const PALETTE = {
 const blogPosts = [
   {
     id: 1,
-    slug: "modern-road-construction-techniques-2024", // <--- ADDED THIS
+    slug: "modern-road-construction-techniques-2024",
     title: "Modern Road Construction Techniques in 2024",
-    excerpt: "Exploring the latest asphalt technologies and compaction methods that ensure durability on Bangladesh's highways.",
+    excerpt:
+      "Exploring the latest asphalt technologies and compaction methods that ensure durability on Bangladesh's highways.",
     date: "Oct 24, 2023",
     author: "Md. Azizur Rahman",
     category: "Roads",
-    image: "https://images.unsplash.com/photo-1590496793929-36417d3117de?q=80&w=800&auto=format&fit=crop",
+    image:
+      "https://images.unsplash.com/photo-1590496793929-36417d3117de?q=80&w=800&auto=format&fit=crop",
   },
   {
     id: 2,
-    slug: "future-of-eco-friendly-infrastructure", // <--- ADDED THIS
+    slug: "future-of-eco-friendly-infrastructure",
     title: "The Future of Eco-Friendly Infrastructure",
-    excerpt: "How CPL is integrating sustainable materials and green building practices into large-scale industrial projects.",
+    excerpt:
+      "How CPL is integrating sustainable materials and green building practices into large-scale industrial projects.",
     date: "Oct 18, 2023",
     author: "Engr. Rafiqul Ali",
     category: "Sustainability",
-    image: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?q=80&w=800&auto=format&fit=crop",
+    image:
+      "https://images.unsplash.com/photo-1504307651254-35680f356dfd?q=80&w=800&auto=format&fit=crop",
   },
   {
     id: 3,
-    slug: "rooppur-nuclear-power-plant-case-study", // <--- ADDED THIS
+    slug: "rooppur-nuclear-power-plant-case-study",
     title: "Rooppur Nuclear Power Plant: A Case Study",
-    excerpt: "An in-depth look at the logistical challenges and engineering triumphs of supplying materials to the Rooppur site.",
+    excerpt:
+      "An in-depth look at the logistical challenges and engineering triumphs of supplying materials to the Rooppur site.",
     date: "Sep 10, 2023",
     author: "CPL Team",
     category: "Case Study",
-    image: "https://images.unsplash.com/photo-1581094794329-c8112a89af12?q=80&w=800&auto=format&fit=crop",
+    image:
+      "https://images.unsplash.com/photo-1581094794329-c8112a89af12?q=80&w=800&auto=format&fit=crop",
   },
   {
     id: 4,
-    slug: "heavy-equipment-maintenance-101", // <--- ADDED THIS
+    slug: "heavy-equipment-maintenance-101",
     title: "Heavy Equipment Maintenance 101",
-    excerpt: "Why regular maintenance of excavators and cranes is crucial for safety and cost-efficiency on long-term projects.",
+    excerpt:
+      "Why regular maintenance of excavators and cranes is crucial for safety and cost-efficiency on long-term projects.",
     date: "Aug 05, 2023",
     author: "Maintenance Dept.",
     category: "Equipment",
-    image: "https://images.unsplash.com/photo-1581092921461-eab62e97a782?q=80&w=800&auto=format&fit=crop",
+    image:
+      "https://images.unsplash.com/photo-1581092921461-eab62e97a782?q=80&w=800&auto=format&fit=crop",
   },
   {
     id: 5,
-    slug: "water-drainage-systems-monsoon-ready-cities", // <--- ADDED THIS
+    slug: "water-drainage-systems-monsoon-ready-cities",
     title: "Water Drainage Systems for Monsoon Ready Cities",
-    excerpt: "Designing culverts and drainage channels that can withstand the heaviest monsoon rains in Bangladesh.",
+    excerpt:
+      "Designing culverts and drainage channels that can withstand the heaviest monsoon rains in Bangladesh.",
     date: "Jul 22, 2023",
     author: "Civil Dept.",
     category: "Infrastructure",
-    image: "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?q=80&w=800&auto=format&fit=crop",
+    image:
+      "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?q=80&w=800&auto=format&fit=crop",
   },
   {
     id: 6,
-    slug: "effective-site-safety-management", // <--- ADDED THIS
+    slug: "effective-site-safety-management",
     title: "Effective Site Safety Management",
-    excerpt: "Best practices for maintaining zero-accident records on major construction sites using modern safety gear.",
+    excerpt:
+      "Best practices for maintaining zero-accident records on major construction sites using modern safety gear.",
     date: "Jun 15, 2023",
     author: "Safety Officer",
     category: "Safety",
-    image: "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?q=80&w=800&auto=format&fit=crop",
+    image:
+      "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?q=80&w=800&auto=format&fit=crop",
   },
 ];
 
@@ -100,18 +112,26 @@ const containerVariants = {
 
 const itemVariants = {
   hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
+  // FIX: Removed 'ease: "easeOut"' to satisfy TypeScript strict type checking.
+  // The default easing is sufficient for this animation.
+  show: { opacity: 1, y: 0, transition: { duration: 0.5 } },
 };
 
 export default function BlogPage() {
   return (
     <div className="min-h-screen bg-gray-50 font-sans text-gray-800">
-      
       {/* ── HERO SECTION ── */}
       <section className="bg-[#002253] py-20 px-4 md:px-8 text-center relative overflow-hidden">
         {/* Background Pattern */}
-        <div className="absolute inset-0 opacity-5" style={{ backgroundImage: "radial-gradient(circle at 1px 1px, white 1px, transparent 0)", backgroundSize: "24px 24px" }} />
-        
+        <div
+          className="absolute inset-0 opacity-5"
+          style={{
+            backgroundImage:
+              "radial-gradient(circle at 1px 1px, white 1px, transparent 0)",
+            backgroundSize: "24px 24px",
+          }}
+        />
+
         <div className="relative z-10 max-w-4xl mx-auto">
           <span className="text-[#FF8B28] font-bold tracking-[0.2em] uppercase text-sm mb-4 block">
             Insights & Updates
@@ -120,14 +140,14 @@ export default function BlogPage() {
             Engineering the Future
           </h1>
           <p className="text-gray-300 text-lg max-w-2xl mx-auto">
-            Expert articles, project updates, and industry insights from the team at Constructive Partners Limited.
+            Expert articles, project updates, and industry insights from the
+            team at Constructive Partners Limited.
           </p>
         </div>
       </section>
 
       {/* ── MAIN CONTENT AREA ── */}
       <div className="max-w-7xl mx-auto px-4 md:px-8 py-12 grid grid-cols-1 lg:grid-cols-3 gap-8">
-        
         {/* ── LEFT COLUMN: BLOG POSTS (Span 2) ── */}
         <div className="lg:col-span-2">
           {/* Filter Bar (Desktop) */}
@@ -196,7 +216,7 @@ export default function BlogPage() {
 
                   <div className="mt-auto flex items-center justify-between border-t border-gray-100 pt-4">
                     <Link
-                      href={`/blogs/${post.slug}`} 
+                      href={`/blogs/${post.slug}`}
                       className="text-[#E55503] text-sm font-bold flex items-center gap-1 group-hover:gap-2 transition-all"
                     >
                       Read Article
@@ -230,7 +250,6 @@ export default function BlogPage() {
 
         {/* ── RIGHT COLUMN: SIDEBAR (Span 1) ── */}
         <aside className="lg:col-span-1 space-y-8">
-          
           {/* Search Widget */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -245,7 +264,10 @@ export default function BlogPage() {
                 placeholder="Search articles..."
                 className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-[#E55503] focus:ring-1 focus:ring-[#E55503]/20 transition-all"
               />
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
+              <Search
+                className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+                size={20}
+              />
             </div>
           </motion.div>
 
@@ -256,21 +278,31 @@ export default function BlogPage() {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="bg-white p-6 rounded-2xl shadow-md border border-gray-100"
           >
-            <h3 className="text-xl font-bold text-[#002253] mb-4">Categories</h3>
+            <h3 className="text-xl font-bold text-[#002253] mb-4">
+              Categories
+            </h3>
             <ul className="space-y-2">
               {categories.map((cat, index) => (
                 <li key={index}>
                   <a
                     href="#"
                     className={`block px-4 py-3 rounded-xl flex items-center justify-between group transition-all ${
-                      index === 0 ? "bg-[#002253] text-white" : "bg-gray-50 text-gray-600 hover:bg-[#002253] hover:text-white"
+                      index === 0
+                        ? "bg-[#002253] text-white"
+                        : "bg-gray-50 text-gray-600 hover:bg-[#002253] hover:text-white"
                     }`}
                   >
                     <span className="text-sm font-medium">{cat}</span>
-                    <span className={`text-xs px-2 py-1 rounded-md ${
-                      index === 0 ? "bg-white/20" : "bg-gray-200 group-hover:bg-white/20"
-                    }`}>
-                      {index === 0 ? blogPosts.length : Math.floor(Math.random() * 5)}
+                    <span
+                      className={`text-xs px-2 py-1 rounded-md ${
+                        index === 0
+                          ? "bg-white/20"
+                          : "bg-gray-200 group-hover:bg-white/20"
+                      }`}
+                    >
+                      {index === 0
+                        ? blogPosts.length
+                        : Math.floor(Math.random() * 5)}
                     </span>
                   </a>
                 </li>
@@ -285,7 +317,9 @@ export default function BlogPage() {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="bg-white p-6 rounded-2xl shadow-md border border-gray-100"
           >
-            <h3 className="text-xl font-bold text-[#002253] mb-4">Popular Posts</h3>
+            <h3 className="text-xl font-bold text-[#002253] mb-4">
+              Popular Posts
+            </h3>
             <div className="space-y-4">
               {[blogPosts[0], blogPosts[2], blogPosts[4]].map((post) => (
                 <Link
@@ -325,14 +359,14 @@ export default function BlogPage() {
           >
             <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-2xl -mr-16 -mt-16" />
             <h3 className="text-xl font-bold mb-2">Have a Project?</h3>
-            <p className="text-white/70 text-sm mb-6">Get a free quote for your next construction need.</p>
+            <p className="text-white/70 text-sm mb-6">
+              Get a free quote for your next construction need.
+            </p>
             <button className="bg-[#E55503] text-white px-6 py-2 rounded-full text-sm font-bold hover:bg-[#FF8B28] transition-all shadow-lg">
               Get a Quote
             </button>
           </motion.div>
-
         </aside>
-
       </div>
     </div>
   );

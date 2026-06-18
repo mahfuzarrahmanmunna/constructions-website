@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { Search, X, User } from "lucide-react"; // Added icons
 
 // Top Bar Links (Use)
 const useLinks = [
@@ -61,11 +62,14 @@ export default function Navbar() {
   const router = useRouter();
 
   const [isScrolled, setIsScrolled] = useState(false);
-
   const [megaOpen, setMegaOpen] = useState(false);
   const [activeCategory, setActiveCategory] = useState(categories[0].name);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileProdOpen, setMobileProdOpen] = useState(false);
+
+  // --- Search Modal States ---
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
 
   // Scroll Detection
   useEffect(() => {
@@ -74,6 +78,28 @@ export default function Navbar() {
     };
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Handle Search Redirect
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      router.push(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
+      setSearchOpen(false);
+      setSearchQuery("");
+    }
+  };
+
+  // Close modal on Escape key
+  useEffect(() => {
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setSearchOpen(false);
+        setMegaOpen(false);
+      }
+    };
+    window.addEventListener("keydown", handleEsc);
+    return () => window.removeEventListener("keydown", handleEsc);
   }, []);
 
   // Unified active state for background changes
@@ -116,7 +142,7 @@ export default function Navbar() {
 
   return (
     <div
-      className="fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out"
+      className="fixed top-0 left-0 rounded-b-2xl right-0 z-50 transition-all duration-500 ease-out"
       onMouseLeave={startClose}
       onMouseEnter={cancelClose}
     >
@@ -156,8 +182,8 @@ export default function Navbar() {
           className={[
             "text-2xl font-bold tracking-[0.2em] uppercase select-none transition-colors duration-300",
             hasActiveState
-              ? "text-secondary"
-              : "text-white hover:text-secondary",
+              ? "text-[#002253]" // Ensure logo stays readable on white bg
+              : "text-white hover:text-white",
           ].join(" ")}
         >
           CPL
@@ -167,10 +193,6 @@ export default function Navbar() {
         <nav className="hidden lg:flex items-center gap-8">
           {mainLinks.map((link) => {
             const handleEnter = () => {
-              // In this new structure, we might map "Projects" or "Services" to the Mega Menu
-              // Or just keep them as simple links as per the request.
-              // For now, we will keep them as simple links unless you want the Mega Menu back.
-              // If you hover "Solutions" or "Projects", let's trigger the Mega Menu.
               if (link === "Projects" || link === "Services") {
                 setMegaOpen(true);
               } else {
@@ -178,11 +200,10 @@ export default function Navbar() {
               }
             };
 
-            // Map "Projects" to Construction Cases if needed
             let linkHref = "/";
             if (link === "Home") linkHref = "/";
             if (link === "About") linkHref = "/about";
-            if (link === "Services") linkHref = "/solutions"; // Or /service
+            if (link === "Services") linkHref = "/solutions";
             if (link === "Projects") linkHref = "/ourWorks";
             if (link === "Blog") linkHref = "/blog";
             if (link === "Contact") linkHref = "/contact";
@@ -207,42 +228,36 @@ export default function Navbar() {
           className={[
             "hidden lg:flex items-center gap-5 transition-colors duration-300",
             hasActiveState
-              ? "text-secondary"
-              : "text-white hover:text-secondary",
+              ? "text-[#002253]"
+              : "text-white hover:text-[#002253]",
           ].join(" ")}
         >
-          <Link
-            href="/search"
+          {/* Search Button (Changed to trigger Modal) */}
+          <button
+            onClick={() => setSearchOpen(true)}
             aria-label="Search"
             className="hover:text-[#E55503] transition-colors"
           >
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <circle cx="11" cy="11" r="8" />
-              <line x1="21" y1="21" x2="16.65" y2="16.65" />
-            </svg>
-          </Link>
+            <Search width="20" height="20" strokeWidth={2} />
+          </button>
+
           <span
             className={[
               "w-px h-5 transition-colors duration-300",
               hasActiveState ? "bg-gray-300" : "bg-white/30",
             ].join(" ")}
           />
+
+          {/* Added Sign In Link */}
           <Link
-            href="/global-network"
-            className="text-sm font-medium tracking-wide hover:text-[#E55503] transition-colors"
+            href="/login"
+            className="flex items-center gap-2 text-sm font-medium tracking-wide hover:text-[#E55503] transition-colors"
           >
-            Global
+            <User size={18} />
+            Sign In
           </Link>
 
+          {/* Sitemap Icon (Keeping this) */}
           <Link
             href="/sitemap"
             aria-label="Menu grid"
@@ -298,7 +313,7 @@ export default function Navbar() {
       </header>
 
       {/* ── Desktop mega menu (Reused for Projects/Solutions) ───────────────── */}
-      <div
+      {/* <div
         className={[
           "hidden lg:block w-full overflow-hidden transition-all duration-[400ms] ease-out backdrop-blur-xl",
           megaOpen
@@ -313,7 +328,6 @@ export default function Navbar() {
           ].join(" ")}
         >
           <div className="flex flex-1">
-            {/* Left column — categories */}
             <div className="w-72 flex-shrink-0 border-r border-gray-100 py-6 bg-white/50 rounded-r-2xl my-2">
               {categories.map((cat) => {
                 const isActivecat = activeCategory === cat.name;
@@ -324,7 +338,7 @@ export default function Navbar() {
                     onMouseEnter={() => setActiveCategory(cat.name)}
                     className={[
                       "flex items-center gap-3 px-5 py-3 cursor-pointer transition-colors duration-150 rounded-sm",
-                      isActivecat ? "bg-primary" : "hover:bg-gray-50",
+                      isActivecat ? "bg-[#E55503]" : "hover:bg-gray-50",
                     ].join(" ")}
                   >
                     <img
@@ -335,7 +349,7 @@ export default function Navbar() {
                     <span
                       className={[
                         "text-sm font-medium leading-tight",
-                        isActivecat ? "text-white" : "text-secondary",
+                        isActivecat ? "text-white" : "text-[#002253]",
                       ].join(" ")}
                     >
                       {cat.name}
@@ -345,11 +359,10 @@ export default function Navbar() {
               })}
             </div>
 
-            {/* Right column — service panel */}
             <div className="flex-1 flex flex-col justify-between py-8 px-12">
               <div className="flex gap-20">
                 <div>
-                  <p className="text-sm font-bold tracking-[0.18em] text-secondary-light uppercase mb-3">
+                  <p className="text-sm font-bold tracking-[0.18em] text-gray-500 uppercase mb-3">
                     Service Support
                   </p>
                   <ul className="space-y-2">
@@ -360,7 +373,7 @@ export default function Navbar() {
                       <li key={link.name}>
                         <Link
                           href={link.href}
-                          className="text-base text-secondary-light hover:text-primary transition-colors duration-150 font-medium"
+                          className="text-base text-gray-600 hover:text-[#E55503] transition-colors duration-150 font-medium"
                         >
                           {link.name}
                         </Link>
@@ -369,18 +382,18 @@ export default function Navbar() {
                   </ul>
                 </div>
                 <div>
-                  <p className="text-sm font-bold tracking-[0.18em] text-secondary-light uppercase mb-3">
+                  <p className="text-sm font-bold tracking-[0.18em] text-gray-500 uppercase mb-3">
                     Service Hotline
                   </p>
                   <ul className="space-y-2">
                     {hotlines.map(({ country, number }) => (
                       <li key={country} className="flex items-center gap-3">
-                        <span className="w-24 text-sm font-semibold tracking-wide text-secondary-light">
+                        <span className="w-24 text-sm font-semibold tracking-wide text-gray-500">
                           {country}
                         </span>
                         <a
                           href={`tel:${number}`}
-                          className="text-base text-secondary font-medium tabular-nums hover:text-primary"
+                          className="text-base text-[#002253] font-medium tabular-nums hover:text-[#E55503]"
                         >
                           {number}
                         </a>
@@ -390,7 +403,7 @@ export default function Navbar() {
                 </div>
               </div>
               <div className="mt-6">
-                <div className="inline-flex items-center bg-primary px-4 py-2">
+                <div className="inline-flex items-center bg-[#002253] px-4 py-2">
                   <span className="text-white text-xs font-bold tracking-[0.25em] uppercase">
                     CPL
                   </span>
@@ -399,23 +412,22 @@ export default function Navbar() {
             </div>
           </div>
 
-          {/* Bottom action buttons */}
           <div className="flex items-center gap-3 border-t border-gray-100 py-5">
             <Link
               href="/inquiry"
-              className="px-6 py-2.5 rounded-full bg-secondary/5 text-secondary text-sm font-medium hover:bg-secondary/10 transition-colors duration-200"
+              className="px-6 py-2.5 rounded-full bg-gray-50 text-[#002253] text-sm font-medium hover:bg-gray-100 transition-colors duration-200"
             >
               Inquiry
             </Link>
             <Link
               href="/contact"
-              className="px-6 py-2.5 rounded-full bg-primary text-white text-sm font-medium hover:bg-primary-light transition-colors duration-200"
+              className="px-6 py-2.5 rounded-full bg-[#E55503] text-white text-sm font-medium hover:bg-[#FF8B28] transition-colors duration-200"
             >
               Online consultation
             </Link>
           </div>
         </div>
-      </div>
+      </div> */}
 
       {/* ── Mobile menu ──────────────────────────────────────── */}
       <div
@@ -452,7 +464,7 @@ export default function Navbar() {
           if (link === "About") mobileLinkHref = "/about";
           if (link === "Services") mobileLinkHref = "/solutions";
           if (link === "Projects") mobileLinkHref = "/ourWorks";
-          if (link === "Blog") mobileLinkHref = "/blog";
+          if (link === "Blog") mobileLinkHref = "/blogs";
           if (link === "Contact") mobileLinkHref = "/contact";
 
           return (
@@ -460,7 +472,7 @@ export default function Navbar() {
               key={link}
               href={mobileLinkHref}
               onClick={closeMobile}
-              className="block px-6 py-4 text-secondary font-medium border-b border-gray-100 hover:bg-gray-50 transition-colors"
+              className="block px-6 py-4 text-[#002253] font-medium border-b border-gray-100 hover:bg-gray-50 transition-colors"
             >
               {link}
             </Link>
@@ -483,6 +495,44 @@ export default function Navbar() {
           </Link>
         </div>
       </div>
+
+      {/* ── SEARCH MODAL ──────────────────────────────────────── */}
+      {searchOpen && (
+        <div className="fixed inset-0 z-[60] flex items-start justify-center pt-20 md:pt-32 px-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
+          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-3xl overflow-hidden animate-in zoom-in-95 duration-200">
+            <form onSubmit={handleSearch} className="relative">
+              <div className="flex items-center gap-4 p-6 border-b border-gray-100">
+                <Search className="text-gray-400" size={24} />
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Search for projects, services, or insights..."
+                  className="flex-1 text-xl outline-none text-[#002253] placeholder:text-gray-400 bg-transparent"
+                  autoFocus
+                />
+                <button
+                  type="button"
+                  onClick={() => setSearchOpen(false)}
+                  className="text-gray-400 hover:text-red-500 transition-colors"
+                  aria-label="Close"
+                >
+                  <X size={24} strokeWidth={2} />
+                </button>
+              </div>
+              {/* Optional: Suggestion area could go here */}
+              <div className="p-4 bg-gray-50 flex justify-end">
+                <button
+                  type="submit"
+                  className="px-6 py-2 bg-[#002253] text-white rounded-lg hover:bg-[#E55503] transition-colors font-medium"
+                >
+                  Go to Search
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

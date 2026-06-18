@@ -11,8 +11,6 @@ import {
   Share2,
   Clock,
   Printer,
-  Facebook,
-  Twitter,
 } from "lucide-react";
 import Link from "next/link";
 

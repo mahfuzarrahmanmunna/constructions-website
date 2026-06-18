@@ -3,18 +3,26 @@
 import { useRef, useLayoutEffect } from "react";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
-import { Trophy, Briefcase, Users, ShieldCheck } from "lucide-react";
+import {
+  Trophy,
+  Briefcase,
+  Users,
+  ShieldCheck,
+  LucideProps,
+} from "lucide-react";
 
+// Register ScrollTrigger only on the client side to avoid SSR issues
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
+// Type definition for the stats data
 type Stat = {
   value?: number; // Optional for non-numeric stats
   label: string;
   suffix?: string;
   isStatic?: boolean; // Flag for "Government Approved" card
-  icon: any; // Lucide icon component
+  icon: React.ComponentType<LucideProps>; // Lucide icon component
 };
 
 const stats: Stat[] = [
@@ -24,12 +32,13 @@ const stats: Stat[] = [
   { isStatic: true, label: "Government Approved", icon: ShieldCheck },
 ];
 
-export default function GlobalStatsSection() {
+export default function StatCards() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const numbersRef = useRef<(HTMLSpanElement | null)[]>([]);
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
+      // Set initial state for cards (hidden and pushed down)
       gsap.set(".stat-card", {
         opacity: 0,
         y: 60,
@@ -108,18 +117,7 @@ export default function GlobalStatsSection() {
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-20">
-        {/* Header */}
-        <div className="text-center mb-16">
-          <span className="text-xs font-bold tracking-[0.25em] uppercase text-[#E55503] mb-3 block">
-            Our Services
-          </span>
-
-          <h2 className="text-3xl md:text-5xl font-black uppercase tracking-wider text-[#002253]">
-            What We Do
-          </h2>
-
-          <div className="h-1.5 w-24 bg-[#E55503] mx-auto mt-6 rounded-full" />
-        </div>
+        {/* --- Header Removed Here --- */}
 
         {/* Stats Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -152,7 +150,7 @@ export default function GlobalStatsSection() {
                   hover:shadow-xl
                 "
               >
-                {/* Corner Accents (Optional, keeps design consistent) */}
+                {/* Corner Accents */}
                 <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-[#E55503] rounded-tl-lg" />
                 <div className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-[#E55503] rounded-br-lg" />
 
