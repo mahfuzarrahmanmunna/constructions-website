@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
 
+import { verifyAdmin } from "@/lib/verifyAdmin";
+
 
 import { connectDB }
 from "@/lib/mongodb";
@@ -13,6 +15,8 @@ from "@/models/Inquiry";
 export async function GET() {
 
   try {
+
+    await verifyAdmin();
 
     await connectDB();
 
@@ -53,9 +57,10 @@ export async function GET() {
     return NextResponse.json(
       {
         success: false,
+        message: "Unauthorized",
       },
       {
-        status: 500,
+        status: 401,
       }
     );
   }
