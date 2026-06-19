@@ -194,7 +194,9 @@ export default function CostEstimatorSection() {
                   ].map((field, index) => (
                     <div
                       key={field.id}
-                      ref={(el) => (inputsRef.current[index] = el)}
+                      ref={(el) => {
+                        inputsRef.current[index] = el;
+                      }}
                       className="input-anim relative group"
                     >
                       <label
@@ -327,7 +329,9 @@ export default function CostEstimatorSection() {
                     <div className="flex items-baseline gap-1">
                       <span className="text-2xl font-bold text-white">$</span>
                       <span
-                        ref={(el) => (counterRef.current[0] = el)}
+                        ref={(el) => {
+                          counterRef.current[0] = el;
+                        }}
                         className="text-2xl font-bold text-white font-mono"
                       >
                         125.00
@@ -342,7 +346,9 @@ export default function CostEstimatorSection() {
                     <div className="flex items-baseline gap-1">
                       <span className="text-2xl font-bold text-white">$</span>
                       <span
-                        ref={(el) => (counterRef.current[1] = el)}
+                        ref={(el) => {
+                          counterRef.current[1] = el;
+                        }}
                         className="text-2xl font-bold text-white font-mono"
                       >
                         0.85

@@ -1,21 +1,35 @@
 import HeroBanner from '@/app/components/HeroBanner/HeroBanner'
-import ExploreProducts from './components/ExploreProducts/ExploreProducts'
-import RequestQuoteForm from './components/RequestQuoteForm/RequestQuoteForm'
-import ContactFloatingMenu from './components/ContactFloatingMenu/ContactFloatingMenu'
 import CategorySection from './components/CategorySection/CategorySection'
-import ShowcaseSection from './components/ShowcaseSection/ShowcaseSection'
 import GlobalStatsSection from './components/GlobalStatsSection/GlobalStatsSection'
+import CostEstimatorSection from './components/CostEstimatorSection/CostEstimatorSection'
+import OurProcessSection from './components/OurProcessSection/OurProcessSection'
+import CtaSection from './components/CtaSection/CtaSection'
+import BangladeshMapSection from './components/BangladeshMapSection/BangladeshMapSection'
+import ServicesSection from './components/ServicesSection/ServicesSection'
+import ProjectStoriesSection from './components/ProjectStoriesSection/ProjectStoriesSection'
+import TestimonialsShortsSection from './components/TestimonialsShortsSection/TestimonialsShortsSection'
 
 export default function Home() {
   return (
     <main className="flex flex-col flex-1">
       <HeroBanner />
-      <GlobalStatsSection/>
-      <ExploreProducts/>
-      <CategorySection/>
-      <ShowcaseSection/>
-      <RequestQuoteForm/>
-      <ContactFloatingMenu/>
+      <GlobalStatsSection />
+      <CategorySection />
+      <ServicesSection />
+      <CostEstimatorSection />
+      <OurProcessSection />
+      <BangladeshMapSection />
+      <ProjectStoriesSection />
+      <TestimonialsShortsSection />
+      {/* <ExploreProducts />
+      <BusinessCategorySection />
+      <ProblemSolveSection />
+      <CoreServicesSection />
+      <SecondaryServicesSection />
+      <WhyChooseSection />
+      <ShowcaseSection />
+      <ContactFloatingMenu /> */}
+      <CtaSection />
     </main>
-  )
+  );
 }
