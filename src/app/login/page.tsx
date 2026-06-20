@@ -4,6 +4,7 @@ import "./App.css";
 import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
+  signOut,
   signInWithPopup,
   sendPasswordResetEmail,
   updateProfile,
@@ -11,6 +12,7 @@ import {
 
 import { auth, googleProvider } from "@/lib/firebase";
 import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 const EyeIcon = () => (
   <svg
@@ -87,6 +89,8 @@ function AuthForm() {
     password: "",
     confirmPassword: "",
   });
+  const router = useRouter();
+  const ADMIN_EMAIL = "azizurseu@gmail.com";
 
   const [focusedField, setFocusedField] = useState<string | null>(null);
 
@@ -95,25 +99,39 @@ function AuthForm() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = async (
-    e: React.FormEvent<HTMLFormElement>
-    ) => {
-    e.preventDefault();
+const handleSubmit = async (
+  e: React.FormEvent<HTMLFormElement>
+) => {
+  e.preventDefault();
 
-    setIsLoading(true);
+  setIsLoading(true);
 
-    try {
-      if (isLogin) {
+  try {
+    if (isLogin) {
+      const userCredential =
         await signInWithEmailAndPassword(
           auth,
           formData.email,
           formData.password
         );
 
-      toast.success(`Welcome back!`);
+      if (userCredential.user.email !== ADMIN_EMAIL) {
+        await signOut(auth);
+
+        toast.error(
+          "You are not authorized to access the admin panel."
+        );
+
+        return;
+      }
+
+      toast.success("Welcome back!");
+
+      router.push("/admin/dashboard");
     } else {
       if (formData.password !== formData.confirmPassword) {
         toast.error("Passwords do not match");
+
         return;
       }
 
@@ -129,20 +147,19 @@ function AuthForm() {
       });
 
       toast.success("Account created successfully!");
-      }
-    } catch (error) {
+    }
+  } catch (error) {
     console.error(error);
 
     if (error instanceof Error) {
       toast.error(error.message);
     } else {
-      toast.error ("Authentication failed");
+      toast.error("Authentication failed");
     }
-    }finally {
-      setIsLoading(false);
-    }
-  };
-
+  } finally {
+    setIsLoading(false);
+  }
+};
   const handleGoogleLogin = async () => {
     try {
       setIsLoading(true);
