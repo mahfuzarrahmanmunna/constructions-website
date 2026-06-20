@@ -47,7 +47,7 @@ const socialLinks = [
 export default function Footer() {
   return (
     <footer
-      className="relative text-white overflow-hidden"
+      className="relative text-white overflow-hidden "
       style={{ backgroundColor: "#00122e" }}
     >
       {/* ambient glows */}

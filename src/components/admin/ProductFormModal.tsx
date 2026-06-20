@@ -220,7 +220,7 @@ export default function ProductFormModal({ initialData, onClose, onSaved }: Prop
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium mb-1 text-[#002253]">Price ($)</label>
+                <label className="block text-sm font-medium mb-1 text-[#002253]">Price (Tk)</label>
                 <input
                   type="number"
                   value={form.price}
@@ -261,7 +261,7 @@ export default function ProductFormModal({ initialData, onClose, onSaved }: Prop
                 />
               </div>
             </div>
-            <div className="grid md:grid-cols-2 gap-4">
+            <div className="grid md:grid-cols-2 gap-4 text-2xl text-gray-500">
               <ImageUploader label="Main Image" value={form.image} onChange={(url) => update("image", url)} />
               <ImageUploader
                 label="Hero Image"

@@ -10,6 +10,7 @@ import {
   LineChart,
   MessageSquare,
   X,
+  Settings,
 } from "lucide-react";
 
 type SidebarProps = {
@@ -263,6 +264,15 @@ export default function Sidebar({
             <Users size={20} />
          Category Management
           </Link>
+
+          <Link
+  href="/admin/settings"
+  onClick={closeSidebar}
+  className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/10 transition-all"
+>
+  <Settings size={20} />
+  Site Content
+</Link>
           <Link
             href="/admin/users"
             onClick={closeSidebar}
