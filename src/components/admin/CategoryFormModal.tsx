@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { useState } from "react";
@@ -44,7 +43,7 @@ export default function CategoryFormModal({ initialData, onClose, onSaved }: Pro
     e.preventDefault();
     setSaving(true);
 
-    const url = isEdit ? `/api/categories/${initialData._id}` : "ategories";
+   const url = isEdit ? `/api/categories/${initialData._id}` : "/api/categories";
     const method = isEdit ? "PUT" : "POST";
 
     const request = fetch(url, {
@@ -109,7 +108,7 @@ export default function CategoryFormModal({ initialData, onClose, onSaved }: Pro
               placeholder="e.g. medium_excavator"
               value={form.slug}
               onChange={(e) => update("slug", e.target.value)}
-              className="w-full border rounded-lg px-3 py-2 text-sm"
+              className="w-full border rounded-lg px-3 py-2 text-sm text-[#002253]"
             />
           </div>
 
@@ -120,7 +119,7 @@ export default function CategoryFormModal({ initialData, onClose, onSaved }: Pro
               placeholder="e.g. excavator"
               value={form.machineType}
               onChange={(e) => update("machineType", e.target.value)}
-              className="w-full border rounded-lg px-3 py-2 text-sm"
+              className="w-full border rounded-lg px-3 py-2 text-sm text-[#002253]"
             />
           </div>
 
@@ -130,11 +129,13 @@ export default function CategoryFormModal({ initialData, onClose, onSaved }: Pro
               type="number"
               value={form.order}
               onChange={(e) => update("order", Number(e.target.value))}
-              className="w-full border rounded-lg px-3 py-2 text-sm"
+              className="w-full border rounded-lg px-3 py-2 text-sm text-[#002253]"
             />
           </div>
 
-          <ImageUploader label="Icon / Image" value={form.icon ?? ""} onChange={(url) => update("icon", url)} />
+        <div className="text-sm text-gray-500">
+           <ImageUploader label="Icon / Image" value={form.icon ?? ""} onChange={(url) => update("icon", url)}   />
+        </div>
 
           <div className="flex justify-end gap-3 border-t pt-4">
             <button type="button" onClick={onClose} className="px-4 py-2 text-sm border rounded-lg text-gray-600">

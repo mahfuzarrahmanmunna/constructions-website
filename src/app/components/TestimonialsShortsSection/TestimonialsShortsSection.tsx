@@ -2,49 +2,50 @@
 
 import React, { useRef, useState } from "react";
 import ReactPlayer from "react-player";
-import { Play, Quote, Star, ArrowRight, X, MapPin } from "lucide-react";
+import { ChevronLeft, ChevronRight, Star, Play, X } from "lucide-react";
 
-// --- Mock Data ---
+// --- Exact Mock Data from Image ---
 const testimonials = [
   {
     id: 1,
-    name: "Sarah Jenkins",
-    role: "Project Director",
-    company: "Dhaka Metro Rail Ltd.",
-    videoId: "LXb3EKWsInQ",
+    name: "Ahmed Sakib",
+    role: "Home Owner, Dhaka",
+    videoId: "https://youtu.be/lCxdVlDZPmo?si=Z3eM_FEOOIN3d4Hg",
     rating: 5,
-    quote:
-      "CPL's ability to mobilize heavy machinery within 48 hours was the turning point for our Phase 2 launch.",
+    quote: "Excellent team, They build my dream home with great quality and on time. Highly recommended.",
   },
   {
     id: 2,
-    name: "Rahim Uddin",
-    role: "Chief Engineer",
-    company: "Bangladesh Bridge Authority",
+    name: "Ahmed Sakib",
+    role: "Home Owner, Dhaka",
     videoId: "ysz5S6PUM-U",
     rating: 5,
-    quote:
-      "The precision of their piling rigs in soft soil conditions was engineering excellence at its finest.",
+    quote: "Excellent team, They build my dream home with great quality and on time. Highly recommended.",
   },
   {
     id: 3,
-    name: "David Chen",
-    role: "Site Manager",
-    company: "Obayashi JV",
+    name: "Ahmed Sakib",
+    role: "Home Owner, Dhaka",
     videoId: "JGwWNGJdvx8",
     rating: 5,
-    quote:
-      "Safety protocols were strictly followed. Zero accidents in 18 months of high-altitude steel work.",
+    quote: "Excellent team, They build my dream home with great quality and on time. Highly recommended.",
   },
   {
     id: 4,
-    name: "Fatima Rahman",
-    role: "Procurement Head",
-    company: "Sumitomo Corp",
+    name: "Ahmed Sakib",
+    role: "Home Owner, Dhaka",
     videoId: "aircAruvnKk",
     rating: 5,
-    quote:
-      "Material supply logistics were seamless. We never faced a single day of downtime due to shortage.",
+    quote: "Excellent team, They build my dream home with great quality and on time. Highly recommended.",
+  },
+
+   {
+    id: 4,
+    name: "Ahmed Sakib",
+    role: "Home Owner, Dhaka",
+    videoId: "aircAruvnKk",
+    rating: 5,
+    quote: "Excellent team, They build my dream home with great quality and on time. Highly recommended.",
   },
 ];
 
@@ -52,7 +53,7 @@ export default function TestimonialsShortsSection() {
   const [playingId, setPlayingId] = useState<string | null>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
-  // FIX: Cast ReactPlayer to 'any' to bypass the HTMLVideoElement type error in Next.js 16/Turbopack
+  // Cast ReactPlayer to 'any' to bypass Next.js type issues
   const Player = ReactPlayer as any;
 
   const handlePlay = (id: number) => {
@@ -65,7 +66,7 @@ export default function TestimonialsShortsSection() {
 
   const scroll = (direction: "left" | "right") => {
     if (scrollContainerRef.current) {
-      const scrollAmount = 340;
+      const scrollAmount = 320;
       scrollContainerRef.current.scrollBy({
         left: direction === "left" ? -scrollAmount : scrollAmount,
         behavior: "smooth",
@@ -74,54 +75,32 @@ export default function TestimonialsShortsSection() {
   };
 
   return (
-    <section className="relative bg-[#F8FAFC] py-24 overflow-hidden">
-      {/* Background Pattern - Subtle Grid */}
-      <div
-        className="absolute inset-0 z-0 opacity-[0.4]"
-        style={{
-          backgroundImage: "radial-gradient(#cbd5e1 1px, transparent 1px)",
-          backgroundSize: "32px 32px",
-        }}
-      />
+    <section className="relative w-full bg-white py-16 px-4 md:px-12 overflow-hidden select-none">
+      {/* --- Main Header Container --- */}
+      <div className="text-center mb-12">
+        <span className="text-lg font-bold uppercase tracking-widest text-[#F97316]">
+          Testimonials
+        </span>
+        <h2 className="text-4xl md:text-5xl font-bold text-black mt-2">
+          What Our Client Say
+        </h2>
+      </div>
 
-      <div className="max-w-7xl mx-auto px-6 relative z-10">
-        {/* --- Header --- */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-6">
-          <div>
-            <span className="inline-block px-3 py-1 bg-[#E55503]/10 text-[#E55503] font-bold tracking-widest uppercase text-xs rounded-full mb-4 border border-[#E55503]/20">
-              Client Stories
-            </span>
-            <h2 className="text-4xl md:text-5xl font-extrabold text-[#002253] mb-4 tracking-tight">
-              Voices from the <br className="hidden md:block" />
-              <span className="text-[#E55503]">Field</span>
-            </h2>
-            <p className="text-slate-500 text-lg max-w-xl">
-              Hear directly from our partners about the impact of our
-              engineering solutions.
-            </p>
-          </div>
-
-          {/* Navigation Buttons (Desktop) */}
-          <div className="flex gap-4 bg-white p-2 rounded-2xl shadow-lg border border-slate-100">
-            <button
-              onClick={() => scroll("left")}
-              className="w-12 h-12 rounded-xl bg-white border border-slate-200 text-[#002253] hover:bg-[#002253] hover:text-white transition-all flex items-center justify-center shadow-sm"
-            >
-              <ArrowRight size={20} className="rotate-180" />
-            </button>
-            <button
-              onClick={() => scroll("right")}
-              className="w-12 h-12 rounded-xl bg-[#E55503] text-white hover:bg-[#002253] transition-all flex items-center justify-center shadow-md shadow-orange-500/30"
-            >
-              <ArrowRight size={20} />
-            </button>
-          </div>
-        </div>
+      {/* --- Slider Viewport Wrapper --- */}
+      <div className="relative max-w-7xl mx-auto flex items-center">
+        
+        {/* Left Arrow Button */}
+        <button
+          onClick={() => scroll("left")}
+          className="absolute left-0 md:-left-6 z-40 w-11 h-11 bg-white border border-slate-200 rounded-xl flex items-center justify-center text-slate-400 hover:text-orange-500 shadow-sm transition-all"
+        >
+          <ChevronLeft size={20} />
+        </button>
 
         {/* --- Horizontal Scroll Container --- */}
         <div
           ref={scrollContainerRef}
-          className="flex gap-8 overflow-x-auto snap-x snap-mandatory pb-16 scrollbar-hide scroll-smooth px-2"
+          className="flex gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth w-full px-4 md:px-8 py-4 scrollbar-hide"
           style={{
             scrollbarWidth: "none",
             msOverflowStyle: "none",
@@ -130,23 +109,20 @@ export default function TestimonialsShortsSection() {
           {testimonials.map((item) => (
             <div
               key={item.id}
-              className="snap-center shrink-0 w-[300px] md:w-[340px] relative rounded-[2rem] bg-white border border-slate-200 shadow-xl overflow-hidden group transition-all duration-300 hover:shadow-2xl hover:-translate-y-2"
+              className="snap-start shrink-0 w-[280px] md:w-[300px] bg-white border border-slate-200 rounded-2xl shadow-sm p-4 flex flex-col justify-between"
             >
-              {/* --- Video Container (Top 2/3) --- */}
-              <div className="relative h-[480px] bg-slate-900 w-full">
-                {/* Play Button Overlay */}
-                {!playingId && (
-                  <div className="absolute inset-0 z-20 flex flex-col items-center justify-center bg-slate-900/10 backdrop-blur-[2px] group-hover:bg-slate-900/20 transition-all">
-                    <button
-                      onClick={() => handlePlay(item.id)}
-                      className="w-20 h-20 rounded-full bg-white text-[#002253] flex items-center justify-center shadow-xl hover:bg-[#E55503] hover:text-white hover:scale-110 transition-all duration-300"
-                    >
-                      <Play size={32} className="fill-current ml-1" />
-                    </button>
-                  </div>
-                )}
+              {/* --- Video Thumbnail Box --- */}
+              <div className="relative h-[280px] bg-[#D9D9D9] w-full rounded-lg overflow-hidden flex items-center justify-center mb-4">
+                {!playingId || playingId !== item.videoId ? (
+                  <button
+                    onClick={() => handlePlay(item.id)}
+                    className="w-14 h-14 rounded-full bg-white/80 text-slate-500 flex items-center justify-center shadow-md hover:bg-white hover:scale-105 transition-all z-20"
+                  >
+                    <Play size={24} className="fill-current ml-1 text-slate-400" />
+                  </button>
+                ) : null}
 
-                {/* React Player */}
+                {/* React Player Element */}
                 <Player
                   url={`https://www.youtube.com/watch?v=${item.videoId}`}
                   width="100%"
@@ -158,13 +134,9 @@ export default function TestimonialsShortsSection() {
                   config={{
                     youtube: {
                       playerVars: {
-                        showinfo: 0,
                         modestbranding: 1,
                         rel: 0,
                         playsinline: 1,
-                      },
-                      embedOptions: {
-                        host: "https://www.youtube-nocookie.com",
                       },
                     },
                   }}
@@ -174,73 +146,55 @@ export default function TestimonialsShortsSection() {
                     left: 0,
                     objectFit: "cover",
                   }}
-                  className="react-player"
                 />
 
-                {/* Close Button (Visible when playing) */}
+                {/* Floating Close Overlay Trigger */}
                 {playingId === item.videoId && (
                   <button
                     onClick={() => setPlayingId(null)}
-                    className="absolute top-4 right-4 z-50 w-10 h-10 rounded-full bg-white/90 text-[#002253] flex items-center justify-center hover:bg-red-500 hover:text-white shadow-lg transition-all"
+                    className="absolute top-2 right-2 z-30 w-8 h-8 rounded-full bg-white/90 text-slate-700 flex items-center justify-center hover:bg-red-500 hover:text-white transition-all shadow"
                   >
-                    <X size={18} />
+                    <X size={14} />
                   </button>
                 )}
               </div>
 
-              {/* --- Content Info (Bottom 1/3) --- */}
-              <div className="relative p-6 bg-white z-30">
-                {/* Top Floating Stats */}
-                <div className="absolute -top-6 left-6 right-6 flex justify-between items-start">
-                  <div className="bg-white px-4 py-2 rounded-full shadow-md border border-slate-100 flex items-center gap-2">
-                    <div className="flex gap-0.5">
-                      {[...Array(item.rating)].map((_, i) => (
-                        <Star
-                          key={i}
-                          size={12}
-                          className="fill-[#E55503] text-[#E55503]"
-                        />
-                      ))}
-                    </div>
-                    <span className="text-xs font-bold text-slate-700 ml-1">
-                      {item.rating}.0
-                    </span>
-                  </div>
-                  <Quote size={24} className="text-slate-200 rotate-180" />
+              {/* --- Meta Profile Info Block --- */}
+              <div className="flex flex-col text-left">
+                <h4 className="text-base font-bold text-slate-900 leading-tight">
+                  {item.name}
+                </h4>
+                <p className="text-xs text-slate-400 font-medium mt-0.5 mb-2">
+                  {item.role}
+                </p>
+
+                {/* Exact Star Rating Group */}
+                <div className="flex gap-1 mb-3">
+                  {[...Array(item.rating)].map((_, i) => (
+                    <Star
+                      key={i}
+                      size={16}
+                      className="fill-[#F97316] text-[#F97316]"
+                    />
+                  ))}
                 </div>
 
-                {/* Text Content */}
-                <div className="mt-4">
-                  <p className="text-slate-600 text-sm leading-relaxed mb-6 line-clamp-3 font-medium">
-                    `{item.quote}`
-                  </p>
-
-                  {/* Author Profile */}
-                  <div className="flex items-center gap-4 border-t border-slate-100 pt-4">
-                    <div className="w-12 h-12 rounded-full bg-[#002253] text-white flex items-center justify-center text-sm font-bold tracking-wider shadow-md">
-                      {item.name.charAt(0)}
-                    </div>
-                    <div>
-                      <p className="text-[#002253] text-sm font-bold leading-tight">
-                        {item.name}
-                      </p>
-                      <p className="text-[#E55503] text-xs font-semibold uppercase tracking-wide">
-                        {item.role}
-                      </p>
-                    </div>
-                  </div>
-                </div>
+                {/* Testimonial Message Body */}
+                <p className="text-xs text-slate-700 font-normal leading-relaxed line-clamp-3">
+                  {item.quote}
+                </p>
               </div>
             </div>
           ))}
         </div>
 
-        {/* Mobile Scroll Hint */}
-        <div className="md:hidden flex justify-center mt-2 gap-1">
-          <div className="w-2 h-2 rounded-full bg-slate-300" />
-          <div className="w-2 h-2 rounded-full bg-[#E55503]" />
-          <div className="w-2 h-2 rounded-full bg-slate-300" />
-        </div>
+        {/* Right Arrow Button */}
+        <button
+          onClick={() => scroll("right")}
+          className="absolute right-0 md:-right-6 z-40 w-11 h-11 bg-white border border-slate-200 rounded-xl flex items-center justify-center text-slate-400 hover:text-orange-500 shadow-sm transition-all"
+        >
+          <ChevronRight size={20} />
+        </button>
       </div>
     </section>
   );
