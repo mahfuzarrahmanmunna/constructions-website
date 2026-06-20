@@ -7,99 +7,97 @@ import {
   Calculator,
   HardHat,
   KeyRound,
-  ChevronRight,
-  MoveDown,
+  ArrowRight,
 } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { MotionPathPlugin } from "gsap/MotionPathPlugin"; // ← ADD THIS
 
-// Register Plugins
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger, MotionPathPlugin); // ← REGISTER BOTH
 
-// --- Data ---
+const COLORS = {
+  navy: "#002253",
+  blue: "#224B88",
+  orange: "#E55503",
+  orangeLight: "#FF8B28",
+};
+
 const steps = [
-  {
-    icon: FileText,
-    title: "Request Quote",
-    description:
-      "Submit your project requirements for initial feasibility assessment.",
-  },
-  {
-    icon: MapPin,
-    title: "Site Survey",
-    description:
-      "Technical team conducts comprehensive site analysis and topography survey.",
-  },
-  {
-    icon: Calculator,
-    title: "Estimation",
-    description:
-      "Detailed BOQ and transparent cost breakdown presented for approval.",
-  },
-  {
-    icon: HardHat,
-    title: "Execution",
-    description:
-      "Mobilization of resources with strict quality control and safety protocols.",
-  },
-  {
-    icon: KeyRound,
-    title: "Handover",
-    description:
-      "Final inspection, documentation, and seamless project transition.",
-  },
+  { icon: FileText,    title: "Request Quote", description: "Share your project requirements for initial assessment." },
+  { icon: MapPin,      title: "Site Survey",   description: "Analyze site conditions and prepare detailed reports." },
+  { icon: Calculator,  title: "Estimation",    description: "Create cost estimation and project timeline." },
+  { icon: HardHat,     title: "Execution",     description: "Execute project with quality standards." },
+  { icon: KeyRound,    title: "Handover",      description: "Deliver completed project with documentation." },
 ];
 
 export default function OurProcessSection() {
-  // Refs
   const sectionRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
-  const timelineSvgRef = useRef<SVGSVGElement>(null);
   const progressPathRef = useRef<SVGPathElement>(null);
-  const markerRef = useRef<SVGGElement>(null); // The traveling dot
+  const markerRef = useRef<SVGGElement>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const nodeRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const [hoveredStep, setHoveredStep] = useState<number | null>(null);
 
-  // 3D Tilt State
-  const [tiltStyles, setTiltStyles] = useState<{ [key: number]: any }>({});
-
-  // --- GSAP Animations ---
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // 1. Header Reveal (Split Text style simulation)
-      gsap.from(headerRef.current?.children || [], {
-        y: 50,
-        opacity: 0,
-        duration: 1,
-        stagger: 0.1,
-        ease: "power3.out",
-        delay: 0.2,
-      });
+      // ── HEADER ── use fromTo so opacity:1 is guaranteed as the end state
+      gsap.fromTo(
+        headerRef.current?.children || [],
+        { y: 50, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 1,
+          stagger: 0.12,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 80%",
+          },
+        }
+      );
 
-      // 2. SVG Path Drawing Animation
-      // We animate strokeDashoffset to "draw" the line
+      // ── TRACK PATH ──
+      const trackPath = sectionRef.current?.querySelector(".base-track");
+      if (trackPath) {
+        gsap.fromTo(
+          trackPath,
+          { strokeDashoffset: 2000 },
+          {
+            strokeDashoffset: 0,
+            ease: "none",
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: "top 65%",
+              end: "bottom 65%",
+              scrub: 1,
+            },
+          }
+        );
+      }
+
+      // ── PROGRESS PATH ──
       gsap.fromTo(
         progressPathRef.current,
-        { strokeDashoffset: 1000 }, // Adjust based on path length approx
+        { strokeDashoffset: 2000 },
         {
           strokeDashoffset: 0,
           ease: "none",
           scrollTrigger: {
             trigger: sectionRef.current,
-            start: "top 60%",
-            end: "bottom 60%",
+            start: "top 65%",
+            end: "bottom 65%",
             scrub: 1,
           },
-        },
+        }
       );
 
-      // 3. The Traveling Marker (The Dot)
-      // We calculate the total length and move the dot along the path
+      // ── MARKER on path ──
       const path = progressPathRef.current;
-      if (path) {
-        const length = path.getTotalLength();
-
-        // Set path for the marker to follow
+      if (path && markerRef.current) {
         gsap.set(markerRef.current, {
+          opacity: 1,
           motionPath: {
             path: path,
             align: path,
@@ -118,170 +116,190 @@ export default function OurProcessSection() {
           ease: "none",
           scrollTrigger: {
             trigger: sectionRef.current,
-            start: "top 60%",
-            end: "bottom 60%",
-            scrub: 0.5, // Different scrub speed for the marker
+            start: "top 65%",
+            end: "bottom 65%",
+            scrub: 0.5,
           },
         });
       }
 
-      // 4. Staggered Card Entry
-      gsap.from(cardRefs.current, {
-        y: 80,
-        opacity: 0,
-        scale: 0.95,
-        duration: 0.8,
-        stagger: 0.1,
-        ease: "back.out(1.2)",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 75%",
-        },
-      });
+      // ── NODES ── fromTo guarantees final state
+      gsap.fromTo(
+        nodeRefs.current.filter(Boolean),
+        { scale: 0, opacity: 0 },
+        {
+          scale: 1,
+          opacity: 1,
+          duration: 0.6,
+          stagger: 0.12,
+          ease: "back.out(2.5)",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 70%",
+          },
+        }
+      );
+
+      // ── CARDS ── fromTo guarantees final state
+      gsap.fromTo(
+        cardRefs.current.filter(Boolean),
+        { y: 60, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.7,
+          stagger: 0.12,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 70%",
+          },
+        }
+      );
+
+      // ── CRITICAL: recalculate all trigger positions after setup ──
+      ScrollTrigger.refresh();
     }, sectionRef);
 
     return () => ctx.revert();
   }, []);
 
-  // --- 3D Tilt Logic (Vanilla JS) ---
-  const handleMouseMove = (e: React.MouseEvent, index: number) => {
-    const card = cardRefs.current[index];
-    if (!card) return;
-
-    const rect = card.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
-
-    const rotateX = ((y - centerY) / centerY) * -5; // Max rotation deg
-    const rotateY = ((x - centerX) / centerX) * 5;
-
-    setTiltStyles((prev) => ({
-      ...prev,
-      [index]: {
-        transform: `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`,
-      },
-    }));
-  };
-
-  const handleMouseLeave = (index: number) => {
-    setTiltStyles((prev) => ({
-      ...prev,
-      [index]: {
-        transform: "perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)",
-      },
-    }));
-  };
-
   return (
     <section
       ref={sectionRef}
-      className="relative w-full bg-[#0f172a] text-white py-32 px-4 md:px-8 overflow-hidden"
+      className="relative w-full py-28 md:py-36 px-4 md:px-8"
+      style={{ backgroundColor: COLORS.navy }}
     >
-      {/* --- Noise Texture Overlay --- */}
+      {/* background glow */}
       <div
-        className="absolute inset-0 opacity-[0.05] pointer-events-none z-0 mix-blend-overlay"
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[600px] rounded-full pointer-events-none"
         style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
+          background: `radial-gradient(ellipse, ${COLORS.blue} 0%, transparent 70%)`,
+          opacity: 0.08,
         }}
       />
 
-      {/* --- Background Glow --- */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#002253] rounded-full blur-[120px] opacity-20 pointer-events-none" />
+      {/* noise */}
+      <div
+        className="absolute inset-0 opacity-[0.03] pointer-events-none z-0"
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
+        }}
+      />
 
       <div className="max-w-7xl mx-auto relative z-10">
-        {/* --- Header --- */}
-        <div ref={headerRef} className="text-center mb-32">
-          <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-md mb-8">
-            <div className="w-2 h-2 rounded-full bg-[#E55503] animate-ping" />
-            <span className="text-xs font-bold tracking-[0.3em] uppercase text-slate-300">
-              Operational Workflow
+        {/* ═══ HEADER ═══ */}
+        <div ref={headerRef} className="text-center mb-24 md:mb-28">
+          <div
+            className="inline-flex items-center gap-2.5 px-5 py-2 rounded-full mb-7"
+            style={{
+              backgroundColor: "rgba(229,85,3,0.08)",
+              border: "1px solid rgba(229,85,3,0.2)",
+            }}
+          >
+            <span
+              className="w-2 h-2 rounded-full animate-pulse"
+              style={{ backgroundColor: COLORS.orange }}
+            />
+            <span
+              className="text-[11px] font-bold tracking-[0.25em] uppercase"
+              style={{ color: COLORS.orange }}
+            >
+              How It Works
             </span>
           </div>
 
-          <h2 className="text-5xl md:text-7xl font-bold tracking-tighter mb-6">
-            <span className="text-white">Precision</span> at{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#E55503] to-[#FF8B28]">
-              Every Step
+          <h2
+            className="text-4xl md:text-5xl lg:text-[3.5rem] font-extrabold tracking-tight leading-[1.15] mb-5"
+            style={{ color: "#ffffff" }}
+          >
+            Our Simple{" "}
+            <span
+              className="text-transparent bg-clip-text"
+              style={{
+                backgroundImage: `linear-gradient(135deg, ${COLORS.orange}, ${COLORS.orangeLight})`,
+              }}
+            >
+              Process
             </span>
           </h2>
 
-          <p className="text-slate-400 text-lg max-w-2xl mx-auto font-light leading-relaxed">
-            Our engineering methodology is built on five decades of structural
-            integrity and project excellence.
+          <p
+            className="text-base md:text-lg max-w-xl mx-auto leading-relaxed"
+            style={{ color: "rgba(255,255,255,0.5)" }}
+          >
+            From initial consultation to final handover, we follow a streamlined
+            five-step approach for every project.
           </p>
         </div>
 
-        {/* --- Timeline Layout --- */}
-        <div className="relative py-12">
-          {/* SVG Timeline Layer (Desktop) */}
-          <div className="hidden md:block absolute top-1/2 left-0 w-full -translate-y-1/2 z-0">
+        {/* ═══ TIMELINE ═══ */}
+        <div className="relative">
+          {/* SVG lines */}
+          <div className="hidden md:block absolute top-[36px] left-0 w-full z-0 px-[10%]">
             <svg
-              ref={timelineSvgRef}
-              className="w-full h-20 overflow-visible"
+              className="w-full h-[72px] overflow-visible"
               preserveAspectRatio="none"
+              viewBox="0 0 1000 72"
             >
-              {/* The Base Gray Track */}
-              <path
-                d="M0,40 H1920" // Simple horizontal line
-                fill="none"
-                stroke="rgba(255,255,255,0.1)"
-                strokeWidth="2"
-              />
-
-              {/* The Progress Fill (Orange Gradient) */}
               <defs>
-                <linearGradient
-                  id="lineGradient"
-                  x1="0%"
-                  y1="0%"
-                  x2="100%"
-                  y2="0%"
-                >
-                  <stop offset="0%" stopColor="#002253" />
-                  <stop offset="100%" stopColor="#E55503" />
+                <linearGradient id="pgGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stopColor={COLORS.navy} />
+                  <stop offset="100%" stopColor={COLORS.orange} />
                 </linearGradient>
-                <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
-                  <feGaussianBlur stdDeviation="3" result="coloredBlur" />
+                <filter
+                  id="dotGlow"
+                  x="-50%"
+                  y="-50%"
+                  width="200%"
+                  height="200%"
+                >
+                  <feGaussianBlur stdDeviation="4" result="blur" />
                   <feMerge>
-                    <feMergeNode in="coloredBlur" />
+                    <feMergeNode in="blur" />
                     <feMergeNode in="SourceGraphic" />
                   </feMerge>
                 </filter>
               </defs>
 
               <path
-                ref={progressPathRef}
-                d="M0,40 H1920"
+                className="base-track"
+                d="M0,36 H1000"
                 fill="none"
-                stroke="url(#lineGradient)"
-                strokeWidth="3"
-                strokeLinecap="round"
-                style={{ strokeDasharray: 2000, strokeDashoffset: 2000 }} // Start hidden
+                stroke="rgba(255,255,255,0.08)"
+                strokeWidth="2"
+                style={{ strokeDasharray: 2000, strokeDashoffset: 2000 }}
               />
 
-              {/* The Traveling Marker (Dot + Pulse) */}
-              <g ref={markerRef} className="opacity-0">
-                <circle r="6" fill="#E55503" filter="url(#glow)" />
+              <path
+                ref={progressPathRef}
+                d="M0,36 H1000"
+                fill="none"
+                stroke="url(#pgGrad)"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                style={{ strokeDasharray: 2000, strokeDashoffset: 2000 }}
+              />
+
+              <g ref={markerRef} style={{ opacity: 0 }}>
+                <circle r="5" fill={COLORS.orange} filter="url(#dotGlow)" />
                 <circle
-                  r="12"
+                  r="10"
                   fill="none"
-                  stroke="#E55503"
+                  stroke={COLORS.orange}
                   strokeWidth="1"
-                  opacity="0.5"
+                  opacity="0.4"
                 >
                   <animate
                     attributeName="r"
-                    from="6"
-                    to="20"
+                    from="5"
+                    to="22"
                     dur="1.5s"
                     repeatCount="indefinite"
                   />
                   <animate
                     attributeName="opacity"
-                    from="0.8"
+                    from="0.6"
                     to="0"
                     dur="1.5s"
                     repeatCount="indefinite"
@@ -291,69 +309,123 @@ export default function OurProcessSection() {
             </svg>
           </div>
 
-          {/* --- Steps Grid --- */}
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-6 relative z-10">
+          {/* ═══ STEPS ═══ */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-3 xl:gap-5 relative z-10">
             {steps.map((step, index) => {
               const Icon = step.icon;
+              const isHovered = hoveredStep === index;
 
               return (
                 <div
                   key={index}
-                  // FIX: Changed from concise arrow function to block body to satisfy TypeScript
-                  ref={(el) => {
-                    cardRefs.current[index] = el;
-                  }}
-                  onMouseMove={(e) => handleMouseMove(e, index)}
-                  onMouseLeave={() => handleMouseLeave(index)}
-                  className="group relative pt-10"
-                  style={
-                    tiltStyles[index] || {
-                      transition: "transform 0.1s ease-out",
-                    }
-                  } // Apply tilt styles
+                  className="relative flex flex-col items-center text-center pt-16 md:pt-20 min-w-0"
                 >
-                  {/* --- The Glass Card --- */}
-                  <div className="relative h-full bg-white/5 backdrop-blur-lg border border-white/10 p-8 rounded-2xl flex flex-col items-center text-center transition-colors duration-300 group-hover:bg-white/10 group-hover:border-[#E55503]/30 overflow-hidden">
-                    {/* Hover Gradient Blob */}
-                    <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-[#E55503]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-
-                    {/* Number Watermark */}
-                    <span className="absolute top-2 right-4 text-[5rem] font-bold text-white/5 leading-none select-none">
-                      0{index + 1}
-                    </span>
-
-                    {/* Icon Container */}
-                    <div className="relative w-16 h-16 mb-6 bg-white rounded-xl flex items-center justify-center shadow-2xl transform group-hover:scale-110 group-hover:-translate-y-2 transition-all duration-300 z-10">
+                  {/* node */}
+                  <div
+                    ref={(el) => {
+                      nodeRefs.current[index] = el;
+                    }}
+                    className="absolute top-0 left-1/2 -translate-x-1/2 z-20 cursor-pointer"
+                    onMouseEnter={() => setHoveredStep(index)}
+                    onMouseLeave={() => setHoveredStep(null)}
+                  >
+                    <div
+                      className="w-[68px] h-[68px] lg:w-[72px] lg:h-[72px] rounded-full flex items-center justify-center transition-all duration-500"
+                      style={{
+                        backgroundColor: isHovered ? COLORS.orange : "#ffffff",
+                        boxShadow: isHovered
+                          ? `0 0 30px rgba(229,85,3,0.4)`
+                          : "0 4px 20px rgba(0,0,0,0.15)",
+                        transform: isHovered ? "scale(1.1)" : "scale(1)",
+                      }}
+                    >
                       <Icon
-                        size={28}
-                        className="text-[#002253] group-hover:text-[#E55503] transition-colors"
+                        size={26}
+                        strokeWidth={1.8}
+                        style={{
+                          color: isHovered ? "#ffffff" : COLORS.orange,
+                          transition: "color 0.3s",
+                        }}
                       />
                     </div>
 
-                    {/* Content */}
-                    <h3 className="text-xl font-bold text-white mb-3 relative z-10">
+                    <span
+                      className="absolute -bottom-2.5 left-1/2 -translate-x-1/2 w-7 h-7 rounded-full flex items-center justify-center text-[11px] font-extrabold"
+                      style={{
+                        backgroundColor: isHovered
+                          ? COLORS.orangeLight
+                          : COLORS.orange,
+                        color: "#ffffff",
+                        boxShadow: "0 2px 8px rgba(229,85,3,0.3)",
+                      }}
+                    >
+                      {index + 1}
+                    </span>
+                  </div>
+
+                  {/* card */}
+                  <div
+                    ref={(el) => {
+                      cardRefs.current[index] = el;
+                    }}
+                    onMouseEnter={() => setHoveredStep(index)}
+                    onMouseLeave={() => setHoveredStep(null)}
+                    className="w-full rounded-2xl px-5 py-7 lg:px-4 xl:px-5 lg:py-8 transition-all duration-300 min-w-0"
+                    style={{
+                      backgroundColor: isHovered
+                        ? "rgba(34,75,136,0.15)"
+                        : "rgba(34,75,136,0.08)",
+                      border: isHovered
+                        ? `1px solid rgba(229,85,3,0.25)`
+                        : "1px solid rgba(255,255,255,0.06)",
+                    }}
+                  >
+                    <span
+                      className="inline-block text-[11px] font-bold tracking-[0.2em] uppercase mb-3"
+                      style={{ color: COLORS.orange }}
+                    >
+                      Step 0{index + 1}
+                    </span>
+
+                    <h3
+                      className="text-[17px] lg:text-lg font-bold mb-3 leading-snug transition-colors duration-300"
+                      style={{
+                        color: isHovered ? COLORS.orangeLight : "#ffffff",
+                      }}
+                    >
                       {step.title}
                     </h3>
-                    <p className="text-sm text-slate-400 leading-relaxed relative z-10">
+
+                    <p
+                      className="text-[13px] lg:text-sm leading-relaxed"
+                      style={{ color: "rgba(255,255,255,0.75)" }}
+                    >
                       {step.description}
                     </p>
 
-                    {/* Mobile Arrow */}
                     {index !== steps.length - 1 && (
-                      <div className="mt-6 md:hidden flex items-center justify-center text-slate-600">
-                        <MoveDown size={20} />
+                      <div
+                        className="mt-5 lg:hidden flex items-center justify-center"
+                        style={{ color: "rgba(255,255,255,0.2)" }}
+                      >
+                        <ArrowRight size={18} className="rotate-90" />
                       </div>
                     )}
                   </div>
-
-                  {/* Desktop Connector Node (Visual Anchor) */}
-                  <div className="hidden md:block absolute -top-10 left-1/2 -translate-x-1/2 w-4 h-4 bg-[#0f172a] border-2 border-[#E55503] rounded-full z-20" />
                 </div>
               );
             })}
           </div>
         </div>
       </div>
+
+      {/* bottom fade */}
+      <div
+        className="absolute bottom-0 left-0 right-0 h-24 pointer-events-none"
+        style={{
+          background: `linear-gradient(to top, ${COLORS.navy}, transparent)`,
+        }}
+      />
     </section>
   );
 }

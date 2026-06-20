@@ -8,12 +8,13 @@ import BangladeshMapSection from './components/BangladeshMapSection/BangladeshMa
 import ServicesSection from './components/ServicesSection/ServicesSection'
 import ProjectStoriesSection from './components/ProjectStoriesSection/ProjectStoriesSection'
 import TestimonialsShortsSection from './components/TestimonialsShortsSection/TestimonialsShortsSection'
+import HeroBanner1 from './components/HeroBanner/HeroBanner1'
 
 export default function Home() {
   return (
     <main className="flex flex-col flex-1">
-      <HeroBanner />
-      <GlobalStatsSection />
+      <HeroBanner1  />
+      {/* <GlobalStatsSection /> */}
       <CategorySection />
       <ServicesSection />
       <CostEstimatorSection />
