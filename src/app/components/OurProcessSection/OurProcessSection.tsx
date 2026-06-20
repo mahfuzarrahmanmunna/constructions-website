@@ -23,11 +23,31 @@ const COLORS = {
 };
 
 const steps = [
-  { icon: FileText,    title: "Request Quote", description: "Share your project requirements for initial assessment." },
-  { icon: MapPin,      title: "Site Survey",   description: "Analyze site conditions and prepare detailed reports." },
-  { icon: Calculator,  title: "Estimation",    description: "Create cost estimation and project timeline." },
-  { icon: HardHat,     title: "Execution",     description: "Execute project with quality standards." },
-  { icon: KeyRound,    title: "Handover",      description: "Deliver completed project with documentation." },
+  {
+    icon: FileText,
+    title: "Request Quote",
+    description: "Share your project requirements for initial assessment.",
+  },
+  {
+    icon: MapPin,
+    title: "Site Survey",
+    description: "Analyze site conditions and prepare detailed reports.",
+  },
+  {
+    icon: Calculator,
+    title: "Estimation",
+    description: "Create cost estimation and project timeline.",
+  },
+  {
+    icon: HardHat,
+    title: "Execution",
+    description: "Execute project with quality standards.",
+  },
+  {
+    icon: KeyRound,
+    title: "Handover",
+    description: "Deliver completed project with documentation.",
+  },
 ];
 
 export default function OurProcessSection() {
@@ -55,7 +75,7 @@ export default function OurProcessSection() {
             trigger: sectionRef.current,
             start: "top 80%",
           },
-        }
+        },
       );
 
       // ── TRACK PATH ──
@@ -73,7 +93,7 @@ export default function OurProcessSection() {
               end: "bottom 65%",
               scrub: 1,
             },
-          }
+          },
         );
       }
 
@@ -90,7 +110,7 @@ export default function OurProcessSection() {
             end: "bottom 65%",
             scrub: 1,
           },
-        }
+        },
       );
 
       // ── MARKER on path ──
@@ -137,7 +157,7 @@ export default function OurProcessSection() {
             trigger: sectionRef.current,
             start: "top 70%",
           },
-        }
+        },
       );
 
       // ── CARDS ── fromTo guarantees final state
@@ -154,7 +174,7 @@ export default function OurProcessSection() {
             trigger: sectionRef.current,
             start: "top 70%",
           },
-        }
+        },
       );
 
       // ── CRITICAL: recalculate all trigger positions after setup ──
