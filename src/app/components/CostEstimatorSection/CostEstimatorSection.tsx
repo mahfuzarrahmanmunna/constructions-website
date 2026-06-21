@@ -271,7 +271,7 @@ export default function CostEstimatorSection() {
   return (
     <section
       ref={sectionRef}
-      className="estimator-wrapper relative bg-[#0B1120] text-white overflow-hidden font-sans"
+      className="estimator-wrapper py-8 relative bg-[#0B1120] text-white overflow-hidden font-sans"
     >
       {/* Background */}
       <div className="absolute inset-0 z-0 opacity-40">

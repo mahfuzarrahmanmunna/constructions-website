@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Search, X, Menu } from "lucide-react";
+import Image from "next/image";
 
 const mainLinks = ["Home", "About", "Services", "Projects", "Blog", "Contact"];
 
@@ -88,7 +89,9 @@ export default function Navbar() {
             href="/"
             className="font-bold uppercase tracking-[0.4em] transition-colors text-[#002253] text-lg lg:text-3xl"
           >
-            CPL
+            <figure className="w-24">
+              <Image src="/finallogo.png" alt="CPL LOGO" width={150} height={50} />
+            </figure>
           </Link>
 
           {/* Desktop Navigation */}

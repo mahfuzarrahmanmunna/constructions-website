@@ -139,7 +139,7 @@ export default function RecentProjectsSection() {
       </div>
 
       {/* ═══ SWIPER CAROUSEL ═══ */}
-      <div className="w-full max-w-7xl mx-auto px-5 md:px-8 relative z-10">
+      <div className="w-full max-w-7xl overflow-hidden mx-auto px-5 md:px-8 relative z-10">
         <Swiper
           modules={[Navigation, Autoplay]}
           spaceBetween={24}

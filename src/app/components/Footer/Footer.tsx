@@ -1,13 +1,18 @@
 "use client";
 
+import Image from "next/image";
 import React from "react";
 import { FaFacebook, FaLinkedin, FaTwitter, FaYoutube } from "react-icons/fa";
 
 const COLORS = {
   navy: "#002253",
+  navyDark: "#00122e",
   blue: "#224B88",
   orange: "#E55503",
   orangeLight: "#FF8B28",
+  textMuted: "#5a6a80",
+  borderLight: "rgba(0, 34, 83, 0.1)",
+  borderHover: "rgba(0, 34, 83, 0.2)",
 };
 
 const socialLinks = [
@@ -20,8 +25,8 @@ const socialLinks = [
 export default function Footer() {
   return (
     <footer
-      className="relative text-white"
-      style={{ backgroundColor: "#00122e" }}
+      className="relative"
+      style={{ backgroundColor: "#ffffff", color: COLORS.navyDark }}
     >
       {/* top orange line */}
       <div
@@ -37,9 +42,14 @@ export default function Footer() {
           <div className="grid grid-cols-4 gap-8 mb-14">
             {/* brand */}
             <div>
-              <h2 className="text-2xl font-bold tracking-[0.15em] uppercase mb-1">
-                CPL
-              </h2>
+              <figure className="w-24">
+                <Image
+                  src="/finallogo.png"
+                  alt="CPL LOGO"
+                  width={150}
+                  height={50}
+                />
+              </figure>
               <div
                 className="w-10 h-0.5 rounded-full mb-5"
                 style={{
@@ -48,7 +58,7 @@ export default function Footer() {
               />
               <p
                 className="text-sm leading-relaxed max-w-xs"
-                style={{ color: "rgba(255,255,255,0.4)" }}
+                style={{ color: COLORS.textMuted }}
               >
                 Leading global manufacturer of heavy machinery and construction
                 equipment. Engineering excellence for a sustainable future.
@@ -59,7 +69,7 @@ export default function Footer() {
             <div>
               <h3
                 className="text-[11px] font-bold uppercase tracking-[0.2em] mb-6 flex items-center gap-2"
-                style={{ color: "rgba(255,255,255,0.35)" }}
+                style={{ color: COLORS.navy }}
               >
                 <span
                   className="w-1.5 h-1.5 rounded-full"
@@ -80,14 +90,14 @@ export default function Footer() {
                     <a
                       href="#"
                       className="block text-sm py-0.5 pl-3 border-l-2 border-transparent transition-all duration-300"
-                      style={{ color: "rgba(255,255,255,0.4)" }}
+                      style={{ color: COLORS.textMuted }}
                       onMouseEnter={(e) => {
-                        e.currentTarget.style.color = "#ffffff";
+                        e.currentTarget.style.color = COLORS.orange;
                         e.currentTarget.style.borderLeftColor = COLORS.orange;
                         e.currentTarget.style.paddingLeft = "1rem";
                       }}
                       onMouseLeave={(e) => {
-                        e.currentTarget.style.color = "rgba(255,255,255,0.4)";
+                        e.currentTarget.style.color = COLORS.textMuted;
                         e.currentTarget.style.borderLeftColor = "transparent";
                         e.currentTarget.style.paddingLeft = "0.75rem";
                       }}
@@ -103,7 +113,7 @@ export default function Footer() {
             <div>
               <h3
                 className="text-[11px] font-bold uppercase tracking-[0.2em] mb-6 flex items-center gap-2"
-                style={{ color: "rgba(255,255,255,0.35)" }}
+                style={{ color: COLORS.navy }}
               >
                 <span
                   className="w-1.5 h-1.5 rounded-full"
@@ -124,14 +134,14 @@ export default function Footer() {
                     <a
                       href="#"
                       className="block text-sm py-0.5 pl-3 border-l-2 border-transparent transition-all duration-300"
-                      style={{ color: "rgba(255,255,255,0.4)" }}
+                      style={{ color: COLORS.textMuted }}
                       onMouseEnter={(e) => {
-                        e.currentTarget.style.color = "#ffffff";
+                        e.currentTarget.style.color = COLORS.orange;
                         e.currentTarget.style.borderLeftColor = COLORS.orange;
                         e.currentTarget.style.paddingLeft = "1rem";
                       }}
                       onMouseLeave={(e) => {
-                        e.currentTarget.style.color = "rgba(255,255,255,0.4)";
+                        e.currentTarget.style.color = COLORS.textMuted;
                         e.currentTarget.style.borderLeftColor = "transparent";
                         e.currentTarget.style.paddingLeft = "0.75rem";
                       }}
@@ -147,7 +157,7 @@ export default function Footer() {
             <div>
               <h3
                 className="text-[11px] font-bold uppercase tracking-[0.2em] mb-6 flex items-center gap-2"
-                style={{ color: "rgba(255,255,255,0.35)" }}
+                style={{ color: COLORS.navy }}
               >
                 <span
                   className="w-1.5 h-1.5 rounded-full"
@@ -167,14 +177,14 @@ export default function Footer() {
                     <a
                       href="#"
                       className="block text-sm py-0.5 pl-3 border-l-2 border-transparent transition-all duration-300"
-                      style={{ color: "rgba(255,255,255,0.4)" }}
+                      style={{ color: COLORS.textMuted }}
                       onMouseEnter={(e) => {
-                        e.currentTarget.style.color = "#ffffff";
+                        e.currentTarget.style.color = COLORS.orange;
                         e.currentTarget.style.borderLeftColor = COLORS.orange;
                         e.currentTarget.style.paddingLeft = "1rem";
                       }}
                       onMouseLeave={(e) => {
-                        e.currentTarget.style.color = "rgba(255,255,255,0.4)";
+                        e.currentTarget.style.color = COLORS.textMuted;
                         e.currentTarget.style.borderLeftColor = "transparent";
                         e.currentTarget.style.paddingLeft = "0.75rem";
                       }}
@@ -190,9 +200,9 @@ export default function Footer() {
           {/* desktop bottom bar */}
           <div
             className="pt-6 flex items-center justify-between"
-            style={{ borderTop: "1px solid rgba(255,255,255,0.05)" }}
+            style={{ borderTop: `1px solid ${COLORS.borderLight}` }}
           >
-            <p className="text-xs" style={{ color: "rgba(255,255,255,0.25)" }}>
+            <p className="text-xs" style={{ color: COLORS.textMuted }}>
               © {new Date().getFullYear()} CPL Heavy Industry Science &
               Technology Co., Ltd. All rights reserved.
             </p>
@@ -204,9 +214,9 @@ export default function Footer() {
                   aria-label={social.label}
                   className="w-9 h-9 rounded-full flex items-center justify-center transition-all duration-300"
                   style={{
-                    backgroundColor: "rgba(255,255,255,0.03)",
-                    border: "1px solid rgba(255,255,255,0.1)",
-                    color: "rgba(255,255,255,0.35)",
+                    backgroundColor: "transparent",
+                    border: `1px solid ${COLORS.borderLight}`,
+                    color: COLORS.textMuted,
                   }}
                   onMouseEnter={(e) => {
                     e.currentTarget.style.backgroundColor = COLORS.orange;
@@ -215,10 +225,9 @@ export default function Footer() {
                     e.currentTarget.style.transform = "scale(1.1)";
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.backgroundColor =
-                      "rgba(255,255,255,0.03)";
-                    e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)";
-                    e.currentTarget.style.color = "rgba(255,255,255,0.35)";
+                    e.currentTarget.style.backgroundColor = "transparent";
+                    e.currentTarget.style.borderColor = COLORS.borderLight;
+                    e.currentTarget.style.color = COLORS.textMuted;
                     e.currentTarget.style.transform = "scale(1)";
                   }}
                 >
@@ -229,11 +238,14 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* ═══ MOBILE: only logo + socials + copyright ═══ */}
+        {/* ═══ MOBILE: logo + socials + copyright ═══ */}
         <div className="md:hidden py-10 flex flex-col items-center text-center gap-6">
           {/* logo */}
           <div>
-            <h2 className="text-2xl font-bold tracking-[0.15em] uppercase mb-1.5">
+            <h2
+              className="text-2xl font-bold tracking-[0.15em] uppercase mb-1.5"
+              style={{ color: COLORS.navy }}
+            >
               CPL
             </h2>
             <div
@@ -253,9 +265,9 @@ export default function Footer() {
                 aria-label={social.label}
                 className="w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300"
                 style={{
-                  backgroundColor: "rgba(255,255,255,0.04)",
-                  border: "1px solid rgba(255,255,255,0.1)",
-                  color: "rgba(255,255,255,0.4)",
+                  backgroundColor: "transparent",
+                  border: `1px solid ${COLORS.borderLight}`,
+                  color: COLORS.textMuted,
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.backgroundColor = COLORS.orange;
@@ -264,10 +276,9 @@ export default function Footer() {
                   e.currentTarget.style.transform = "scale(1.1)";
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor =
-                    "rgba(255,255,255,0.04)";
-                  e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)";
-                  e.currentTarget.style.color = "rgba(255,255,255,0.4)";
+                  e.currentTarget.style.backgroundColor = "transparent";
+                  e.currentTarget.style.borderColor = COLORS.borderLight;
+                  e.currentTarget.style.color = COLORS.textMuted;
                   e.currentTarget.style.transform = "scale(1)";
                 }}
               >
@@ -279,7 +290,7 @@ export default function Footer() {
           {/* copyright */}
           <p
             className="text-[11px] leading-relaxed max-w-[280px]"
-            style={{ color: "rgba(255,255,255,0.25)" }}
+            style={{ color: COLORS.textMuted }}
           >
             © {new Date().getFullYear()} CPL Heavy Industry Science & Technology
             Co., Ltd. All rights reserved.
