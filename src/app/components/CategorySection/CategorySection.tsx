@@ -93,7 +93,7 @@ export default function CategorySection() {
   }
 
   return (
-    <section className="w-full bg-white py-16 px-4 md:px-8 border-b border-gray-200">
+    <section className="w-full py-24 bg-white px-4 md:px-8 border-gray-200">
       <style jsx global>{`
         /* Hide scrollbar for Chrome, Safari and Opera */
         .no-scrollbar::-webkit-scrollbar {

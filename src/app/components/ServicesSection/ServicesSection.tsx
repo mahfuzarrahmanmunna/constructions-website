@@ -11,7 +11,7 @@ import {
 } from "@/app/service/servicesData";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
-import { ChevronLeft, ChevronRight, ArrowRight,} from "lucide-react";
+import { ChevronLeft, ChevronRight, ArrowRight } from "lucide-react";
 import Link from "next/link";
 
 import "swiper/css";
@@ -21,10 +21,10 @@ if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-// Reusable Card Component
+// Reusable Card Component — Glassmorphism
 const ServiceCard = ({ title, description, image }: Service) => {
   return (
-    <div className="group h-full rounded-2xl border border-gray-200 bg-white p-3 transition-all duration-300 hover:shadow-lg">
+    <div className="group h-full rounded-2xl border border-white/60 bg-white/40 backdrop-blur-xl p-3 transition-all duration-300 hover:shadow-xl hover:bg-white/60">
       <div className="relative h-52 overflow-hidden rounded-xl">
         <Image
           src={image}
@@ -35,9 +35,7 @@ const ServiceCard = ({ title, description, image }: Service) => {
       </div>
 
       <div className="pt-5">
-        <h3 className="mb-2 text-xl font-semibold text-[#1F2937]">
-          {title}
-        </h3>
+        <h3 className="mb-2 text-xl font-semibold text-[#1F2937]">{title}</h3>
 
         <p className="mb-6 text-sm leading-relaxed text-slate-500">
           {description}
@@ -108,7 +106,6 @@ export default function ServicesSection() {
   return (
     <section ref={sectionRef} className="bg-white py-24 text-slate-900">
       <div className="max-w-7xl mx-auto px-6 lg:px-20">
-
         {/* Section Header */}
         <div
           ref={primaryHeaderRef}
@@ -131,45 +128,45 @@ export default function ServicesSection() {
           </h2>
 
           <p className="max-w-md text-slate-500">
-            We offer a wide range of construction services tailored to your needs.
+            We offer a wide range of construction services tailored to your
+            needs.
           </p>
         </div>
+
         {/* Primary Services Grid */}
-       
-            <div className="relative mb-24 primary-grid">
-            <button className="services-prev absolute -left-6 top-1/2 z-10 hidden h-12 w-12 -translate-y-1/2 items-center justify-center rounded-xl border border-gray-200 bg-white shadow-md lg:flex">
-              <ChevronLeft className="text-[#E55503]" size={20} />
-            </button>
+        <div className="relative mb-24 primary-grid">
+          <button className="services-prev absolute -left-6 top-1/2 z-10 hidden h-12 w-12 -translate-y-1/2 items-center justify-center rounded-xl border border-gray-200 bg-white shadow-md lg:flex">
+            <ChevronLeft className="text-[#E55503]" size={20} />
+          </button>
 
-            <button className="services-next absolute -right-6 top-1/2 z-10 hidden h-12 w-12 -translate-y-1/2 items-center justify-center rounded-xl border border-gray-200 bg-white shadow-md lg:flex">
-              <ChevronRight className="text-[#E55503]" size={20} />
-            </button>
+          <button className="services-next absolute -right-6 top-1/2 z-10 hidden h-12 w-12 -translate-y-1/2 items-center justify-center rounded-xl border border-gray-200 bg-white shadow-md lg:flex">
+            <ChevronRight className="text-[#E55503]" size={20} />
+          </button>
 
-            <Swiper
-              modules={[Navigation]}
-              navigation={{
-                prevEl: ".services-prev",
-                nextEl: ".services-next",
-              }}
-              spaceBetween={24}
-              slidesPerView={1.2}
-              breakpoints={{
-                640: {
-                  slidesPerView: 2,
-                },
-                1024: {
-                  slidesPerView: 3,
-                },
-              }}
-            >
-              {primaryServices.map((service) => (
-                <SwiperSlide key={service.id}>
-                  <ServiceCard {...service} />
-                </SwiperSlide>
-              ))}
-            </Swiper>
-          </div>
-        
+          <Swiper
+            modules={[Navigation]}
+            navigation={{
+              prevEl: ".services-prev",
+              nextEl: ".services-next",
+            }}
+            spaceBetween={24}
+            slidesPerView={1.2}
+            breakpoints={{
+              640: {
+                slidesPerView: 2,
+              },
+              1024: {
+                slidesPerView: 3,
+              },
+            }}
+          >
+            {primaryServices.map((service) => (
+              <SwiperSlide key={service.id}>
+                <ServiceCard {...service} />
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </div>
 
         {/* Secondary Services Section */}
         <div className="border-t border-slate-200 pt-20">
