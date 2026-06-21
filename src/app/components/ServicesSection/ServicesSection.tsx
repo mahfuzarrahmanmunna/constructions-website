@@ -9,9 +9,10 @@ import {
   primaryServices,
   secondaryServices,
 } from "@/app/service/servicesData";
+import { Autoplay, Pagination } from "swiper/modules";
+import { ArrowRight } from "lucide-react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation } from "swiper/modules";
-import { ChevronLeft, ChevronRight, ArrowRight,} from "lucide-react";
+
 import Link from "next/link";
 
 import "swiper/css";
@@ -24,8 +25,45 @@ if (typeof window !== "undefined") {
 // Reusable Card Component
 const ServiceCard = ({ title, description, image }: Service) => {
   return (
-    <div className="group h-full rounded-2xl border border-gray-200 bg-white p-3 transition-all duration-300 hover:shadow-lg">
-      <div className="relative h-52 overflow-hidden rounded-xl">
+    <div className="group w-full rounded-3xl bg-white shadow-lg">
+      <div className="relative aspect-[16/9] ">
+        <Image
+          src={image}
+          alt={title}
+          fill
+          className="object-cover transition-transform duration-700 group-hover:scale-105"
+        />
+
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+
+        <div className="absolute bottom-0 left-0 p-8 text-white">
+          <h3 className="mb-2 text-2xl font-bold">
+            {title}
+          </h3>
+
+          <p className="mb-4 max-w-md text-sm text-white/90">
+            {description}
+          </p>
+
+          <button className="flex items-center gap-2 hover:bg-[#E55503] hover:text-white rounded-full bg-white px-5 py-2 text-sm font-medium text-black transition">
+            Learn More
+            <ArrowRight size={16} />
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const SecondaryServiceCard = ({
+  title,
+  description,
+  image,
+}: Service) => {
+  return (
+    <div className="group h-full overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
+      {/* Image */}
+      <div className="relative h-44 w-full overflow-hidden">
         <Image
           src={image}
           alt={title}
@@ -34,18 +72,19 @@ const ServiceCard = ({ title, description, image }: Service) => {
         />
       </div>
 
-      <div className="pt-5">
-        <h3 className="mb-2 text-xl font-semibold text-[#1F2937]">
+      {/* Content */}
+      <div className="p-6">
+        <h3 className="mb-3 text-lg font-bold text-[#002253]">
           {title}
         </h3>
 
-        <p className="mb-6 text-sm leading-relaxed text-slate-500">
+        <p className="mb-6 text-sm leading-relaxed text-slate-500 line-clamp-3">
           {description}
         </p>
 
-        <button className="flex items-center gap-2 text-sm font-medium text-[#E55503]">
-          Learn More
-          <ArrowRight size={16} />
+          <button className="flex border-1 items-center gap-2 hover:bg-[#E55503] hover:text-white rounded-full bg-white px-5 py-2 text-sm font-medium text-black transition">
+            Learn More
+            <ArrowRight size={16} />
         </button>
       </div>
     </div>
@@ -107,7 +146,7 @@ export default function ServicesSection() {
 
   return (
     <section ref={sectionRef} className="bg-white py-24 text-slate-900">
-      <div className="max-w-7xl mx-auto px-6 lg:px-20">
+      <div className="mx-auto w-full max-w-[1600px] px-4 lg:px-8">
 
         {/* Section Header */}
         <div
@@ -136,91 +175,78 @@ export default function ServicesSection() {
         </div>
         {/* Primary Services Grid */}
        
-            <div className="relative mb-24 primary-grid">
-            <button className="services-prev absolute -left-6 top-1/2 z-10 hidden h-12 w-12 -translate-y-1/2 items-center justify-center rounded-xl border border-gray-200 bg-white shadow-md lg:flex">
-              <ChevronLeft className="text-[#E55503]" size={20} />
-            </button>
-
-            <button className="services-next absolute -right-6 top-1/2 z-10 hidden h-12 w-12 -translate-y-1/2 items-center justify-center rounded-xl border border-gray-200 bg-white shadow-md lg:flex">
-              <ChevronRight className="text-[#E55503]" size={20} />
-            </button>
-
-            <Swiper
-              modules={[Navigation]}
-              navigation={{
-                prevEl: ".services-prev",
-                nextEl: ".services-next",
-              }}
-              spaceBetween={24}
-              slidesPerView={1.2}
-              breakpoints={{
-                640: {
-                  slidesPerView: 2,
-                },
-                1024: {
-                  slidesPerView: 3,
-                },
-              }}
-            >
-              {primaryServices.map((service) => (
-                <SwiperSlide key={service.id}>
-                  <ServiceCard {...service} />
-                </SwiperSlide>
-              ))}
-            </Swiper>
-          </div>
-        
+        <div className="primary-grid">
+        <Swiper
+          modules={[Autoplay, Pagination]}
+          centeredSlides
+          loop
+          grabCursor
+          spaceBetween={12}
+          slidesPerView={1.15}
+          autoplay={{
+            delay: 2500,
+            disableOnInteraction: false,
+          }}
+          pagination={{
+            clickable: true,
+          }}
+          breakpoints={{
+            768: {
+              slidesPerView: 1.4,
+            },
+            1024: {
+              slidesPerView: 1.8,
+            },
+            1280: {
+              slidesPerView: 2.3,
+            },
+          }}
+          className="w-full"
+        >
+          {primaryServices.map((service) => (
+            <SwiperSlide key={service.id}>
+              <div className="transition-all duration-500 swiper-slide-content">
+                <ServiceCard {...service} />
+              </div>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </div>
+              
 
         {/* Secondary Services Section */}
-        <div className="border-t border-slate-200 pt-20">
-          <div
-            className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4"
-            ref={secondaryHeaderRef}
-          >
-            <div>
-              <h3 className="text-3xl font-bold text-[#002253] uppercase">
-                Support Services
-              </h3>
-              <p className="text-slate-500 mt-2 max-w-lg">
-                Beyond construction, we provide comprehensive supply and
-                logistical solutions to ensure project success.
-              </p>
-            </div>
-          </div>
-
-          <div className="relative">
-            <button className="services-prev absolute -left-6 top-1/2 z-10 hidden h-12 w-12 -translate-y-1/2 items-center justify-center rounded-xl border border-gray-200 bg-white shadow-md lg:flex">
-              <ChevronLeft className="text-[#E55503]" size={20} />
-            </button>
-
-            <button className="services-next absolute -right-6 top-1/2 z-10 hidden h-12 w-12 -translate-y-1/2 items-center justify-center rounded-xl border border-gray-200 bg-white shadow-md lg:flex">
-              <ChevronRight className="text-[#E55503]" size={20} />
-            </button>
-
-            <Swiper
-              modules={[Navigation]}
-              navigation={{
-                prevEl: ".services-prev",
-                nextEl: ".services-next",
-              }}
-              spaceBetween={24}
-              slidesPerView={1.2}
-              breakpoints={{
-                640: {
-                  slidesPerView: 2,
-                },
-                1024: {
-                  slidesPerView: 3,
-                },
-              }}
-            >
-              {primaryServices.map((service) => (
-                <SwiperSlide key={service.id}>
-                  <ServiceCard {...service} />
-                </SwiperSlide>
-              ))}
-            </Swiper>
-          </div>
+        <div className="secondary-grid relative">
+        <Swiper
+          className="secondary-swiper"
+          modules={[Autoplay, Pagination]}
+          autoplay={{
+            delay: 3000,
+            disableOnInteraction: false,
+          }}
+          pagination={{ clickable: true }}
+          spaceBetween={16}
+          loop={secondaryServices.length > 4}
+          breakpoints={{
+            0: {
+              slidesPerView: 1,
+            },
+            640: {
+              slidesPerView: 2,
+            },
+            768: {
+              slidesPerView: 3,
+            },
+            1280: {
+              slidesPerView: 4,
+            },
+          }}
+        >
+          {secondaryServices.map((service) => (
+            <SwiperSlide key={service.id}>
+              <SecondaryServiceCard {...service} />
+            </SwiperSlide>
+          ))}
+        </Swiper>
         </div>
       </div>
     </section>
