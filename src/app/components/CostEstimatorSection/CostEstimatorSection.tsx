@@ -110,7 +110,7 @@ export default function CostEstimatorSection() {
         <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4wNSkiLz48L3N2Zz4=')] [mask-image:linear-gradient(to_bottom,white,transparent)]" />
       </div>
 
-      <div className="relative z-10 max-w-[1600px] mx-auto min-h-[850px] py-12 px-6 lg:px-12 flex flex-col justify-center">
+      <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-12 py-12 lg:px-12 flex flex-col justify-center">
         {/* Section Header */}
         <div className="mb-8 flex items-end justify-between border-b border-white/10 pb-6">
           <div>

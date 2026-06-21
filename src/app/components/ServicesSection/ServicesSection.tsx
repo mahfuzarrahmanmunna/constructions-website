@@ -12,7 +12,6 @@ import {
 import { Autoplay, Pagination } from "swiper/modules";
 import { ArrowRight } from "lucide-react";
 import { Swiper, SwiperSlide } from "swiper/react";
-
 import Link from "next/link";
 
 import "swiper/css";
@@ -22,7 +21,7 @@ if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-// Reusable Card Component
+// Reusable Card Component — Glassmorphism
 const ServiceCard = ({ title, description, image }: Service) => {
   return (
     <div className="group w-full rounded-3xl bg-white shadow-lg">
@@ -61,7 +60,7 @@ const SecondaryServiceCard = ({
   image,
 }: Service) => {
   return (
-    <div className="group h-full overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
+    <div className="group h-full overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
       {/* Image */}
       <div className="relative h-44 w-full overflow-hidden">
         <Image
@@ -77,6 +76,7 @@ const SecondaryServiceCard = ({
         <h3 className="mb-3 text-lg font-bold text-[#002253]">
           {title}
         </h3>
+
 
         <p className="mb-6 text-sm leading-relaxed text-slate-500 line-clamp-3">
           {description}
@@ -170,9 +170,11 @@ export default function ServicesSection() {
           </h2>
 
           <p className="max-w-md text-slate-500">
-            We offer a wide range of construction services tailored to your needs.
+            We offer a wide range of construction services tailored to your
+            needs.
           </p>
         </div>
+
         {/* Primary Services Grid */}
        
         <div className="primary-grid">

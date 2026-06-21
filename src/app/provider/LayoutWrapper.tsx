@@ -1,9 +1,9 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import Navbar from "../components/Navbar/Navbar";
 import Footer from "../components/Footer/Footer";
 import MobileBottomNav from "../components/MobileBottomNav/MobileBottomNav";
+import Navbar1 from "../components/Navbar/Navbar1";
 
 export default function LayoutWrapper({
   children,
@@ -22,7 +22,7 @@ export default function LayoutWrapper({
 
   return (
     <>
-      <Navbar />
+      <Navbar1 />
       {children}
       <Footer />
       <MobileBottomNav/>

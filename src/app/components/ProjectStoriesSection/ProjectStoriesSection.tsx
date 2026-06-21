@@ -23,7 +23,7 @@ export default function RecentProjectsSection() {
 
   return (
     <section
-      className="relative py-24 md:py-32 overflow-hidden"
+      className="relative overflow-hidden  px-4 md:px-8"
       style={{ backgroundColor: COLORS.navy }}
     >
       {/* ── background texture ── */}
@@ -118,7 +118,7 @@ export default function RecentProjectsSection() {
       </div>
 
       {/* ═══ SWIPER CAROUSEL ═══ */}
-      <div className="w-full relative z-10">
+      <div className="w-full max-w-7xl mx-auto px-6 md:px-12 relative z-10">
         <Swiper
           modules={[Navigation, Autoplay]}
           spaceBetween={30}

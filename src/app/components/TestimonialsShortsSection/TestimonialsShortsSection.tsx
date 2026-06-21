@@ -75,7 +75,7 @@ export default function TestimonialsShortsSection() {
   };
 
   return (
-    <section className="relative w-full bg-white py-16 px-4 md:px-12 overflow-hidden select-none">
+    <section className="relative w-full bg-white px-4 md:px-12 overflow-hidden select-none">
       {/* --- Main Header Container --- */}
       <div className="text-center mb-12">
         <span className="text-lg font-bold uppercase tracking-widest text-[#F97316]">

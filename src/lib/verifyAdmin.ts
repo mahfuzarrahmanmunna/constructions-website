@@ -1,5 +1,5 @@
 import { headers } from "next/headers";
-import { adminAuth } from "./firebase-admin";
+import { getAdminAuth } from "./firebase-admin";
 
 export async function verifyAdmin() {
   const authorization = (await headers()).get("authorization");
@@ -10,7 +10,7 @@ export async function verifyAdmin() {
 
   const token = authorization.split("Bearer ")[1];
 
-  const decodedToken = await adminAuth.verifyIdToken(token);
+  const decodedToken = await getAdminAuth().verifyIdToken(token);
 
   if (decodedToken.email !== process.env.ADMIN_EMAIL) {
     throw new Error("Forbidden");

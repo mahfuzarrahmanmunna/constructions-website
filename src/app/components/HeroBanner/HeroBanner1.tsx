@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState, useMemo } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import RequestQuoteModal from "../RequestQuoteForm/RequestQuoteForm";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -23,7 +24,7 @@ const STATS: StatItem[] = [
   {
     icon: (
       <svg
-        className="w-5 h-5"
+        className="w-6 h-6"
         fill="none"
         viewBox="0 0 24 24"
         stroke="currentColor"
@@ -37,12 +38,12 @@ const STATS: StatItem[] = [
       </svg>
     ),
     value: "10+",
-    label: "Team Experience",
+    label: "Years Experience",
   },
   {
     icon: (
       <svg
-        className="w-5 h-5"
+        className="w-6 h-6"
         fill="none"
         viewBox="0 0 24 24"
         stroke="currentColor"
@@ -61,7 +62,7 @@ const STATS: StatItem[] = [
   {
     icon: (
       <svg
-        className="w-5 h-5"
+        className="w-6 h-6"
         fill="none"
         viewBox="0 0 24 24"
         stroke="currentColor"
@@ -75,12 +76,12 @@ const STATS: StatItem[] = [
       </svg>
     ),
     value: "100+",
-    label: "Team Members",
+    label: "Skilled Workers",
   },
   {
     icon: (
       <svg
-        className="w-5 h-5"
+        className="w-6 h-6"
         fill="none"
         viewBox="0 0 24 24"
         stroke="currentColor"
@@ -98,7 +99,6 @@ const STATS: StatItem[] = [
   },
 ];
 
-/* ── client avatar colors ── */
 const AVATAR_COLORS = [
   "#E55503",
   "#224B88",
@@ -132,6 +132,7 @@ export default function HeroBanner() {
     false,
     false,
   ]);
+  const [isOpen, setIsOpen] = useState(false);
 
   const particles = useMemo(() => generateParticles(8), []);
 
@@ -187,7 +188,6 @@ export default function HeroBanner() {
         );
       }
 
-      /* trust card */
       if (trustCardRef.current) {
         tl.fromTo(
           trustCardRef.current,
@@ -197,7 +197,6 @@ export default function HeroBanner() {
         );
       }
 
-      /* avatars inside card */
       if (trustCardRef.current) {
         const avatars = trustCardRef.current.querySelectorAll(".avatar-circle");
         tl.fromTo(
@@ -327,82 +326,46 @@ export default function HeroBanner() {
   return (
     <section
       ref={sectionRef}
-      className="relative min-h-screen overflow-hidden flex items-center py-24"
-      style={{ backgroundColor: COLORS.navy }}
+      className="relative min-h-screen pt-32 overflow-hidden flex items-center py-24 "
+      style={{ backgroundColor: "#ffffff" }}
     >
-      {/* background radial glow */}
-      <div
-        ref={bgShapeRef}
-        className="absolute -top-32 -right-32 w-[800px] h-[800px] rounded-full opacity-20 pointer-events-none"
-        style={{
-          background: `radial-gradient(circle, ${COLORS.blue} 0%, transparent 70%)`,
-        }}
-      />
-
-      {/* floating particles */}
-      <div ref={particlesRef} className="absolute inset-0 pointer-events-none">
-        {particles.map((p, i) => (
-          <span
-            key={i}
-            className="absolute rounded-full"
-            style={{
-              width: `${p.size}px`,
-              height: `${p.size}px`,
-              backgroundColor: COLORS.orange,
-              opacity: 0.25,
-              top: `${p.top}%`,
-              left: `${p.left}%`,
-            }}
-          />
-        ))}
-      </div>
-
-      {/* subtle grid */}
-      <div
-        className="absolute inset-0 pointer-events-none opacity-[0.03]"
-        style={{
-          backgroundImage: `linear-gradient(rgba(255,255,255,.5) 1px, transparent 1px),
-                            linear-gradient(90deg, rgba(255,255,255,.5) 1px, transparent 1px)`,
-          backgroundSize: "60px 60px",
-        }}
-      />
-
       {/* ═══ MAIN GRID ═══ */}
-      <div className="relative z-10 w-full max-w-[1320px] mx-auto px-5 md:px-8 lg:px-10 py-24 lg:py-0">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-          {/* ── LEFT ── */}
-          <div className="order-2 lg:order-1">
+      <div className="relative z-10 w-full max-w-[1320px] mx-auto px-5 md:px-8 lg:px-10 lg:py-0">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 ">
+          {/* ── LEFT COLUMN ── */}
+          <div className="order-2 lg:order-1 text-center lg:text-left">
             <h1
               ref={headingRef}
-              className="text-[2.5rem] md:text-[3.25rem] lg:text-[3.75rem] font-extrabold leading-[1.1] tracking-tight mb-6"
-              style={{ color: "#ffffff" }}
+              className="text-[2rem] sm:text-[2.5rem] md:text-[3.25rem] lg:text-[3.75rem] font-extrabold leading-[1.12] tracking-tight mb-5 lg:mb-6"
+              style={{ color: COLORS.navy }}
             >
               {splitWords("We Build Strong Foundation For Better Future")}
             </h1>
 
             <p
               ref={descRef}
-              className="text-base md:text-lg leading-relaxed mb-8 max-w-xl"
-              style={{ color: "rgba(255,255,255,0.7)" }}
+              className="text-sm text-gray-600 sm:text-base md:text-lg leading-relaxed mb-7 lg:mb-8 max-w-xl mx-auto lg:mx-0"
             >
               Providing quality construction services for all types of projects
               across Bangladesh — from residential buildings to large-scale
               commercial and government infrastructure.
             </p>
 
-            <div ref={btnsRef} className="flex flex-wrap gap-4 mb-8">
+            {/* ── buttons ── */}
+            <div
+              ref={btnsRef}
+              className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-7 lg:mb-8 max-w-md mx-auto lg:mx-0"
+            >
               {/* Orange primary button */}
-              <a
-                href="#contact"
-                onMouseMove={magneticHover}
-                onMouseLeave={(e) => {
-                  magneticLeave(e);
-                  e.currentTarget.style.backgroundColor = COLORS.orange;
-                }}
-                className="relative inline-flex items-center gap-2 px-8 py-4 rounded-md font-bold text-base transition-colors duration-300 group"
-                style={{ backgroundColor: COLORS.orange, color: COLORS.blue }}
+              <button
+                onClick={() => setIsOpen(true)}
+                className="relative inline-flex items-center justify-center gap-2 px-7 py-3.5 sm:px-8 sm:py-4 rounded-md font-bold text-sm sm:text-base text-white transition-colors duration-300 group w-full sm:w-auto"
+                style={{ backgroundColor: COLORS.orange }}
                 onMouseEnter={(e) =>
                   (e.currentTarget.style.backgroundColor = COLORS.orangeLight)
+                }
+                onMouseLeave={(e) =>
+                  (e.currentTarget.style.backgroundColor = COLORS.orange)
                 }
               >
                 <span className="absolute inset-0 rounded-md overflow-hidden pointer-events-none">
@@ -428,7 +391,7 @@ export default function HeroBanner() {
                     d="M17 8l4 4m0 0l-4 4m4-4H3"
                   />
                 </svg>
-              </a>
+              </button>
 
               {/* White outline button */}
               <a
@@ -437,19 +400,19 @@ export default function HeroBanner() {
                 onMouseLeave={(e) => {
                   magneticLeave(e);
                   e.currentTarget.style.backgroundColor = "transparent";
-                  e.currentTarget.style.color = "#ffffff";
-                  e.currentTarget.style.borderColor = "rgba(255,255,255,0.6)";
+                  e.currentTarget.style.color = "#E55503";
+                  e.currentTarget.style.borderColor = "#E55503";
                 }}
-                className="inline-flex items-center gap-2 px-8 py-4 rounded-md font-bold text-base border-2 transition-all duration-300 group"
+                className="inline-flex items-center justify-center gap-2 px-7 py-3.5 sm:px-8 sm:py-4 rounded-md font-bold text-sm sm:text-base border-2 duration-300 group sm:w-auto"
                 style={{
-                  borderColor: "rgba(255,255,255,0.6)",
-                  color: "#ffffff",
+                  borderColor: "#E55503",
+                  color: COLORS.orange,
                   backgroundColor: "transparent",
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = "#ffffff";
-                  e.currentTarget.style.color = COLORS.navy;
-                  e.currentTarget.style.borderColor = "#ffffff";
+                  e.currentTarget.style.backgroundColor = "#E55503";
+                  e.currentTarget.style.color = "#ffffff";
+                  e.currentTarget.style.borderColor = "#E55503";
                 }}
               >
                 <svg
@@ -472,11 +435,10 @@ export default function HeroBanner() {
             {/* ═══ HAPPY CLIENTS CARD ═══ */}
             <div
               ref={trustCardRef}
-              className="inline-flex flex-wrap items-center gap-4 sm:gap-5 px-5 py-4 rounded-xl transition-all duration-300"
+              className="inline-flex flex-wrap items-center gap-4 sm:gap-5 px-5 py-4 rounded-xl transition-all duration-300 justify-center"
               style={{
-                backgroundColor: "rgba(255,255,255,0.05)",
-                border: "1px solid rgba(255,255,255,0.08)",
-                backdropFilter: "blur(8px)",
+                backgroundColor: "#f7f7f8",
+                border: "1px solid #e5e5e5",
               }}
             >
               {/* overlapping avatar circles */}
@@ -489,37 +451,35 @@ export default function HeroBanner() {
                     key={i}
                     className="avatar-circle absolute flex items-center justify-center rounded-full text-[10px] font-bold text-white select-none"
                     style={{
-                      width: "34px",
-                      height: "34px",
+                      width: "30px",
+                      height: "30px",
                       backgroundColor: color,
-                      border: `2px solid ${COLORS.navy}`,
-                      left: `${i * 22}px`,
+                      border: `2px solid #f7f7f8`,
+                      left: `${i * 18}px`,
                       zIndex: AVATAR_COLORS.length - i,
                     }}
                   >
                     {String.fromCharCode(65 + i)}
                   </span>
                 ))}
-                {/* last "more" circle */}
                 <span
-                  className="avatar-circle absolute flex items-center justify-center rounded-full text-[9px] font-bold select-none"
+                  className="avatar-circle absolute flex items-center justify-center rounded-full text-[8px] font-bold select-none"
                   style={{
-                    width: "34px",
-                    height: "34px",
-                    left: `${AVATAR_COLORS.length * 22}px`,
-                    backgroundColor: "rgba(229,85,3,0.2)",
-                    border: `2px solid ${COLORS.navy}`,
+                    width: "30px",
+                    height: "30px",
+                    left: `${AVATAR_COLORS.length * 18}px`,
+                    backgroundColor: "rgba(229,85,3,0.15)",
+                    border: `2px solid #f7f7f8`,
                     color: COLORS.orange,
                     zIndex: 0,
                   }}
                 >
                   +44
                 </span>
-                {/* spacer so parent has correct width */}
                 <span
                   style={{
-                    width: `${(AVATAR_COLORS.length + 1) * 22 + 34}px`,
-                    height: "34px",
+                    width: `${(AVATAR_COLORS.length + 1) * 18 + 30}px`,
+                    height: "30px",
                   }}
                 />
               </div>
@@ -527,51 +487,38 @@ export default function HeroBanner() {
               {/* divider */}
               <span
                 className="hidden sm:block w-px self-stretch"
-                style={{ backgroundColor: "rgba(255,255,255,0.1)" }}
+                style={{ backgroundColor: "#d4d4d4" }}
               />
 
               {/* text content */}
-              <div className="flex flex-col gap-1">
-                <div className="flex items-center gap-2">
-                  <span
-                    className="text-base font-bold"
-                    style={{ color: "#ffffff" }}
-                  >
-                    50+ Happy Clients
-                  </span>
-                </div>
-                <div className="flex items-center gap-1.5">
-                  {/* star */}
+              <div className="flex flex-col gap-0.5">
+                <span
+                  className="text-sm sm:text-base font-bold"
+                  style={{ color: COLORS.navy }}
+                >
+                  50+ Happy Clients
+                </span>
+                <div className="flex text-gray-500 items-center gap-1.5">
                   <svg
-                    className="w-4 h-4 shrink-0"
+                    className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0"
                     style={{ color: "#FBBF24" }}
                     fill="currentColor"
                     viewBox="0 0 24 24"
                   >
                     <path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 6.91-1.01L12 2z" />
                   </svg>
-                  <span
-                    className="text-sm font-bold"
-                    style={{ color: "#ffffff" }}
-                  >
-                    4.8
-                  </span>
-                  <span
-                    className="text-sm"
-                    style={{ color: "rgba(255,255,255,0.5)" }}
-                  >
-                    (120+ Reviews)
-                  </span>
+                  <span className="text-xs sm:text-sm font-bold">4.8</span>
+                  <span className="text-xs sm:text-sm">(120+ Reviews)</span>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* ── RIGHT — Image ── */}
-          <div ref={imageRef} className="order-1 lg:order-2">
+          {/* ── RIGHT — Image: hidden on mobile, visible on lg+ ── */}
+          <div ref={imageRef} className="order-1 lg:order-2 hidden lg:block">
             <div
               className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden"
-              style={{ backgroundColor: "rgba(255,255,255,0.06)" }}
+              style={{ backgroundColor: "#e8e8e8" }}
             >
               <div className="absolute inset-0">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -581,8 +528,6 @@ export default function HeroBanner() {
                   className="w-full h-full object-cover"
                 />
               </div>
-
-              {/* decorative corner accents */}
               <div
                 className="absolute -bottom-1 -right-1 w-24 h-24 rounded-tl-3xl"
                 style={{ backgroundColor: COLORS.orange }}
@@ -595,77 +540,76 @@ export default function HeroBanner() {
           </div>
         </div>
 
-        {/* ── STATS ROW WITH ICONS ── */}
-        <div
-          ref={statsRef}
-          className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-5 mt-16 lg:mt-20"
-        >
-          {STATS.map((stat, i) => (
-            <div
-              key={i}
-              className="relative group rounded-xl px-4 py-5 md:px-5 md:py-6 flex items-center gap-3.5 transition-all duration-300 cursor-default"
-              style={{
-                backgroundColor: "rgba(255,255,255,0.04)",
-                border: "1px solid rgba(255,255,255,0.08)",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = "rgba(229,85,3,0.1)";
-                e.currentTarget.style.borderColor = COLORS.orange;
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor =
-                  "rgba(255,255,255,0.04)";
-                e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)";
-              }}
-            >
-              {/* icon box */}
-              <span
-                className="flex items-center justify-center w-11 h-11 rounded-lg shrink-0 transition-colors duration-300"
-                style={{
-                  backgroundColor: "rgba(229,85,3,0.12)",
-                  color: COLORS.orange,
-                }}
+        {/* ── STATS ROW ── */}
+        <div ref={statsRef} className="mt-12 lg:mt-16 xl:mt-20">
+          <div
+            className="flex flex-col sm:flex-row items-stretch overflow-hidden rounded-lg"
+            style={{
+              backgroundColor: "#ffffff",
+              borderTop: "1px solid #E55503",
+              borderBottom: "1px solid #E55503",
+              borderLeft: "1px solid #E55503",
+              borderRight: "1px solid #E55503",
+            }}
+          >
+            {STATS.map((stat, i) => (
+              <div
+                key={i}
+                className="flex-1 flex items-center justify-center gap-3 sm:gap-4 py-6 px-5 sm:px-6 relative"
               >
-                {stat.icon}
-              </span>
-
-              {/* text */}
-              <div className="flex flex-col">
-                <span
-                  className="text-xl md:text-2xl font-extrabold leading-none"
-                  style={{ color: COLORS.orange }}
-                >
-                  <AnimatedNumber
-                    target={parseInt(stat.value)}
-                    suffix={stat.value.replace(/[0-9]/g, "")}
-                    active={counters[i]}
+                {/* Vertical divider — not on first item, hidden on mobile except between rows */}
+                {i > 0 && (
+                  <span
+                    className="hidden sm:block absolute left-0 top-[15%] h-[70%] w-px"
+                    style={{ backgroundColor: "#d4d4d4" }}
                   />
-                </span>
-                <span
-                  className="text-xs font-medium leading-tight mt-0.5"
-                  style={{ color: "rgba(255,255,255,0.55)" }}
-                >
-                  {stat.label}
-                </span>
-              </div>
+                )}
 
-              {/* hover top accent line */}
-              <span
-                className="absolute top-0 left-1/2 -translate-x-1/2 w-0 h-0.5 rounded-full transition-all duration-500 group-hover:w-10"
-                style={{ backgroundColor: COLORS.orange }}
-              />
-            </div>
-          ))}
+                {/* Mobile row divider */}
+                {i === 2 && (
+                  <span
+                    className="sm:hidden absolute top-0 left-[10%] right-[10%] h-px"
+                    style={{ backgroundColor: "#d4d4d4" }}
+                  />
+                )}
+
+                {/* Icon */}
+                <span
+                  className="flex items-center justify-center rounded-full shrink-0 w-11 h-11 sm:w-12 sm:h-12"
+                  style={{
+                    backgroundColor: "rgba(229,85,3,0.1)",
+                    color: COLORS.orange,
+                  }}
+                >
+                  {stat.icon}
+                </span>
+
+                {/* Text */}
+                <div className="flex flex-col">
+                  <span
+                    className="text-xl sm:text-2xl lg:text-2xl xl:text-[1.7rem] font-extrabold leading-none mb-0.5"
+                    style={{ color: COLORS.orange }}
+                  >
+                    <AnimatedNumber
+                      target={parseInt(stat.value)}
+                      suffix={stat.value.replace(/[0-9]/g, "")}
+                      active={counters[i]}
+                    />
+                  </span>
+                  <span
+                    className="text-[11px] sm:text-xs font-semibold leading-tight"
+                    style={{ color: COLORS.navy }}
+                  >
+                    {stat.label}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 
-      {/* bottom gradient fade */}
-      <div
-        className="absolute bottom-0 left-0 right-0 h-32 pointer-events-none"
-        style={{
-          background: `linear-gradient(to top, ${COLORS.navy}, transparent)`,
-        }}
-      />
+      <RequestQuoteModal isOpen={isOpen} onClose={() => setIsOpen(false)} />
     </section>
   );
 }
