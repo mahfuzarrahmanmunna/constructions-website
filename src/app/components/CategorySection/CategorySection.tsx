@@ -11,7 +11,6 @@ interface Category {
 
 // --- Data ---
 const categories: Category[] = [
-  // Row 1
   {
     name: "Concrete Machinery",
     image: "/category/1st.png",
@@ -36,7 +35,6 @@ const categories: Category[] = [
     name: "Mining & Tunneling",
     image: "/category/6th.png",
   },
-  // Row 2
   {
     name: "Truck",
     image: "/category/7th.png",
@@ -67,12 +65,12 @@ const categories: Category[] = [
 const ArrowRightIcon = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    width="20"
-    height="20"
+    width="18"
+    height="18"
     viewBox="0 0 24 24"
     fill="none"
     stroke="currentColor"
-    strokeWidth="2"
+    strokeWidth="2.5"
     strokeLinecap="round"
     strokeLinejoin="round"
   >
@@ -82,7 +80,6 @@ const ArrowRightIcon = () => (
 );
 
 export default function CategorySection() {
-  // Slice to first 12 items
   const displayCategories = categories.slice(0, 12);
 
   // --- Mobile Logic: Chunk data into groups of 4 (2 cols x 2 rows) ---
@@ -93,38 +90,47 @@ export default function CategorySection() {
   }
 
   return (
-    <section className="w-full py-24 bg-white px-4 md:px-8 border-gray-200">
+    <section className="w-full py-20 md:py-24 bg-white px-4 md:px-8">
       <style jsx global>{`
-        /* Hide scrollbar for Chrome, Safari and Opera */
         .no-scrollbar::-webkit-scrollbar {
           display: none;
         }
-        /* Hide scrollbar for IE, Edge and Firefox */
         .no-scrollbar {
-          -ms-overflow-style: none; /* IE and Edge */
-          scrollbar-width: none; /* Firefox */
+          -ms-overflow-style: none;
+          scrollbar-width: none;
         }
       `}</style>
 
       <div className="max-w-7xl mx-auto">
-        {/* Section Header */}
-        <div className="flex flex-col md:flex-row justify-between items-end mb-10 md:mb-12">
-          <div>
-            <h2 className="text-3xl font-bold text-[#002253] mb-2 uppercase tracking-wide">
-              Product Categories
+        {/* ═══ Section Header — matches screenshot ═══ */}
+        <div className="flex flex-col  justify-between items-center mb-10 md:mb-14 gap-4">
+          <div className="flex flex-col justify-center text-center items-center ">
+            <p
+              className="text-xs sm:text-sm font-bold text-[#E55503] uppercase tracking-widest"
+              style={{ fontFamily: "'Inter', sans-serif" }}
+            >
+              Equipment
+            </p>
+            {/* Orange accent line */}
+            <div className="h-[3px] w-10 bg-[#E55503] mt-1.5 mb-2" />
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#002253] leading-tight">
+              Sale and Rental
             </h2>
-            <div className="h-1 w-16 bg-[#E55503]"></div>
           </div>
-
-          <div className="hidden md:block text-[#224B88] text-sm font-medium mt-4 md:mt-0">
-            Explore our full range of industrial solutions
-          </div>
+          {/* View All — vertically centered on right */}
+          {/* <Link
+            href="/categories"
+            className="group text-end flex items-center justify-end gap-2 text-[#002253] font-bold text-sm uppercase tracking-wider hover:text-[#E55503] transition-colors duration-300 shrink-0"
+          >
+            View All
+            <span className="transform transition-transform duration-300 group-hover:translate-x-1">
+              <ArrowRightIcon />
+            </span>
+          </Link> */}
         </div>
 
         {/* 
-           MOBILE VIEW (Swiper)
-           - visible on mobile (< md)
-           - Hidden on desktop
+           ═══ MOBILE VIEW (Horizontal Scroll) ═══
         */}
         <div className="flex overflow-x-auto snap-x snap-mandatory gap-4 pb-4 no-scrollbar md:hidden -mx-4 px-4">
           {mobileChunks.map((chunk, chunkIndex) => (
@@ -139,17 +145,17 @@ export default function CategorySection() {
                   className="group flex flex-col items-center text-center"
                 >
                   {/* Image Container */}
-                  <div className="relative w-full aspect-[4/3] rounded-lg overflow-hidden flex items-center justify-center transition-colors duration-300 bg-gray-100 group-hover:bg-[#E55503]">
+                  <div className="relative w-full aspect-[4/3] rounded-lg overflow-hidden flex items-center justify-center transition-colors duration-300 bg-[#f0f0f0] group-hover:bg-[#E55503]">
                     <img
                       src={cat.image}
                       alt={cat.name}
-                      className="w-[75%] h-[75%] object-contain transition-all duration-500 ease-out mix-blend-multiply grayscale opacity-80 group-hover:mix-blend-normal group-hover:scale-110 group-hover:grayscale-0 group-hover:opacity-100 group-hover:drop-shadow-2xl"
+                      className="w-[70%] h-[70%] object-contain transition-all duration-500 ease-out group-hover:scale-110 group-hover:drop-shadow-lg"
                       loading="lazy"
                     />
                   </div>
 
                   {/* Text Label */}
-                  <h3 className="text-xs font-bold text-[#002253] group-hover:text-[#E55503] transition-colors duration-300 uppercase tracking-wide leading-tight h-10 flex items-center justify-center mt-2">
+                  <h3 className="text-[11px] font-bold text-[#002253] group-hover:text-[#E55503] transition-colors duration-300 uppercase tracking-wide leading-tight h-9 flex items-center justify-center mt-2 px-1">
                     {cat.name}
                   </h3>
                 </Link>
@@ -159,11 +165,9 @@ export default function CategorySection() {
         </div>
 
         {/* 
-           DESKTOP VIEW (Grid)
-           - Hidden on mobile
-           - visible on desktop (>= md)
+           ═══ DESKTOP VIEW (6-col Grid) ═══
         */}
-        <div className="hidden md:grid grid-cols-3 lg:grid-cols-6 gap-x-6 gap-y-10">
+        <div className="hidden md:grid grid-cols-3 lg:grid-cols-6 gap-x-5 lg:gap-x-6 gap-y-10">
           {displayCategories.map((cat, index) => (
             <Link
               key={index}
@@ -171,31 +175,21 @@ export default function CategorySection() {
               className="group flex flex-col items-center text-center"
             >
               {/* Image Container */}
-              <div className="relative w-full aspect-[4/3] rounded-lg overflow-hidden flex items-center justify-center transition-colors duration-300 bg-gray-100 group-hover:bg-[#E55503]">
+              <div className="relative w-full aspect-[4/3] rounded-lg overflow-hidden flex items-center justify-center transition-colors duration-300 bg-[#f0f0f0] group-hover:bg-[#E55503]">
                 <img
                   src={cat.image}
                   alt={cat.name}
-                  className="w-[75%] h-[75%] object-contain transition-all duration-500 ease-out mix-blend-multiply grayscale opacity-80 group-hover:mix-blend-normal group-hover:scale-110 group-hover:grayscale-0 group-hover:opacity-100 group-hover:drop-shadow-2xl"
+                  className="w-[70%] h-[70%] object-contain transition-all duration-500 ease-out group-hover:scale-110 group-hover:drop-shadow-lg"
                   loading="lazy"
                 />
               </div>
 
               {/* Text Label */}
-              <h3 className="text-xs md:text-sm font-bold text-[#002253] group-hover:text-[#E55503] transition-colors duration-300 uppercase tracking-wide leading-tight h-10 flex items-center justify-center">
+              <h3 className="text-xs lg:text-[13px] font-bold text-[#002253] group-hover:text-[#E55503] transition-colors duration-300 uppercase tracking-wide leading-tight h-10 flex items-center justify-center px-1">
                 {cat.name}
               </h3>
             </Link>
           ))}
-        </div>
-
-        {/* Bottom Navigation / View All Button */}
-        <div className="flex justify-end mt-12">
-          <button className="group flex items-center gap-2 text-[#002253] font-bold text-sm uppercase tracking-wider hover:text-[#E55503] transition-colors duration-300">
-            View All Categories
-            <span className="transform transition-transform duration-300 group-hover:translate-x-1">
-              <ArrowRightIcon />
-            </span>
-          </button>
         </div>
       </div>
     </section>

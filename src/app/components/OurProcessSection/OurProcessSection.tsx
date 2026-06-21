@@ -161,31 +161,12 @@ export default function OurProcessSection() {
   return (
     <section
       ref={sectionRef}
-      className="relative w-full py-8 px-4 md:px-8 overflow-hidden"
-      style={{ backgroundColor: COLORS.navy }}
+      className="relative w-full py-16 md:py-20 lg:py-24 px-4 md:px-8 overflow-hidden"
+      style={{ backgroundColor: "#ffffff" }}
     >
-      {/* subtle grid texture */}
-      <div
-        className="absolute inset-0 opacity-[0.04] pointer-events-none"
-        style={{
-          backgroundImage: `linear-gradient(rgba(255,255,255,0.3) 1px, transparent 1px),
-                            linear-gradient(90deg, rgba(255,255,255,0.3) 1px, transparent 1px)`,
-          backgroundSize: "40px 40px",
-        }}
-      />
-
-      {/* ambient glow */}
-      <div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] rounded-full pointer-events-none"
-        style={{
-          background: `radial-gradient(ellipse, ${COLORS.blue}, transparent 70%)`,
-          opacity: 0.3,
-        }}
-      />
-
       <div className="max-w-7xl mx-auto relative z-10">
         {/* ═══ HEADER ═══ */}
-        <div ref={headerRef} className="text-center mb-6 md:mb-20">
+        <div ref={headerRef} className="text-center mb-14 md:mb-20">
           <span
             className="inline-block text-[11px] font-bold tracking-[0.3em] uppercase mb-4"
             style={{ color: COLORS.orange }}
@@ -194,13 +175,13 @@ export default function OurProcessSection() {
           </span>
           <h2
             className="text-3xl md:text-4xl lg:text-[2.75rem] font-extrabold tracking-tight leading-tight mb-4"
-            style={{ color: "#ffffff" }}
+            style={{ color: COLORS.navy }}
           >
             Our Simple Process
           </h2>
           <p
             className="text-sm md:text-base max-w-lg mx-auto leading-relaxed"
-            style={{ color: "rgba(255,255,255,0.55)" }}
+            style={{ color: "#6b7280" }}
           >
             From initial consultation to final handover, we follow a streamlined
             five-step approach for every project.
@@ -215,7 +196,7 @@ export default function OurProcessSection() {
             <div
               ref={lineRef}
               className="w-full h-px origin-left"
-              style={{ backgroundColor: "rgba(255,255,255,0.1)" }}
+              style={{ backgroundColor: "#e5e7eb" }}
             />
             {/* orange fill line */}
             <div
@@ -250,10 +231,10 @@ export default function OurProcessSection() {
                         style={{
                           backgroundColor: isHovered
                             ? COLORS.orange
-                            : `${COLORS.navy}`,
+                            : "rgba(229,85,3,0.1)",
                           boxShadow: isHovered
-                            ? `0 8px 30px rgba(229,85,3,0.4)`
-                            : `0 4px 20px rgba(0,0,0,0.25)`,
+                            ? `0 8px 30px rgba(229,85,3,0.3)`
+                            : `0 4px 15px rgba(0,0,0,0.06)`,
                           transform: isHovered ? "scale(1.1)" : "scale(1)",
                           transition: "all 0.4s cubic-bezier(0.4,0,0.2,1)",
                         }}
@@ -262,7 +243,8 @@ export default function OurProcessSection() {
                           size={30}
                           strokeWidth={1.8}
                           style={{
-                            color: "#ffffff",
+                            color: isHovered ? "#ffffff" : COLORS.orange,
+                            transition: "color 0.4s",
                           }}
                         />
                       </div>
@@ -275,7 +257,7 @@ export default function OurProcessSection() {
                             ? COLORS.orangeLight
                             : COLORS.orange,
                           color: "#ffffff",
-                          boxShadow: "0 2px 10px rgba(229,85,3,0.4)",
+                          boxShadow: "0 2px 10px rgba(229,85,3,0.3)",
                           transform: isHovered ? "scale(1.15)" : "scale(1)",
                           transition: "all 0.35s cubic-bezier(0.4,0,0.2,1)",
                         }}
@@ -293,14 +275,12 @@ export default function OurProcessSection() {
                       onMouseLeave={() => setHoveredStep(null)}
                       className="w-full rounded-2xl px-5 py-6 lg:px-4 xl:px-5 min-w-0"
                       style={{
-                        backgroundColor: isHovered
-                          ? "rgba(255,255,255,0.08)"
-                          : "rgba(255,255,255,0.03)",
+                        backgroundColor: isHovered ? "#ffffff" : "#f9fafb",
                         border: isHovered
-                          ? `1px solid rgba(229,85,3,0.35)`
-                          : "1px solid rgba(255,255,255,0.06)",
+                          ? `1px solid rgba(229,85,3,0.3)`
+                          : "1px solid #e5e7eb",
                         boxShadow: isHovered
-                          ? "0 12px 35px -8px rgba(229,85,3,0.2)"
+                          ? "0 12px 35px -8px rgba(229,85,3,0.15)"
                           : "none",
                         transform: isHovered
                           ? "translateY(-6px)"
@@ -318,7 +298,7 @@ export default function OurProcessSection() {
                       <h3
                         className="text-base lg:text-[15px] font-bold mb-2.5 leading-snug"
                         style={{
-                          color: isHovered ? COLORS.orangeLight : "#ffffff",
+                          color: isHovered ? COLORS.orange : COLORS.navy,
                           transition: "color 0.3s",
                         }}
                       >
@@ -327,7 +307,7 @@ export default function OurProcessSection() {
 
                       <p
                         className="text-[13px] lg:text-xs leading-relaxed"
-                        style={{ color: "rgba(255,255,255,0.5)" }}
+                        style={{ color: "#6b7280" }}
                       >
                         {step.description}
                       </p>
@@ -359,9 +339,16 @@ export default function OurProcessSection() {
                           cx="14"
                           cy="14"
                           r="14"
-                          fill={COLORS.blue}
-                          stroke="rgba(255,255,255,0.1)"
+                          fill={COLORS.orange}
+                          opacity="0.1"
+                        />
+                        <circle
+                          cx="14"
+                          cy="14"
+                          r="13"
+                          stroke={COLORS.orange}
                           strokeWidth="1"
+                          opacity="0.3"
                         />
                         <path
                           d="M12 10L16 14L12 18"
@@ -386,9 +373,7 @@ export default function OurProcessSection() {
                   className="w-2.5 h-2.5 rounded-full transition-all duration-300"
                   style={{
                     backgroundColor:
-                      index === hoveredStep
-                        ? COLORS.orange
-                        : "rgba(255,255,255,0.15)",
+                      index === hoveredStep ? COLORS.orange : "#d1d5db",
                     transform:
                       index === hoveredStep ? "scale(1.3)" : "scale(1)",
                   }}
@@ -396,7 +381,7 @@ export default function OurProcessSection() {
                 {index < steps.length - 1 && (
                   <div
                     className="w-6 h-px"
-                    style={{ backgroundColor: "rgba(255,255,255,0.1)" }}
+                    style={{ backgroundColor: "#e5e7eb" }}
                   />
                 )}
               </React.Fragment>

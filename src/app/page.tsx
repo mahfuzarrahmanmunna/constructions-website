@@ -10,31 +10,14 @@ import HeroBanner1 from './components/HeroBanner/HeroBanner1'
 export default function Home() {
   return (
     <main className="">
-      <div>
         <HeroBanner1 />
-      </div>
-      <div>
         <ServicesSection />
-      </div>
-      <div>
         <ProjectStoriesSection />
-      </div>
-      <div>
         <CostEstimatorSection />
-      </div>
-      <div>
-        {" "}
         <CategorySection />
-      </div>
-      <div>
         <OurProcessSection />
-      </div>
-      <div>
         <BangladeshMapSection />
-      </div>
-      <div>
         <CtaSection />
-      </div>
     </main>
   );
 }

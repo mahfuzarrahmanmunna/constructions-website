@@ -333,7 +333,6 @@ export default function HeroBanner() {
       <div className="relative z-10 w-full max-w-[1320px] mx-auto px-5 md:px-8 lg:px-10 lg:py-0">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 ">
           {/* ── LEFT COLUMN ── */}
-          {/* mobile: centered full-width, desktop: left aligned */}
           <div className="order-2 lg:order-1 text-center lg:text-left">
             <h1
               ref={headingRef}
@@ -346,16 +345,14 @@ export default function HeroBanner() {
             <p
               ref={descRef}
               className="text-sm text-gray-600 sm:text-base md:text-lg leading-relaxed mb-7 lg:mb-8 max-w-xl mx-auto lg:mx-0"
-              // style={{ color: "rgba(255,255,255,0.7)" }}
             >
               Providing quality construction services for all types of projects
               across Bangladesh — from residential buildings to large-scale
               commercial and government infrastructure.
             </p>
 
-            {/* ── buttons: mobile stacked full-width, desktop side by side ── */}
+            {/* ── buttons ── */}
             <div
-              // onMouseMove={magneticHover}
               ref={btnsRef}
               className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-7 lg:mb-8 max-w-md mx-auto lg:mx-0"
             >
@@ -406,7 +403,7 @@ export default function HeroBanner() {
                   e.currentTarget.style.color = "#E55503";
                   e.currentTarget.style.borderColor = "#E55503";
                 }}
-                className="inline-flex items-center justify-center gap-2 px-7 py-3.5 sm:px-8 sm:py-4 rounded-md font-bold text-sm sm:text-base border-2  duration-300 group  sm:w-auto"
+                className="inline-flex items-center justify-center gap-2 px-7 py-3.5 sm:px-8 sm:py-4 rounded-md font-bold text-sm sm:text-base border-2 duration-300 group sm:w-auto"
                 style={{
                   borderColor: "#E55503",
                   color: COLORS.orange,
@@ -435,14 +432,13 @@ export default function HeroBanner() {
               </a>
             </div>
 
-            {/* ═══ HAPPY CLIENTS CARD — centered on mobile ─══ */}
+            {/* ═══ HAPPY CLIENTS CARD ═══ */}
             <div
               ref={trustCardRef}
               className="inline-flex flex-wrap items-center gap-4 sm:gap-5 px-5 py-4 rounded-xl transition-all duration-300 justify-center"
               style={{
-                backgroundColor: "rgba(255,255,255,0.05)",
-                border: "1px solid rgba(255,255,255,0.08)",
-                backdropFilter: "blur(8px)",
+                backgroundColor: "#f7f7f8",
+                border: "1px solid #e5e5e5",
               }}
             >
               {/* overlapping avatar circles */}
@@ -458,7 +454,7 @@ export default function HeroBanner() {
                       width: "30px",
                       height: "30px",
                       backgroundColor: color,
-                      border: `2px solid ${COLORS.navy}`,
+                      border: `2px solid #f7f7f8`,
                       left: `${i * 18}px`,
                       zIndex: AVATAR_COLORS.length - i,
                     }}
@@ -472,8 +468,8 @@ export default function HeroBanner() {
                     width: "30px",
                     height: "30px",
                     left: `${AVATAR_COLORS.length * 18}px`,
-                    backgroundColor: "rgba(229,85,3,0.2)",
-                    border: `2px solid ${COLORS.navy}`,
+                    backgroundColor: "rgba(229,85,3,0.15)",
+                    border: `2px solid #f7f7f8`,
                     color: COLORS.orange,
                     zIndex: 0,
                   }}
@@ -488,18 +484,21 @@ export default function HeroBanner() {
                 />
               </div>
 
-              {/* divider — hidden on very small screens */}
+              {/* divider */}
               <span
                 className="hidden sm:block w-px self-stretch"
-                style={{ backgroundColor: "rgba(255,255,255,0.1)" }}
+                style={{ backgroundColor: "#d4d4d4" }}
               />
 
               {/* text content */}
-              <div className="flex  flex-col gap-0.5">
-                <span className="text-sm sm:text-base text-gray-600 font-bold">
+              <div className="flex flex-col gap-0.5">
+                <span
+                  className="text-sm sm:text-base font-bold"
+                  style={{ color: COLORS.navy }}
+                >
                   50+ Happy Clients
                 </span>
-                <div className="flex text-gray-400 items-center gap-1.5">
+                <div className="flex text-gray-500 items-center gap-1.5">
                   <svg
                     className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0"
                     style={{ color: "#FBBF24" }}
@@ -509,17 +508,17 @@ export default function HeroBanner() {
                     <path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 6.91-1.01L12 2z" />
                   </svg>
                   <span className="text-xs sm:text-sm font-bold">4.8</span>
-                  <span className="text-xs sm:text-sm ">(120+ Reviews)</span>
+                  <span className="text-xs sm:text-sm">(120+ Reviews)</span>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* ── RIGHT — Image: HIDDEN on mobile, visible on lg+ ── */}
+          {/* ── RIGHT — Image: hidden on mobile, visible on lg+ ── */}
           <div ref={imageRef} className="order-1 lg:order-2 hidden lg:block">
             <div
               className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden"
-              style={{ backgroundColor: "rgba(255,255,255,0.06)" }}
+              style={{ backgroundColor: "#e8e8e8" }}
             >
               <div className="absolute inset-0">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -542,85 +541,73 @@ export default function HeroBanner() {
         </div>
 
         {/* ── STATS ROW ── */}
-        {/* Mobile: 2x2 grid, icon on TOP, centered text */}
-        {/* Desktop: 4-col horizontal, icon on LEFT */}
-        <div
-          ref={statsRef}
-          className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-5 mt-12 lg:mt-16 xl:mt-20"
-        >
-          {STATS.map((stat, i) => (
-            <div
-              key={i}
-              className="relative group rounded-xl transition-all duration-300 cursor-default
-                         /* mobile: vertical card layout */
-                         px-4 py-5 sm:px-5 sm:py-6
-                         flex flex-col items-center text-center
-                         /* desktop: horizontal layout overrides */
-                         lg:flex-row lg:items-center lg:text-left lg:px-4 lg:py-5 lg:gap-3.5"
-              style={{
-                backgroundColor: "#cfcbca",
-                border: "1px solid rgba(255,255,255,0.08)",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = "rgba(229,85,3,0.1)";
-                e.currentTarget.style.borderColor = COLORS.orange;
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor =
-                  "rgba(255,255,255,0.04)";
-                e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)";
-              }}
-            >
-              {/* icon box — mobile: larger, on top / desktop: smaller, on left */}
-              <span
-                className="flex items-center justify-center rounded-lg shrink-0 transition-colors duration-300
-                           w-12 h-12 sm:w-14 sm:h-14 mb-3 sm:mb-4
-                           lg:w-11 lg:h-11 lg:mb-0"
-                style={{
-                  backgroundColor: "rgba(229,85,3,0.12)",
-                  color: COLORS.orange,
-                }}
+        <div ref={statsRef} className="mt-12 lg:mt-16 xl:mt-20">
+          <div
+            className="flex flex-col sm:flex-row items-stretch overflow-hidden rounded-lg"
+            style={{
+              backgroundColor: "#ffffff",
+              borderTop: "1px solid #E55503",
+              borderBottom: "1px solid #E55503",
+              borderLeft: "1px solid #E55503",
+              borderRight: "1px solid #E55503",
+            }}
+          >
+            {STATS.map((stat, i) => (
+              <div
+                key={i}
+                className="flex-1 flex items-center justify-center gap-3 sm:gap-4 py-6 px-5 sm:px-6 relative"
               >
-                {stat.icon}
-              </span>
-
-              {/* text block */}
-              <div className="flex flex-col items-center lg:items-start">
-                <span
-                  className="text-2xl sm:text-3xl lg:text-xl xl:text-2xl font-extrabold leading-none mb-0.5 lg:mb-1"
-                  style={{ color: COLORS.orange }}
-                >
-                  <AnimatedNumber
-                    target={parseInt(stat.value)}
-                    suffix={stat.value.replace(/[0-9]/g, "")}
-                    active={counters[i]}
+                {/* Vertical divider — not on first item, hidden on mobile except between rows */}
+                {i > 0 && (
+                  <span
+                    className="hidden sm:block absolute left-0 top-[15%] h-[70%] w-px"
+                    style={{ backgroundColor: "#d4d4d4" }}
                   />
-                </span>
-                <span
-                  className="text-[11px] sm:text-xs font-medium leading-tight"
-                  style={{ color: COLORS.navy }}
-                >
-                  {stat.label}
-                </span>
-              </div>
+                )}
 
-              {/* hover top accent line — desktop only */}
-              <span
-                className="absolute top-0 left-1/2 -translate-x-1/2 w-0 h-0.5 rounded-full transition-all duration-500 group-hover:w-10 hidden lg:block"
-                style={{ backgroundColor: COLORS.orange }}
-              />
-            </div>
-          ))}
+                {/* Mobile row divider */}
+                {i === 2 && (
+                  <span
+                    className="sm:hidden absolute top-0 left-[10%] right-[10%] h-px"
+                    style={{ backgroundColor: "#d4d4d4" }}
+                  />
+                )}
+
+                {/* Icon */}
+                <span
+                  className="flex items-center justify-center rounded-full shrink-0 w-11 h-11 sm:w-12 sm:h-12"
+                  style={{
+                    backgroundColor: "rgba(229,85,3,0.1)",
+                    color: COLORS.orange,
+                  }}
+                >
+                  {stat.icon}
+                </span>
+
+                {/* Text */}
+                <div className="flex flex-col">
+                  <span
+                    className="text-xl sm:text-2xl lg:text-2xl xl:text-[1.7rem] font-extrabold leading-none mb-0.5"
+                    style={{ color: COLORS.orange }}
+                  >
+                    <AnimatedNumber
+                      target={parseInt(stat.value)}
+                      suffix={stat.value.replace(/[0-9]/g, "")}
+                      active={counters[i]}
+                    />
+                  </span>
+                  <span
+                    className="text-[11px] sm:text-xs font-semibold leading-tight"
+                    style={{ color: COLORS.navy }}
+                  >
+                    {stat.label}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
-
-      {/* bottom gradient fade */}
-      {/* <div
-        className="absolute bottom-0 left-0 right-0 h-32 pointer-events-none"
-        style={{
-          background: `linear-gradient(to top, ${COLORS.navy}, transparent)`,
-        }}
-      /> */}
 
       <RequestQuoteModal isOpen={isOpen} onClose={() => setIsOpen(false)} />
     </section>
