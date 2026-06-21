@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import toast from "react-hot-toast";
 import AdminProfile from "@/components/admin/AdminProfile";
+import { auth } from "@/lib/firebase";
 
 export default function DashboardPage() {
 
@@ -33,7 +34,16 @@ setDashboardData] =useState({
 
 useEffect(() => {
   const loadDashboard = async () => {
-    const request = fetch("/api/dashboard")
+    const token = await auth.currentUser?.getIdToken();
+    if (!token) {
+      throw new Error("Not authenticated");
+    }
+
+    const request = fetch("/api/dashboard", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
       .then(async (res) => {
         const data = await res.json();
 

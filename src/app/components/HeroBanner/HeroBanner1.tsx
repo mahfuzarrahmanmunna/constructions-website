@@ -104,8 +104,6 @@ const AVATAR_COLORS = [
   "#224B88",
   "#FF8B28",
   "#002253",
-  "#4a90d9",
-  "#c44b00",
 ];
 
 function generateParticles(count: number) {
@@ -474,7 +472,7 @@ export default function HeroBanner() {
                     zIndex: 0,
                   }}
                 >
-                  +44
+                  +46
                 </span>
                 <span
                   style={{
