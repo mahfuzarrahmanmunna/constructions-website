@@ -1,22 +1,28 @@
-import { getApps, initializeApp, cert } from "firebase-admin/app";
-import { getAuth } from "firebase-admin/auth";
+import { getApps, initializeApp, cert, type App } from "firebase-admin/app";
+import { getAuth, type Auth } from "firebase-admin/auth";
 
-const privateKey = process.env.FIREBASE_PRIVATE_KEY?.replace(
-  /\\n/g,
-  "\n"
-);
+function getAdminApp(): App {
+  if (getApps().length > 0) {
+    return getApps()[0];
+  }
 
-const firebaseAdminConfig = {
-  credential: cert({
-    projectId: process.env.FIREBASE_PROJECT_ID,
-    clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
-    privateKey,
-  }),
-};
+  const privateKey = process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, "\n");
+  const projectId = process.env.FIREBASE_PROJECT_ID;
+  const clientEmail = process.env.FIREBASE_CLIENT_EMAIL;
 
-const app =
-  getApps().length === 0
-    ? initializeApp(firebaseAdminConfig)
-    : getApps()[0];
+  if (!projectId || !clientEmail || !privateKey) {
+    throw new Error("Firebase Admin credentials are not configured");
+  }
 
-export const adminAuth = getAuth(app);
+  return initializeApp({
+    credential: cert({
+      projectId,
+      clientEmail,
+      privateKey,
+    }),
+  });
+}
+
+export function getAdminAuth(): Auth {
+  return getAuth(getAdminApp());
+}

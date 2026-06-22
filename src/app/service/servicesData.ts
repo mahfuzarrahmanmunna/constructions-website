@@ -93,4 +93,25 @@ export const secondaryServices: Service[] = [
       "Engineering design, workforce supply, sourcing solutions, maintenance support, logistics, and chartering services.",
     image: "/services/consultancy.jpg",
   },
+  {
+    id: 13,
+    title: "Construction Material Supply",
+    description:
+      "Supply of aggregates, cement, steel, scaffolding systems, electrical items, safety equipment, and construction accessories.",
+    image: "/services/material.jpg",
+  },
+  {
+    id: 14,
+    title: "Equipment Rental Services",
+    description:
+      "Excavators, cranes, rollers, bulldozers, demolition equipment, and specialized machinery with certified operators.",
+    image: "/services/equipment.jpg",
+  },
+  {
+    id: 15,
+    title: "Consultancy Services",
+    description:
+      "Engineering design, workforce supply, sourcing solutions, maintenance support, logistics, and chartering services.",
+    image: "/services/consultancy.jpg",
+  },
 ];

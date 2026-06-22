@@ -264,6 +264,27 @@ export default function Sidebar({
             <Users size={20} />
          Category Management
           </Link>
+          <Link
+            href="/admin/manage-estimates"
+            onClick={closeSidebar}
+            className="
+            flex
+            items-center
+            gap-3
+
+            px-4
+            py-3
+
+            rounded-xl
+
+            hover:bg-white/10
+
+            transition-all
+            "
+          >
+            <Users size={20} />
+         Estimate Management
+          </Link>
 
           <Link
   href="/admin/settings"

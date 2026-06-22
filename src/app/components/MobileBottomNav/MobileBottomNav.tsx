@@ -3,26 +3,49 @@
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { Home, LayoutGrid, Calculator, Phone, Menu } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 
 export default function MobileBottomNav() {
   const pathname = usePathname();
+  const [navVisible, setNavVisible] = useState(true);
+  const lastScrollY = useRef(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const current = window.scrollY;
+      if (current > lastScrollY.current && current > 80) {
+        setNavVisible(false);
+      } else {
+        setNavVisible(true);
+      }
+      lastScrollY.current = current;
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const navItems = [
     { name: "Home", href: "/", icon: Home },
     { name: "Products", href: "/exploreproduct", icon: LayoutGrid },
-    { name: "Estimate", href: "#estimate", icon: Calculator, isMain: true }, // Links to the section or page
+    { name: "Estimate", href: "#estimate", icon: Calculator, isMain: true },
     { name: "Contact", href: "/contact", icon: Phone },
-    { name: "Menu", href: "#", icon: Menu }, // Triggers mobile menu overlay if needed
+    { name: "Menu", href: "#", icon: Menu },
   ];
 
-  // Helper to check if the route is active
   const isActive = (href: string) => {
     if (href === "#") return false;
     return pathname === href;
   };
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 md:hidden bg-[#0B1120]/95 backdrop-blur-xl border-t border-white/10 pb-5 pt-3 shadow-[0_-10px_40px_rgba(0,0,0,0.5)]">
+    <nav
+      className="fixed bottom-0 left-0 right-0 z-50 md:hidden bg-[#0B1120]/95 backdrop-blur-xl border-t border-white/10 pb-5 pt-3 shadow-[0_-10px_40px_rgba(0,0,0,0.5)]
+        transition-transform duration-350 ease-[cubic-bezier(0.4,0,0.2,1)]"
+      style={{
+        transform: navVisible ? "translateY(0)" : "translateY(100%)",
+      }}
+    >
       <div className="flex items-center justify-around px-2">
         {navItems.map((item) => {
           const active = isActive(item.href);
@@ -37,7 +60,6 @@ export default function MobileBottomNav() {
                 ${item.isMain ? "-mt-8" : "mt-0"}
               `}
             >
-              {/* Special Styling for the Main "Estimate" Button */}
               {item.isMain ? (
                 <div className="relative">
                   <div className="absolute inset-0 bg-primary blur-lg opacity-40 group-hover:opacity-60 transition-opacity duration-300 rounded-full" />
@@ -51,7 +73,6 @@ export default function MobileBottomNav() {
                       className={`w-6 h-6 transition-colors ${active ? "text-white" : "text-primary group-hover:text-primary-light"}`}
                     />
                   </div>
-                  {/* Label for main button */}
                   <span
                     className={`absolute -bottom-6 text-[10px] font-bold tracking-wider transition-colors ${active ? "text-primary" : "text-slate-400 group-hover:text-slate-200"}`}
                   >
@@ -60,7 +81,6 @@ export default function MobileBottomNav() {
                 </div>
               ) : (
                 <>
-                  {/* Standard Nav Items */}
                   <div
                     className={`
                       mb-1 p-1.5 rounded-xl transition-all duration-300
@@ -74,7 +94,6 @@ export default function MobileBottomNav() {
                       `}
                     />
                   </div>
-                  {/* Active Dot Indicator */}
                   <span
                     className={`
                       w-1 h-1 rounded-full transition-all duration-300

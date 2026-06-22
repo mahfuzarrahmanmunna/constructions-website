@@ -139,3 +139,30 @@ body {
   border-radius: 4px;
   background: var(--brand-primary-light);
 }
+.primary-swiper .swiper-slide {
+  transform: scale(0.82);
+  transition: transform 0.5s ease, opacity 0.5s ease;
+  opacity: 0.6;
+}
+
+.primary-swiper .swiper-slide-active {
+  transform: scale(1);
+  opacity: 1;
+}
+
+.swiper-pagination {
+  position: relative;
+  margin-top: 32px;
+}
+
+.swiper-pagination-bullet {
+  width: 10px;
+  height: 10px;
+  background: #cbd5e1;
+  opacity: 1;
+}
+
+.swiper-pagination-bullet-active {
+  background: #e55503;
+}
+
