@@ -4,12 +4,18 @@ import { useRef, useLayoutEffect } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
-import { ArrowRight } from "lucide-react";
 import {
   Service,
   primaryServices,
   secondaryServices,
 } from "@/app/service/servicesData";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation } from "swiper/modules";
+import { ChevronLeft, ChevronRight, ArrowRight,} from "lucide-react";
+import Link from "next/link";
+
+import "swiper/css";
+import "swiper/css/navigation";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -18,35 +24,29 @@ if (typeof window !== "undefined") {
 // Reusable Card Component
 const ServiceCard = ({ title, description, image }: Service) => {
   return (
-    <div className="service-card group relative h-full bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden hover:shadow-xl transition-all duration-300">
-      {/* Image Container */}
-      <div className="relative h-48 w-full overflow-hidden">
-        <div className="absolute inset-0 bg-[#002253]/10 group-hover:bg-transparent transition-colors z-10" />
+    <div className="group h-full rounded-2xl border border-gray-200 bg-white p-3 transition-all duration-300 hover:shadow-lg">
+      <div className="relative h-52 overflow-hidden rounded-xl">
         <Image
           src={image}
           alt={title}
           fill
-          className="object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out"
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          className="object-cover transition-transform duration-500 group-hover:scale-105"
         />
       </div>
 
-      {/* Content */}
-      <div className="p-6 relative">
-        {/* Orange Line Accent */}
-        <div className="absolute top-0 left-6 w-10 h-1 bg-[#E55503] transform -translate-y-1/2 group-hover:w-20 transition-all duration-300" />
-
-        <h3 className="text-xl font-bold text-[#002253] mb-3 group-hover:text-[#E55503] transition-colors">
+      <div className="pt-5">
+        <h3 className="mb-2 text-xl font-semibold text-[#1F2937]">
           {title}
         </h3>
-        <p className="text-slate-600 text-sm leading-relaxed mb-4 line-clamp-3">
+
+        <p className="mb-6 text-sm leading-relaxed text-slate-500">
           {description}
         </p>
 
-        {/* Hover Arrow */}
-        <div className="flex items-center text-[#E55503] font-bold text-sm opacity-0 transform translate-x-[-10px] group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300">
-          Learn More <ArrowRight size={16} className="ml-2" />
-        </div>
+        <button className="flex items-center gap-2 text-sm font-medium text-[#E55503]">
+          Learn More
+          <ArrowRight size={16} />
+        </button>
       </div>
     </div>
   );
@@ -54,12 +54,11 @@ const ServiceCard = ({ title, description, image }: Service) => {
 
 export default function ServicesSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const primaryHeaderRef = useRef<HTMLHeadingElement>(null);
-  const secondaryHeaderRef = useRef<HTMLHeadingElement>(null);
+  const primaryHeaderRef = useRef<HTMLDivElement>(null);
+  const secondaryHeaderRef = useRef<HTMLDivElement>(null);
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
-      // Animate Primary Cards
       gsap.from(".primary-card", {
         y: 50,
         opacity: 0,
@@ -72,7 +71,6 @@ export default function ServicesSection() {
         },
       });
 
-      // Animate Secondary Cards
       gsap.from(".secondary-card", {
         y: 50,
         opacity: 0,
@@ -85,17 +83,23 @@ export default function ServicesSection() {
         },
       });
 
-      // Header Animations
-      gsap.from([primaryHeaderRef.current, secondaryHeaderRef.current], {
-        y: 30,
-        opacity: 0,
-        duration: 1,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 80%",
-        },
-      });
+      const headers = [
+        primaryHeaderRef.current,
+        secondaryHeaderRef.current,
+      ].filter(Boolean);
+
+      if (headers.length) {
+        gsap.from(headers, {
+          y: 30,
+          opacity: 0,
+          duration: 1,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 80%",
+          },
+        });
+      }
     }, sectionRef);
 
     return () => ctx.revert();
@@ -104,31 +108,68 @@ export default function ServicesSection() {
   return (
     <section ref={sectionRef} className="bg-white py-24 text-slate-900">
       <div className="max-w-7xl mx-auto px-6 lg:px-20">
+
         {/* Section Header */}
         <div
-          className="text-center mb-16 max-w-3xl mx-auto"
           ref={primaryHeaderRef}
+          className="relative mb-14 flex flex-col items-center text-center"
         >
-          <span className="text-[#E55503] font-bold tracking-widest uppercase text-xs mb-2 block">
-            Expertise
-          </span>
-          <h2 className="text-4xl md:text-5xl font-black text-[#002253] uppercase tracking-wide mb-4">
-            Our Core Services
-          </h2>
-          <div className="h-1.5 w-24 bg-[#E55503] mx-auto rounded-full" />
-        </div>
+          <Link
+            href="/services"
+            className="absolute right-0 top-1/2 hidden -translate-y-1/2 items-center gap-2 rounded-lg border border-gray-200 px-5 py-2 text-sm font-medium text-slate-500 transition-colors hover:border-[#E55503] hover:text-[#E55503] md:flex"
+          >
+            View All
+            <ArrowRight className="text-orange-400" size={16} />
+          </Link>
 
-        {/* Primary Services Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-24 primary-grid">
-          {primaryServices.map((service) => (
-            <div
-              key={service.id}
-              className="primary-card service-card-container h-full"
-            >
-              <ServiceCard {...service} />
-            </div>
-          ))}
+          <span className="mb-3 text-sm font-bold uppercase tracking-[0.2em] text-[#E55503]">
+            Our Service
+          </span>
+
+          <h2 className="mb-4 text-4xl font-bold text-black md:text-5xl">
+            What We Do
+          </h2>
+
+          <p className="max-w-md text-slate-500">
+            We offer a wide range of construction services tailored to your needs.
+          </p>
         </div>
+        {/* Primary Services Grid */}
+       
+            <div className="relative mb-24 primary-grid">
+            <button className="services-prev absolute -left-6 top-1/2 z-10 hidden h-12 w-12 -translate-y-1/2 items-center justify-center rounded-xl border border-gray-200 bg-white shadow-md lg:flex">
+              <ChevronLeft className="text-[#E55503]" size={20} />
+            </button>
+
+            <button className="services-next absolute -right-6 top-1/2 z-10 hidden h-12 w-12 -translate-y-1/2 items-center justify-center rounded-xl border border-gray-200 bg-white shadow-md lg:flex">
+              <ChevronRight className="text-[#E55503]" size={20} />
+            </button>
+
+            <Swiper
+              modules={[Navigation]}
+              navigation={{
+                prevEl: ".services-prev",
+                nextEl: ".services-next",
+              }}
+              spaceBetween={24}
+              slidesPerView={1.2}
+              breakpoints={{
+                640: {
+                  slidesPerView: 2,
+                },
+                1024: {
+                  slidesPerView: 3,
+                },
+              }}
+            >
+              {primaryServices.map((service) => (
+                <SwiperSlide key={service.id}>
+                  <ServiceCard {...service} />
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </div>
+        
 
         {/* Secondary Services Section */}
         <div className="border-t border-slate-200 pt-20">
@@ -147,52 +188,38 @@ export default function ServicesSection() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 secondary-grid">
-            {secondaryServices.map((service) => (
-              <div
-                key={service.id}
-                className="secondary-card service-card-container h-full"
-              >
-                {/* Slightly different style for secondary cards - Full width image on top, dark accent */}
-                <div className="group relative h-full bg-slate-50 rounded-xl overflow-hidden border border-slate-200 hover:border-[#002253] transition-colors duration-300">
-                  <div className="p-8">
-                    <div className="w-12 h-12 bg-[#002253] rounded-lg flex items-center justify-center mb-6 text-white">
-                      {/* Generic Icon placeholder using Lucide or SVG if you had specific icons, otherwise relying on image */}
-                      <svg
-                        className="w-6 h-6"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M13 10V3L4 14h7v7l9-11h-7z"
-                        />
-                      </svg>
-                    </div>
-                    <h4 className="text-xl font-bold text-[#002253] mb-3">
-                      {service.title}
-                    </h4>
-                    <p className="text-slate-600 text-sm leading-relaxed">
-                      {service.description}
-                    </p>
-                  </div>
+          <div className="relative">
+            <button className="services-prev absolute -left-6 top-1/2 z-10 hidden h-12 w-12 -translate-y-1/2 items-center justify-center rounded-xl border border-gray-200 bg-white shadow-md lg:flex">
+              <ChevronLeft className="text-[#E55503]" size={20} />
+            </button>
 
-                  {/* Optional: Small thumbnail image at bottom for secondary services */}
-                  <div className="h-32 w-full relative overflow-hidden mt-auto">
-                    <Image
-                      src={service.image}
-                      alt={service.title}
-                      fill
-                      className="object-cover opacity-80 group-hover:opacity-100 transition-opacity"
-                      sizes="100vw"
-                    />
-                  </div>
-                </div>
-              </div>
-            ))}
+            <button className="services-next absolute -right-6 top-1/2 z-10 hidden h-12 w-12 -translate-y-1/2 items-center justify-center rounded-xl border border-gray-200 bg-white shadow-md lg:flex">
+              <ChevronRight className="text-[#E55503]" size={20} />
+            </button>
+
+            <Swiper
+              modules={[Navigation]}
+              navigation={{
+                prevEl: ".services-prev",
+                nextEl: ".services-next",
+              }}
+              spaceBetween={24}
+              slidesPerView={1.2}
+              breakpoints={{
+                640: {
+                  slidesPerView: 2,
+                },
+                1024: {
+                  slidesPerView: 3,
+                },
+              }}
+            >
+              {primaryServices.map((service) => (
+                <SwiperSlide key={service.id}>
+                  <ServiceCard {...service} />
+                </SwiperSlide>
+              ))}
+            </Swiper>
           </div>
         </div>
       </div>
