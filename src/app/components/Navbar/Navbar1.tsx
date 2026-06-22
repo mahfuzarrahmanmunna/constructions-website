@@ -81,7 +81,7 @@ export default function Navbar() {
           className={`flex lg:rounded-full lg:px-8 lg:py-4 lg:border text-[#002253]
             lg:border-white/20 lg:bg-white/10 lg:backdrop-blur-lg lg:shadow-lg
             lg:shadow-black/5 items-center justify-between transition-all duration-300
-            border-b border-white/20 md:bg-white/5 md:backdrop-blur-lg
+            border-b border-white/20 md:bg-white/5 md:backdrop-blur-lg hover:border-amber-500
           `}
         >
           {/* Logo */}

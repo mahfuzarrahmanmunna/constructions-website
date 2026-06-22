@@ -32,16 +32,16 @@ const itemVariants = {
 
 export default function ServicePage() {
   return (
-    <div>
+    <div className="bg-white">
       {/* HERO SECTION */}
       <section
-        className="relative w-full h-[45vh] min-h-[450px] mt-40 flex flex-col justify-center items-center overflow-hidden bg-cover bg-center text-white"
+        className="relative w-full h-[45vh] min-h-[450px] mt-30 flex flex-col justify-center items-center overflow-hidden bg-cover bg-white bg-center text-[#002253]"
         style={{
           backgroundImage:
             "url('https://images.unsplash.com/photo-1581094288338-2314dddb7ece?q=80&w=2000&auto=format&fit=crop')",
         }}
       >
-        <div className="absolute inset-0 bg-[#002253]/85 z-[1]" />
+        <div className="absolute inset-0 bg-white/85 z-[1]" />
 
         <div className="relative z-10 text-center px-6 max-w-4xl">
           <motion.span
@@ -85,7 +85,7 @@ export default function ServicePage() {
       </section>
 
       {/* INTRO SECTION */}
-      <section className="py-20 bg-white">
+      <section className="py-10 bg-white">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -106,7 +106,7 @@ export default function ServicePage() {
       </section>
 
       {/* PRIMARY SERVICES GRID */}
-      <section className="py-20 bg-slate-50">
+      <section className="py-16 bg-slate-50">
         <div className="max-w-7xl mx-auto px-6">
           <motion.div
             variants={containerVariants}
@@ -149,7 +149,7 @@ export default function ServicePage() {
       </section>
 
       {/* SECONDARY / SUPPORT SERVICES */}
-      <section className="bg-[#002253] py-20 relative overflow-hidden">
+      <section className="bg-white py-20 relative overflow-hidden">
         {/* Subtle pattern background */}
         <div
           className="absolute inset-0 opacity-10"
@@ -166,7 +166,7 @@ export default function ServicePage() {
           transition={{ duration: 0.8 }}
           className="max-w-7xl mx-auto px-6 relative z-10"
         >
-          <h2 className="text-white text-4xl md:text-5xl font-black text-center mb-16 uppercase tracking-wide">
+          <h2 className="text-[#002253] text-4xl md:text-5xl font-black text-center mb-16 uppercase tracking-wide">
             Support Services
           </h2>
 
@@ -182,7 +182,7 @@ export default function ServicePage() {
                 key={service.id}
                 variants={itemVariants}
                 whileHover={{ y: -10, transition: { duration: 0.3 } }}
-                className="bg-white rounded-2xl p-8 shadow-xl border-t-4 border-[#E55503]"
+                className="bg-white rounded-2xl p-8 shadow-xl border-t-4 [#002253]"
               >
                 <div className="overflow-hidden h-48 rounded-lg mb-6 group">
                   <img
