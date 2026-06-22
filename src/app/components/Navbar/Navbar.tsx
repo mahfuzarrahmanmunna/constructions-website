@@ -88,7 +88,7 @@ export default function Navbar() {
                   : "bg-transparent"
               }
 
-              lg:rounded-full lg:px-8 lg:py-4 lg:border
+              lg:rounded-full lg:px-8 lg:py-4 lg:border hover:border-amber-500
 
               ${
                 isScrolled

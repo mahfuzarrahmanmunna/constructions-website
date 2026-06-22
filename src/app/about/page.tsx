@@ -28,7 +28,7 @@ export default function AboutPage() {
               "url(/images/cases-photos/case-hero.webp)",
           }}
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#002253]/90 via-[#002253]/80 to-white" />
+        <div className="absolute inset-0 bg-gradient-to-b from via-[#002253]/80 to-white" />
 
         <div className="relative z-10 text-center px-4 max-w-4xl">
           <div className="inline-flex items-center gap-2 rounded-full border border-[#FF8B28]/30 bg-[#FF8B28]/10 px-4 py-2 mb-6">
@@ -162,15 +162,15 @@ export default function AboutPage() {
       </div>
 
       {/* ── STATS SECTION ── */}
-      <div className="w-full bg-[#002253] py-16">
+      <div className="w-full bg-white py-16 border-8">
         <div className="max-w-7xl mx-auto px-4 md:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {stats.map((stat, index) => (
               <div key={index} className="text-center">
-                <div className="text-4xl md:text-5xl font-bold text-[#FF8B28] mb-2">
+                <div className="text-4xl md:text-5xl font-bold  text-[#FF8B28] mb-2">
                   {stat.number}
                 </div>
-                <div className="text-sm text-white/60 uppercase tracking-wider font-medium">
+                <div className="text-sm text-[#002253] uppercase tracking-wider font-medium">
                   {stat.label}
                 </div>
               </div>
@@ -648,7 +648,7 @@ export default function AboutPage() {
       </div>
 
       {/* ── OUR BUSINESS PARTNERS ── */}
-      <div className="w-full bg-[#002253] py-20 px-4 md:px-8">
+      <div className="w-full bg-white py-20 px-4 md:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <div className="inline-flex items-center gap-2 rounded-full border border-[#FF8B28]/20 bg-[#FF8B28]/10 px-4 py-2 mb-6">
@@ -657,13 +657,13 @@ export default function AboutPage() {
                 Our Network
               </span>
             </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-4 uppercase tracking-wide">
+            <h2 className="text-4xl md:text-5xl font-bold text-[#002253] mb-4 uppercase tracking-wide">
               Our Business Partners
             </h2>
             <div className="w-20 h-1 bg-[#E55503] mx-auto rounded-full"></div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 text-[#002253] md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
               {
                 title: "Construction Material Manufacturers",
@@ -733,7 +733,7 @@ export default function AboutPage() {
             ].map((item, index) => (
               <div
                 key={index}
-                className="group relative bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-8 transition-all duration-500 hover:bg-white/10 hover:border-[#E55503]/30 hover:shadow-[0_10px_40px_-10px_rgba(229,85,3,0.2)]"
+                className="group relative text-[#002253] bg-white/5 backdrop-blur-sm border border-[#FF8B28]/40 rounded-2xl p-8 transition-all duration-500 hover:bg-white/10 hover:border-[#E55503]/30 hover:shadow-[0_10px_40px_-10px_rgba(229,85,3,0.2)]"
               >
                 {/* Icon */}
                 <div className="w-14 h-14 rounded-xl bg-white/10 flex items-center justify-center text-[#FF8B28] mb-6 transition-all duration-500 group-hover:bg-[#E55503] group-hover:text-white group-hover:scale-110">
@@ -741,12 +741,12 @@ export default function AboutPage() {
                 </div>
 
                 {/* Title */}
-                <h3 className="text-lg font-bold text-white mb-3 leading-snug">
+                <h3 className="text-lg font-bold text-[#002253] mb-3 leading-snug">
                   {item.title}
                 </h3>
 
                 {/* Description */}
-                <p className="text-white/50 text-sm leading-relaxed">
+                <p className="text-[#002253] text-sm leading-relaxed">
                   {item.description}
                 </p>
 
@@ -944,13 +944,13 @@ export default function AboutPage() {
       </div>
 
       {/* ── CTA SECTION ── */}
-      <div className="w-full bg-[#002253] py-20 px-4 md:px-8">
+      <div className="w-full bg-white py-20 px-4 md:px-8">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#002253] mb-6 leading-tight">
             Ready to Start Your Next Project?
           </h2>
           <div className="w-20 h-1 bg-[#E55503] mx-auto rounded-full mb-8"></div>
-          <p className="text-white/60 text-lg mb-10 max-w-2xl mx-auto">
+          <p className="text-[#002253]/60 text-lg mb-10 max-w-2xl mx-auto">
             Partner with CPL for comprehensive construction solutions. Let's
             build something extraordinary together.
           </p>
@@ -959,12 +959,12 @@ export default function AboutPage() {
               href="/contact"
               className="group relative overflow-hidden rounded-full px-10 py-4 text-sm font-bold text-white bg-[#E55503] transition-all duration-300 hover:scale-105 hover:shadow-[0_10px_30px_-10px_rgba(229,85,3,0.5)]"
             >
-              <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:animate-shimmer" />
+              <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-[#002253]/20 to-transparent -translate-x-full group-hover:animate-shimmer" />
               Get In Touch
             </a>
             <a
               href="/cases"
-              className="rounded-full border border-white/30 bg-white/5 px-10 py-4 text-sm font-semibold text-white backdrop-blur-md transition-all duration-300 hover:bg-white/10 hover:border-white/50"
+              className="rounded-full border border-[#E55503] bg-white/5 px-10 py-4 text-sm font-semibold text-[#E55503] backdrop-blur-md transition-all duration-300 hover:bg-[#E55503] hover:text-white"
             >
               View Our Projects
             </a>
