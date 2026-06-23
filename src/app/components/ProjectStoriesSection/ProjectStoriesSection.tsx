@@ -6,7 +6,8 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Autoplay } from "swiper/modules";
 import { ArrowRight, MapPin } from "lucide-react";
 import { caseStudies } from "@/app/ourWorks/casesData";
-
+import Link from "next/link";
+import { products } from "../../products/productsData";
 import "swiper/css";
 import "swiper/css/navigation";
 
@@ -20,6 +21,16 @@ const COLORS = {
 export default function RecentProjectsSection() {
   const prevRef = useRef<HTMLDivElement>(null);
   const nextRef = useRef<HTMLDivElement>(null);
+  const featuredProjects =
+    caseStudies.filter((project) => project.isFeatured);
+
+  const displayProjects =
+    featuredProjects.length > 0
+      ? featuredProjects
+      : caseStudies.slice(0, 3);
+
+
+
 
   return (
     <section className="relative overflow-hidden bg-white py-20 md:py-28">
@@ -137,7 +148,110 @@ export default function RecentProjectsSection() {
           </div>
         </div>
       </div>
+                {/* Featured Projects Slider */}
+          <div className="mx-auto mb-20 max-w-6xl">
+            <Swiper
+              modules={[Autoplay]}
+              loop
+              autoplay={{
+                delay: 4000,
+                disableOnInteraction: false,
+              }}
+              className="rounded-3xl overflow-hidden"
+            >
+              {displayProjects.map((project) => (
+                <SwiperSlide key={project.id}>
+                  <div className="overflow-hidden rounded-3xl bg-white shadow-xl border border-slate-200">
 
+                    <div className="grid lg:grid-cols-[1.7fr_1fr] min-h-[550px]">
+
+                      {/* Image */}
+                      <div className="relative h-[320px] md:h-[450px] lg:h-full">
+                        <Image
+                          src={project.image}
+                          alt={project.title}
+                          fill
+                          className="object-cover"
+                        />
+
+                        <div className="absolute top-6 left-6">
+                          <span className="rounded-full bg-white px-4 py-2 text-xs font-bold uppercase tracking-wider text-[#E55503] shadow">
+                            Featured Project
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Content */}
+                      <div className="flex h-full flex-col bg-[#002253] p-8 lg:p-10 text-white">
+
+                        <span className="text-sm font-semibold uppercase tracking-wider text-[#E55503]">
+                          {project.category}
+                        </span>
+
+                        <h2 className="mt-4 text-3xl lg:text-2xl font-bold leading-tight">
+                          {project.title}
+                        </h2>
+
+                        <div className="mt-1 flex items-center gap-2 text-slate-300">
+                          <MapPin size={16} />
+                          {project.location}
+                        </div>
+                        <div className="mt-4 grid grid-cols-2 gap-5 border-t border-white/10 pt-6">
+                          <div>
+                            <p className="text-xs uppercase text-[#E55503]">
+                              Client
+                            </p>
+                            <p className="mt-1 text-sm">
+                              {project.client}
+                            </p>
+                          </div>
+
+                          <div>
+                            <p className="text-xs uppercase text-[#E55503]">
+                              Duration
+                            </p>
+                            <p className="mt-1 text-sm">
+                              {project.duration}
+                            </p>
+                          </div>
+
+                          <div>
+                            <p className="text-xs uppercase text-[#E55503]">
+                              Equipment
+                            </p>
+                            <p className="mt-1 text-sm line-clamp-3 text-slate-300">
+                              {project.equipment}
+                            </p>
+                          </div>
+
+                          <div>
+                            <p className="text-xs uppercase text-[#E55503]">
+                              Result
+                            </p>
+                            <p className="mt-1 text-sm">
+                              {project.stats}
+                            </p>
+                          </div>
+                        </div>
+
+                        <div className=" pt-8">
+                          <Link
+                            href={`/ourWorks/${project.id}`}
+                            className="inline-flex w-fit items-center gap-2 rounded-xl bg-[#E55503] px-6 py-3 font-semibold text-white transition hover:bg-[#c94700]"
+                          >
+                            View Project
+                            <ArrowRight size={18} />
+                          </Link>
+                        </div>
+
+                      </div>
+                    </div>
+
+                  </div>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </div>
       {/* ═══ SWIPER CAROUSEL ═══ */}
       <div className="w-full max-w-7xl overflow-hidden mx-auto px-5 md:px-8 relative z-10">
         <Swiper
