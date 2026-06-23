@@ -127,15 +127,6 @@ export default function CategoryPage() {
         <div className="absolute inset-0 bg-gradient-to-b from-[#002253]/95 via-[#002253]/85 to-[#f8f9fb]" />
 
         <div className="relative z-10 mx-auto w-full max-w-7xl px-4 py-14 md:px-8 md:py-20">
-          {/* Breadcrumb */}
-          <nav className="hero-reveal mb-6 flex flex-wrap items-center gap-2 text-xs uppercase tracking-wider text-gray-300">
-            <Link href="/" className="transition-colors hover:text-white">Home</Link>
-            <span>/</span>
-            <Link href="/categories" className="transition-colors hover:text-white">Categories</Link>
-            <span>/</span>
-            <span className="text-[#FF8B28]">{categoryInfo.label}</span>
-          </nav>
-
           <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
             <div>
               <span className="hero-reveal mb-3 inline-block text-xs font-bold uppercase tracking-[0.25em] text-[#FF8B28]">
@@ -196,7 +187,7 @@ export default function CategoryPage() {
                 <img
                   src={product.image}
                   alt={product.name}
-                  className="h-[70%] w-[70%] object-contain transition-transform duration-500 group-hover:scale-110"
+                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
                 />
                 <span className="absolute right-3 top-3 rounded-full bg-[#002253] px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-white">
                   {product.condition}

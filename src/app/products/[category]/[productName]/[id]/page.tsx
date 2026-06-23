@@ -105,24 +105,7 @@ export default function ProductDetailPage() {
   return (
     <main ref={pageRef} className="min-h-screen bg-[#f8f9fb] font-sans">
 
-      {/* ── Breadcrumb ────────────────────────────────────────────────────── */}
-      <div className="bg-[#002253] px-4 py-4 text-white md:px-8">
-        <div className="mx-auto max-w-7xl">
-          <nav className="flex flex-wrap items-center gap-2 text-xs uppercase tracking-wider text-gray-400">
-            <Link href="/" className="transition-colors hover:text-white">Home</Link>
-            <span>/</span>
-            <Link href="/categories" className="transition-colors hover:text-white">Categories</Link>
-            <span>/</span>
-            <Link href={`/products/${category}`} className="transition-colors hover:text-white">
-              {categoryInfo.label}
-            </Link>
-            <span>/</span>
-            <span className="text-[#FF8B28]">{product.name}</span>
-          </nav>
-        </div>
-      </div>
-
-      <div className="mx-auto max-w-7xl px-4 py-8 md:px-8 md:py-12">
+      <div className="mx-auto max-w-7xl px-4 pb-8 pt-24 md:px-8 md:pb-12 md:pt-32">
 
         {/* Back link */}
         <Link href={`/products/${category}`}
