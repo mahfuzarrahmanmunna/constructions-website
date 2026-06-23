@@ -7,8 +7,11 @@ import { FaYoutube, FaXTwitter, FaFacebook, FaLinkedin } from "react-icons/fa6";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import toast from "react-hot-toast";
+import dynamic from "next/dynamic";
 
-gsap.registerPlugin(ScrollTrigger);
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 // --- Color Palette ---
 const COLORS = {
@@ -17,6 +20,37 @@ const COLORS = {
   orange: "#E55503",
   orangeLight: "#FF8B28",
 };
+
+// Same interactive Bangladesh map (8 division markers) used on the home page.
+// Loaded client-side only because Leaflet needs the browser `window`.
+const MapContent = dynamic(
+  () => import("@/app/components/BangladeshMapSection/MapContent"),
+  {
+    ssr: false,
+    loading: () => (
+      <div
+        className="flex h-[500px] w-full items-center justify-center rounded-2xl"
+        style={{ backgroundColor: "rgba(0,34,83,0.03)" }}
+      >
+        <div className="flex flex-col items-center gap-3">
+          <div
+            className="h-8 w-8 animate-spin rounded-full border-2 border-t-transparent"
+            style={{
+              borderColor: COLORS.orange,
+              borderTopColor: "transparent",
+            }}
+          />
+          <p
+            className="text-sm font-medium"
+            style={{ color: "rgba(0,34,83,0.4)" }}
+          >
+            Loading Map...
+          </p>
+        </div>
+      </div>
+    ),
+  },
+);
 
 // --- Mock Data ---
 const hotlines = [
@@ -43,6 +77,8 @@ const contactDetails = {
 };
 
 export default function ContactPage() {
+  const sectionRef = useRef<HTMLDivElement>(null);
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -123,6 +159,8 @@ export default function ContactPage() {
           subject: "",
           message: "",
         });
+      } else {
+        toast.error(data.message || "Failed to send message");
       }
     } catch (error) {
       console.log(error);
@@ -159,7 +197,7 @@ export default function ContactPage() {
         </div>
       </div>
 
-          {/* MAIN CONTENT SECTION */}
+      {/* MAIN CONTENT SECTION */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-20 lg:py-28 -mt-16 relative z-20">
         <div className="info-grid grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8">
           {/* --- LEFT COLUMN --- */}
@@ -429,7 +467,6 @@ export default function ContactPage() {
               Open in Maps <ArrowRight size={12} />
             </a>
           </div>
-
 
           {/* Map Iframe */}
           <div className="relative w-full h-[350px] sm:h-[450px] bg-slate-100">
