@@ -7,15 +7,11 @@ import { FaYoutube, FaXTwitter, FaFacebook, FaLinkedin } from "react-icons/fa6";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import toast from "react-hot-toast";
-import gsap from "gsap";
-import ScrollTrigger from "gsap/ScrollTrigger";
 import dynamic from "next/dynamic";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
-
-gsap.registerPlugin(ScrollTrigger);
 
 // --- Color Palette ---
 const COLORS = {
@@ -164,7 +160,6 @@ export default function ContactPage() {
           message: "",
         });
       } else {
-        // Surface validation / server failures instead of silently ignoring them.
         toast.error(data.message || "Failed to send message");
       }
     } catch (error) {
@@ -200,11 +195,9 @@ export default function ContactPage() {
             to our global team today.
           </p>
         </div>
-      </section>
+      </div>
 
-      {/* =========================
-          MAIN CONTENT SECTION
-          ========================= */}
+      {/* MAIN CONTENT SECTION */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-20 lg:py-28 -mt-16 relative z-20">
         <div className="info-grid grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8">
           {/* --- LEFT COLUMN --- */}
