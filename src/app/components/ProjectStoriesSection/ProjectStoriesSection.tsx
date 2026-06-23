@@ -9,6 +9,7 @@ import { caseStudies } from "@/app/ourWorks/casesData";
 
 import "swiper/css";
 import "swiper/css/navigation";
+import Link from "next/link";
 
 const COLORS = {
   navy: "#002253",
@@ -67,7 +68,7 @@ export default function RecentProjectsSection() {
 
           {/* Navigation Arrows + View All */}
           <div className="flex items-center gap-4">
-            <a
+            <Link
               href="/ourWorks"
               className="hidden sm:inline-flex items-center gap-2 text-sm font-bold uppercase tracking-wider transition-colors duration-300 mr-2"
               style={{ color: COLORS.navy }}
@@ -78,7 +79,7 @@ export default function RecentProjectsSection() {
             >
               View All
               <ArrowRight size={16} />
-            </a>
+            </Link>
 
             <div className="flex items-center gap-2">
               <div
