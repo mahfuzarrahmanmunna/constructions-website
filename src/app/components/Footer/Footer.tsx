@@ -25,18 +25,26 @@ const socialLinks = [
 export default function Footer() {
   return (
     <footer
-      className="relative"
-      style={{ backgroundColor: "#ffffff", color: COLORS.navyDark }}
+      className="relative bg-white pt-12 overflow-hidden"
+      style={{ color: COLORS.navyDark }}
     >
+      <div className="absolute bottom-0 left-0 w-full h-auto pointer-events-none z-0">
+        <img
+          src="/footer/footer.PNG"
+          alt=""
+          className="w-full h-52 object-bottom"
+        />
+      </div>
+
       {/* top orange line */}
       <div
-        className="h-px w-full opacity-80"
+        className="h-px w-full opacity-80 relative z-10"
         style={{
           background: `linear-gradient(to right, transparent, ${COLORS.orange}, transparent)`,
         }}
       />
 
-      <div className="relative max-w-7xl mx-auto px-6 md:px-12 lg:px-20">
+      <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-12 lg:px-20">
         {/* ═══ DESKTOP: full 4-column footer ═══ */}
         <div className="hidden md:block pt-16 pb-8">
           <div className="grid grid-cols-4 gap-8 mb-14">

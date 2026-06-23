@@ -44,7 +44,7 @@ const stats = [
 export default function BangladeshMapSection() {
   return (
     <section
-      className="relative w-full px-4 md:px-8"
+      className="relative w-full py-24 px-4 md:px-8"
       style={{ backgroundColor: "#ffffff" }}
     >
       {/* subtle top border accent */}

@@ -56,7 +56,7 @@ export default function RecentProjectsSection() {
   ];
 
   return (
-    <section className="relative overflow-hidden bg-[#ffffff] pt-16 sm:pt-24 pb-16 sm:pb-24">
+    <section className="relative overflow-hidden bg-[#ffffff]  pb-16 sm:pb-24">
       {/* Decorative accents */}
       <div
         className="absolute -top-60 -left-60 w-[500px] h-[500px] rounded-full pointer-events-none opacity-[0.04]"

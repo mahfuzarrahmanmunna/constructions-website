@@ -103,7 +103,7 @@ export default function OurWorksPage() {
     <main className="w-full font-sans text-[#002253] bg-slate-50 min-h-screen pb-20">
       {/* ── SANY-STYLE HERO BANNER (case-section-0) ── */}
       <section
-        className="relative w-full h-[45vh] min-h-[350px] flex flex-col justify-center items-center overflow-hidden bg-cover bg-center text-white"
+        className="relative w-full h-[45vh] min-h-[520px] flex flex-col justify-center items-center overflow-hidden bg-cover bg-center text-white"
         style={{
           backgroundImage:
             "url('https://images.unsplash.com/photo-1581094288338-2314dddb7ece?q=80&w=2000&auto=format&fit=crop')",
@@ -149,7 +149,7 @@ export default function OurWorksPage() {
       </section>
 
       {/* ── SANY-STYLE PRODUCT CHOOSE BAR ── */}
-      <div className="bg-white border-b border-slate-200/80 py-5 px-6 md:px-12 sticky top-[80px] z-30 shadow-[0_2px_15px_rgba(0,34,83,0.04)]">
+      <div className="bg-white border-b border-slate-200/80 py-5 px-6 md:px-12 sticky top-[118px] z-30 shadow-[0_2px_15px_rgba(0,34,83,0.04)]">
         <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-4">
           <div className="text-sm font-extrabold uppercase tracking-widest text-[#002253] flex items-center gap-2">
             <span className="w-2.5 h-4 bg-[#E55503] block rounded-sm"></span>
