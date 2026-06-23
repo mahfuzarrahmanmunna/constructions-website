@@ -10,6 +10,7 @@ export interface CaseStudy {
   client: string;
   stats: string;
   image: string;
+  youtubeUrl?: string;
   isFeatured: boolean;
 }
 
@@ -27,6 +28,7 @@ export const caseStudies: CaseStudy[] = [
     duration: "28 Months",
     stats: "8.5 km Overhead Spans",
     image: "/images/ourWorks/elevated-expressway.jpg",
+    youtubeUrl: "https://www.youtube.com/watch?v=YOUR_VIDEO_ID",
     isFeatured: true,
   },
   {
@@ -41,6 +43,7 @@ export const caseStudies: CaseStudy[] = [
     duration: "18 Months",
     stats: "12 km Drainage Laid",
     image: "/images/ourWorks/dhaka-road-project.png",
+    youtubeUrl: "https://www.youtube.com/watch?v=YOUR_VIDEO_ID",
     isFeatured: false,
   },
   {
@@ -55,6 +58,7 @@ export const caseStudies: CaseStudy[] = [
     duration: "36 Months",
     stats: "72 Deep Piles Anchored",
     image: "/images/ourWorks/bridge-project.jpg",
+    youtubeUrl: "https://www.youtube.com/watch?v=YOUR_VIDEO_ID",
     isFeatured: false,
   },
   {
@@ -69,6 +73,7 @@ export const caseStudies: CaseStudy[] = [
     duration: "24 Months",
     stats: "32 km Mountain Road",
     image: "/images/ourWorks/mountain-road-project.jpg",
+    youtubeUrl: "https://www.youtube.com/watch?v=YOUR_VIDEO_ID",
     isFeatured: false,
   },
   {
@@ -83,6 +88,7 @@ export const caseStudies: CaseStudy[] = [
     duration: "22 Months",
     stats: "8 Structural Blocks",
     image: "/images/ourWorks/elevated-expressway.jpg",
+    youtubeUrl: "https://www.youtube.com/watch?v=YOUR_VIDEO_ID",
     isFeatured: false,
   },
 
@@ -99,6 +105,7 @@ export const caseStudies: CaseStudy[] = [
     duration: "Ongoing (Sourcing since 2021)",
     stats: "100% Quality Pass Rate",
     image: "/images/ourWorks/442876.jpg",
+    youtubeUrl: "https://www.youtube.com/watch?v=YOUR_VIDEO_ID",
     isFeatured: true,
   },
   {
@@ -113,6 +120,7 @@ export const caseStudies: CaseStudy[] = [
     duration: "32 Months (Ongoing)",
     stats: "450k Tons Delivered",
     image: "/images/ourWorks/bridge-project.jpg",
+    youtubeUrl: "https://www.youtube.com/watch?v=YOUR_VIDEO_ID",
     isFeatured: false,
   },
   {
@@ -127,6 +135,7 @@ export const caseStudies: CaseStudy[] = [
     duration: "24 Months",
     stats: "120k m³ Concrete Sourced",
     image: "/images/ourWorks/dhaka-road-project.png",
+    youtubeUrl: "https://www.youtube.com/watch?v=YOUR_VIDEO_ID",
     isFeatured: false,
   },
 
@@ -143,6 +152,7 @@ export const caseStudies: CaseStudy[] = [
     duration: "15 Months",
     stats: "4,500+ Operating Hours",
     image: "/images/ourWorks/piling-works.jpg",
+    youtubeUrl: "https://www.youtube.com/watch?v=YOUR_VIDEO_ID",
     isFeatured: false,
   },
   {
@@ -157,6 +167,7 @@ export const caseStudies: CaseStudy[] = [
     duration: "20 Months",
     stats: "18,000+ Safe Hours",
     image: "/images/ourWorks/elevated-expressway.jpg",
+    youtubeUrl: "https://www.youtube.com/watch?v=YOUR_VIDEO_ID",
     isFeatured: false,
   },
   {
@@ -171,6 +182,7 @@ export const caseStudies: CaseStudy[] = [
     duration: "30 Months",
     stats: "36 Active Heavy Rigs",
     image: "/images/ourWorks/mountain-road-project.jpg",
+    youtubeUrl: "https://www.youtube.com/watch?v=YOUR_VIDEO_ID",
     isFeatured: false,
   },
   
@@ -187,6 +199,7 @@ export const caseStudies: CaseStudy[] = [
     duration: "20 Months",
     stats: "350k m² Geotextiles Sourced",
     image: "/images/ourWorks/elevated-expressway.jpg",
+    youtubeUrl: "https://www.youtube.com/watch?v=YOUR_VIDEO_ID",
     isFeatured: false,
   },
   {
@@ -201,6 +214,7 @@ export const caseStudies: CaseStudy[] = [
     duration: "26 Months",
     stats: "180k Tons Cement Sourced",
     image: "/images/ourWorks/bridge-project.jpg",
+    youtubeUrl: "https://www.youtube.com/watch?v=YOUR_VIDEO_ID",
     isFeatured: false,
   },
 
@@ -217,6 +231,7 @@ export const caseStudies: CaseStudy[] = [
     duration: "24 Months",
     stats: "12,000+ Safe Work Hours",
     image: "/images/ourWorks/piling-works.jpg",
+    youtubeUrl: "https://www.youtube.com/watch?v=YOUR_VIDEO_ID",
     isFeatured: false,
   },
   {
@@ -231,6 +246,7 @@ export const caseStudies: CaseStudy[] = [
     duration: "18 Months (Ongoing)",
     stats: "15 Heavy Rigs Deployed",
     image: "/images/ourWorks/dhaka-road-project.png",
+    youtubeUrl: "https://www.youtube.com/watch?v=YOUR_VIDEO_ID",
     isFeatured: false,
   },
 ];

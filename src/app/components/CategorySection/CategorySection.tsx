@@ -110,7 +110,6 @@ export default function CategorySection() {
               style={{ fontFamily: "'Inter', sans-serif" }}>
               Equipment
             </p>
-            <div className="h-[3px] w-10 bg-[#E55503] mt-1.5 mb-2" />
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#002253] leading-tight">
               Sale and Rental
             </h2>

@@ -6,12 +6,14 @@ import { useRouter } from "next/navigation";
 import { Search, X, Menu } from "lucide-react";
 import Image from "next/image";
 
-const mainLinks = ["Home", "About", "Services", "Projects", "Blog", "Contact"];
+const mainLinks = ["Home", "Products", "Projects",  "Services", "About", "Contact"];
 
 const getLinkHref = (link: string) => {
   switch (link) {
     case "Home":
       return "/";
+    case "Products":
+      return "/products";
     case "About":
       return "/about";
     case "Services":
@@ -19,7 +21,7 @@ const getLinkHref = (link: string) => {
     case "Projects":
       return "/ourWorks";
     case "Blog":
-      return "/blog";
+      return "/blogs";
     case "Contact":
       return "/contact";
     default:

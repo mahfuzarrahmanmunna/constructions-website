@@ -12,11 +12,11 @@ export default function LayoutWrapper({
 }) {
   const pathname = usePathname();
 
-  // Check if the current path starts with /admin
-  const isAdminRoute = pathname?.startsWith("/admin");
+  // If it is /admin or /login, only render the children (no nav, footer, or bottom bar)
+  const isHiddenLayoutRoute =
+    pathname?.startsWith("/admin") || pathname === "/login";
 
-  // If it is /admin, only render the children. Otherwise, render Nav + Content + Footer.
-  if (isAdminRoute) {
+  if (isHiddenLayoutRoute) {
     return <>{children}</>;
   }
 
@@ -25,7 +25,7 @@ export default function LayoutWrapper({
       <Navbar1 />
       {children}
       <Footer />
-      <MobileBottomNav/>
+      <MobileBottomNav />
     </>
   );
 }

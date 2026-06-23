@@ -6,18 +6,22 @@ import BangladeshMapSection from './components/BangladeshMapSection/BangladeshMa
 import ServicesSection from './components/ServicesSection/ServicesSection'
 import ProjectStoriesSection from './components/ProjectStoriesSection/ProjectStoriesSection'
 import HeroBanner1 from './components/HeroBanner/HeroBanner1'
+import RecentProjectsSection from './components/ProjectStoriesSection/ProjectStoriesSection'
+import CTASection1 from './components/CtaSection/CTASection1'
 
 export default function Home() {
   return (
     <main className="">
-        <HeroBanner1 />
-        <ServicesSection />
-        <ProjectStoriesSection />
-        <CostEstimatorSection />
-        <CategorySection />
-        <OurProcessSection />
-        <BangladeshMapSection />
-        <CtaSection />
+      <HeroBanner1 />
+      <ProjectStoriesSection />
+      <CTASection1/>
+{/* <RecentProjectsSection/> */}
+      <ServicesSection />
+      <CostEstimatorSection />
+      <CategorySection />
+      <OurProcessSection />
+      <BangladeshMapSection />
+      <CtaSection />
     </main>
   );
 }

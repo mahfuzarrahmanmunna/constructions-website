@@ -145,7 +145,7 @@ export default function ServicesSection() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="bg-white py-24 text-slate-900">
+    <section ref={sectionRef} className="bg-white text-slate-900">
       <div className="mx-auto w-full max-w-[1600px] px-4 lg:px-8">
 
         {/* Section Header */}
