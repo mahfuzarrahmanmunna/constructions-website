@@ -106,10 +106,10 @@ export default function OurWorksPage() {
         className="relative w-full h-[45vh] min-h-[520px] flex flex-col justify-center items-center overflow-hidden bg-cover bg-center text-white"
         style={{
           backgroundImage:
-            "url('https://images.unsplash.com/photo-1581094288338-2314dddb7ece?q=80&w=2000&auto=format&fit=crop')",
+            "url('/background/ourworks.jpg')",
         }}
       >
-        <div className="absolute inset-0 bg-[#002253]/85 z-[1]" />
+        {/* <div className="absolute inset-0 bg-[#ffffff]/85 z-[1]" /> */}
         
         <div className="relative z-10 text-center px-6 max-w-4xl">
           <motion.span
@@ -125,7 +125,7 @@ export default function OurWorksPage() {
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-4xl md:text-6xl font-black uppercase tracking-wider mb-4 leading-tight"
+            className="text-4xl md:text-6xl font-black uppercase tracking-wider mb-4 leading-tight text-[#002253]"
           >
             Construction Cases
           </motion.h1>
@@ -149,7 +149,7 @@ export default function OurWorksPage() {
       </section>
 
       {/* ── SANY-STYLE PRODUCT CHOOSE BAR ── */}
-      <div className="bg-white border-b border-slate-200/80 py-5 px-6 md:px-12 sticky top-[118px] z-30 shadow-[0_2px_15px_rgba(0,34,83,0.04)]">
+      <div className="bg-white border-b border-slate-200/80 py-5 px-6 md:px-12 sticky top-0 z-30 shadow-[0_2px_15px_rgba(0,34,83,0.04)]">
         <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-4">
           <div className="text-sm font-extrabold uppercase tracking-widest text-[#002253] flex items-center gap-2">
             <span className="w-2.5 h-4 bg-[#E55503] block rounded-sm"></span>

@@ -216,7 +216,7 @@ export default function RecentProjectsSection() {
 
               <div className="mt-6 sm:mt-8">
                 <Link
-                  href={`/ourWorks/${featured.id}`}
+                  href={`/ourWorks`}
                   className="inline-flex w-fit items-center gap-2 rounded-xl px-6 py-3 text-sm font-bold text-white transition-all duration-300 hover:shadow-lg hover:shadow-orange-500/20"
                   style={{ backgroundColor: COLORS.orange }}
                   onMouseEnter={(e) =>

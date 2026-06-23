@@ -14,7 +14,7 @@ export default function Home() {
     <main className="bg-white">
       <HeroBanner1 />
       <ProjectStoriesSection />
-      <CTASection1/>
+      {/* <CTASection1/> */}
 {/* <RecentProjectsSection/> */}
       <ServicesSection />
       <CostEstimatorSection />

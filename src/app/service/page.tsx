@@ -35,13 +35,13 @@ export default function ServicePage() {
     <div className="bg-white">
       {/* HERO SECTION */}
       <section
-        className="relative w-full h-[45vh] min-h-[450px] mt-30 flex flex-col justify-center items-center overflow-hidden bg-cover bg-white bg-center text-[#002253]"
+        className="relative w-full h-[45vh] min-h-[550px] flex flex-col justify-center items-center overflow-hidden bg-cover bg-white bg-center text-[#002253]"
         style={{
           backgroundImage:
-            "url('https://images.unsplash.com/photo-1581094288338-2314dddb7ece?q=80&w=2000&auto=format&fit=crop')",
+            "url('/background/service.jpg')",
         }}
       >
-        <div className="absolute inset-0 bg-white/85 z-[1]" />
+        {/* <div className="absolute inset-0 bg-white/85 z-[1]" /> */}
 
         <div className="relative z-10 text-center px-6 max-w-4xl">
           <motion.span
@@ -59,7 +59,7 @@ export default function ServicePage() {
             transition={{ duration: 0.6, delay: 0.1 }}
             className="text-4xl md:text-6xl font-black uppercase tracking-wider mb-4 leading-tight"
           >
-            Integrated Infrastructure & Construction Solutions
+            Construction Solutions
           </motion.h1>
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}

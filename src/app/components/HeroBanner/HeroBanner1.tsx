@@ -324,7 +324,7 @@ export default function HeroBanner() {
   return (
     <section
       ref={sectionRef}
-      className="relative min-h-screen pt-42 overflow-hidden flex items-center py-24 "
+      className="relative min-h-screen pt-36 overflow-hidden flex items-center py-24 "
       style={{ backgroundColor: "#ffffff" }}
     >
       {/* ═══ MAIN GRID ═══ */}
