@@ -4,7 +4,14 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { getCategoryInfo, getProduct } from "@/lib/categoryData";
 import { notFound } from "next/navigation";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import RequestQuoteModal from "@/app/components/RequestQuoteForm/RequestQuoteForm";
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 // ─── Icons ────────────────────────────────────────────────────────────────────
 const CheckIcon = () => (
@@ -29,19 +36,63 @@ const MailIcon = () => (
   </svg>
 );
 
+const ArrowRightIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+    fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+    <line x1="5" y1="12" x2="19" y2="12" />
+    <polyline points="12 5 19 12 12 19" />
+  </svg>
+);
+
 // ─── Page ─────────────────────────────────────────────────────────────────────
 export default function ProductDetailPage() {
   const params = useParams();
-  const category    = params.category as string;
+  const category = params.category as string;
   // productName param is in the URL for readability but we fetch by id
-  const id          = Number(params.id);
+  const id = Number(params.id);
+  const pageRef = useRef<HTMLDivElement>(null);
 
   const categoryInfo = getCategoryInfo(category);
-  const product      = getProduct(category, id);
-
-  if (!categoryInfo || !product) notFound();
+  const product = getProduct(category, id);
 
   const [inquiryOpen, setInquiryOpen] = useState(false);
+
+  useEffect(() => {
+    if (!categoryInfo || !product) return;
+    const ctx = gsap.context(() => {
+      gsap.from(".detail-reveal", {
+        y: 40,
+        opacity: 0,
+        duration: 0.8,
+        stagger: 0.12,
+        ease: "power3.out",
+        clearProps: "all",
+      });
+
+      gsap.from(".related-reveal", {
+        y: 50,
+        opacity: 0,
+        duration: 0.7,
+        stagger: 0.1,
+        ease: "power3.out",
+        clearProps: "all",
+        scrollTrigger: {
+          trigger: ".related-grid",
+          start: "top bottom-=80",
+          once: true,
+        },
+      });
+    }, pageRef);
+
+    const refreshTimer = window.setTimeout(() => ScrollTrigger.refresh(), 1200);
+
+    return () => {
+      clearTimeout(refreshTimer);
+      ctx.revert();
+    };
+  }, [categoryInfo, product, id]);
+
+  if (!categoryInfo || !product) notFound();
 
   // Related products (exclude current)
   const relatedProducts = categoryInfo.products
@@ -52,58 +103,54 @@ export default function ProductDetailPage() {
   const nameToSlug = (name: string) => name.trim().replace(/\s+/g, "-");
 
   return (
-    <main className="min-h-screen bg-[#f8f9fb] font-sans">
+    <main ref={pageRef} className="min-h-screen bg-[#f8f9fb] font-sans">
 
       {/* ── Breadcrumb ────────────────────────────────────────────────────── */}
-      <div className="bg-[#002253] text-white py-4 px-4 md:px-8">
-        <div className="max-w-7xl mx-auto">
-          <nav className="flex items-center gap-2 text-xs text-gray-400 uppercase tracking-wider flex-wrap">
-            <Link href="/" className="hover:text-white transition-colors">Home</Link>
+      <div className="bg-[#002253] px-4 py-4 text-white md:px-8">
+        <div className="mx-auto max-w-7xl">
+          <nav className="flex flex-wrap items-center gap-2 text-xs uppercase tracking-wider text-gray-400">
+            <Link href="/" className="transition-colors hover:text-white">Home</Link>
             <span>/</span>
-            <Link href="/categories" className="hover:text-white transition-colors">Categories</Link>
+            <Link href="/categories" className="transition-colors hover:text-white">Categories</Link>
             <span>/</span>
-            <Link href={`/products/${category}`}
-              className="hover:text-white transition-colors">{categoryInfo.label}</Link>
+            <Link href={`/products/${category}`} className="transition-colors hover:text-white">
+              {categoryInfo.label}
+            </Link>
             <span>/</span>
             <span className="text-[#FF8B28]">{product.name}</span>
           </nav>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 md:px-8 py-8">
+      <div className="mx-auto max-w-7xl px-4 py-8 md:px-8 md:py-12">
 
         {/* Back link */}
         <Link href={`/products/${category}`}
-          className="inline-flex items-center gap-2 text-sm font-semibold text-[#002253] hover:text-[#E55503] transition-colors mb-8">
-          ← Back to {categoryInfo.label}
+          className="group mb-8 inline-flex items-center gap-2 text-sm font-semibold text-[#002253] transition-colors hover:text-[#E55503]">
+          <span className="transition-transform duration-300 group-hover:-translate-x-1">←</span>
+          Back to {categoryInfo.label}
         </Link>
 
         {/* ── Main Product Panel ────────────────────────────────────────── */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+        <div className="mb-14 grid grid-cols-1 gap-8 lg:grid-cols-2">
 
           {/* Left — Image */}
-          <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden">
-            <div className="relative bg-[#f0f0f0] h-72 md:h-96 flex items-center justify-center p-8">
+          <div className="detail-reveal overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-sm">
+            <div className="relative flex h-72 items-center justify-center overflow-hidden bg-[#f0f0f0] p-8 md:h-96">
               <img
                 src={product.image}
                 alt={product.name}
-                className="w-full h-full object-contain"
+                className="h-full w-full object-contain transition-transform duration-500 hover:scale-105"
               />
-              <span className={`absolute top-4 left-4 text-xs font-bold uppercase tracking-wider px-3 py-1.5 rounded-full ${
-                product.condition === "New"
-                  ? "bg-green-100 text-green-700"
-                  : product.condition === "Used"
-                  ? "bg-yellow-100 text-yellow-700"
-                  : "bg-blue-100 text-blue-700"
-              }`}>
+              <span className="absolute left-4 top-4 rounded-full bg-[#002253] px-3 py-1.5 text-xs font-bold uppercase tracking-wider text-white">
                 {product.condition}
               </span>
             </div>
-            <div className="flex items-center justify-between px-6 py-4 border-t border-gray-100">
-              <span className="text-xs text-gray-400 uppercase tracking-wider font-semibold">
+            <div className="flex items-center justify-between border-t border-slate-100 px-6 py-4">
+              <span className="text-xs font-semibold uppercase tracking-wider text-gray-400">
                 Model: <span className="text-[#002253]">{product.model}</span>
               </span>
-              <span className="text-xs text-gray-400 uppercase tracking-wider font-semibold">
+              <span className="text-xs font-semibold uppercase tracking-wider text-gray-400">
                 Year: <span className="text-[#002253]">{product.year}</span>
               </span>
               <span className={`text-xs font-bold uppercase ${product.available ? "text-green-600" : "text-red-500"}`}>
@@ -113,30 +160,32 @@ export default function ProductDetailPage() {
           </div>
 
           {/* Right — Details */}
-          <div className="flex flex-col">
-            <p className="text-xs text-[#E55503] font-bold uppercase tracking-widest mb-2">
+          <div className="detail-reveal flex flex-col">
+            <span className="text-sm font-bold uppercase tracking-widest text-[#E55503]">
               {categoryInfo.label}
-            </p>
-            <h1 className="text-2xl md:text-3xl font-extrabold text-[#002253] mb-3 leading-tight">
+            </span>
+            <span className="mb-3 mt-1.5 block h-[3px] w-10 rounded-full bg-[#E55503]" />
+            <h1 className="mb-3 text-2xl font-extrabold leading-tight tracking-tight text-[#002253] md:text-3xl">
               {product.name}
             </h1>
-            <p className="text-gray-500 text-sm leading-relaxed mb-6">{product.description}</p>
+            <p className="mb-6 text-sm leading-relaxed text-gray-500">{product.description}</p>
 
             {/* Price */}
-            <div className="bg-[#002253] rounded-xl px-6 py-4 mb-6 flex items-center justify-between">
-              <span className="text-gray-300 text-sm font-semibold">Starting Price</span>
-              <span className="text-2xl font-extrabold text-white">{product.price}</span>
+            <div className="relative mb-6 flex items-center justify-between overflow-hidden rounded-xl bg-[#002253] px-6 py-4">
+              <div className="pointer-events-none absolute -right-10 -top-10 h-32 w-32 rounded-full bg-[#E55503]/20 blur-2xl" />
+              <span className="relative text-sm font-semibold text-gray-300">Starting Price</span>
+              <span className="relative text-2xl font-extrabold text-white">{product.price}</span>
             </div>
 
             {/* Specs */}
-            <div className="bg-white rounded-xl border border-gray-100 p-5 mb-6">
-              <h3 className="text-xs font-bold text-[#002253] uppercase tracking-widest mb-4">
+            <div className="mb-6 rounded-xl border border-slate-100 bg-white p-5 shadow-sm">
+              <h3 className="mb-4 text-xs font-bold uppercase tracking-widest text-[#002253]">
                 Key Specifications
               </h3>
               <div className="grid grid-cols-1 gap-3">
                 {product.specs.map((spec) => (
                   <div key={spec.label}
-                    className="flex items-center justify-between py-2 border-b border-gray-50 last:border-0">
+                    className="flex items-center justify-between border-b border-gray-50 py-2 last:border-0">
                     <span className="flex items-center gap-2 text-sm text-gray-500">
                       <span className="text-[#E55503]"><CheckIcon /></span>
                       {spec.label}
@@ -148,15 +197,24 @@ export default function ProductDetailPage() {
             </div>
 
             {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-3 mt-auto">
+            <div className="mt-auto flex flex-col gap-3 sm:flex-row">
+              {/* Get a Quote — orange with shine sweep */}
               <button
                 onClick={() => setInquiryOpen(true)}
-                className="flex-1 bg-[#E55503] hover:bg-[#FF8B28] text-white py-3.5 rounded-xl font-extrabold text-sm uppercase tracking-wider transition-colors duration-300 flex items-center justify-center gap-2">
-                <MailIcon /> Get a Quote
+                className="group relative flex-1 overflow-hidden rounded-xl bg-[#E55503] py-3.5 text-sm font-extrabold uppercase tracking-wider text-white shadow-lg shadow-[#E55503]/25 transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#cc4a03] hover:shadow-xl hover:shadow-[#E55503]/30">
+                <span className="pointer-events-none absolute inset-0 -translate-x-[150%] skew-x-12 bg-gradient-to-r from-transparent via-white/45 to-transparent transition-transform duration-700 ease-out group-hover:translate-x-[150%]" />
+                <span className="relative z-10 flex items-center justify-center gap-2">
+                  <MailIcon /> Get a Quote
+                </span>
               </button>
+
+              {/* Call Now — outline that fills with a shine sweep */}
               <a href="tel:+8801700000000"
-                className="flex-1 border-2 border-[#002253] text-[#002253] hover:bg-[#002253] hover:text-white py-3.5 rounded-xl font-extrabold text-sm uppercase tracking-wider transition-all duration-300 flex items-center justify-center gap-2">
-                <PhoneIcon /> Call Now
+                className="group relative flex-1 overflow-hidden rounded-xl border-2 border-[#002253] py-3.5 text-sm font-extrabold uppercase tracking-wider text-[#002253] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#002253] hover:text-white">
+                <span className="pointer-events-none absolute inset-0 -translate-x-[150%] skew-x-12 bg-gradient-to-r from-transparent via-white/35 to-transparent transition-transform duration-700 ease-out group-hover:translate-x-[150%]" />
+                <span className="relative z-10 flex items-center justify-center gap-2">
+                  <PhoneIcon /> Call Now
+                </span>
               </a>
             </div>
           </div>
@@ -165,28 +223,36 @@ export default function ProductDetailPage() {
         {/* ── Related Products ─────────────────────────────────────────────── */}
         {relatedProducts.length > 0 && (
           <section>
-            <div className="flex items-center gap-3 mb-6">
-              <div className="h-5 w-1 bg-[#E55503] rounded-full" />
-              <h2 className="text-xl font-extrabold text-[#002253]">
+            <div className="mb-6">
+              <span className="text-sm font-bold uppercase tracking-widest text-[#E55503]">
+                You may also like
+              </span>
+              <span className="mb-2 mt-1.5 block h-[3px] w-10 rounded-full bg-[#E55503]" />
+              <h2 className="text-xl font-extrabold tracking-tight text-[#002253] md:text-2xl">
                 Other {categoryInfo.label} Models
               </h2>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            <div className="related-grid grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
               {relatedProducts.map((rel) => (
                 <Link key={rel.id}
                   // ✅ Route: /products/concrete-machinery/Concrete-Pump-Truck/1
                   href={`/products/${category}/${nameToSlug(rel.name)}/${rel.id}`}
-                  className="group bg-white rounded-xl border border-gray-100 hover:border-[#E55503]/30 hover:shadow-lg transition-all duration-300 flex gap-4 p-4 items-center">
-                  <div className="w-20 h-20 bg-[#f0f0f0] rounded-lg flex items-center justify-center shrink-0 overflow-hidden">
+                  className="related-reveal group flex items-center gap-4 rounded-2xl border border-slate-100 bg-white p-4 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#E55503] hover:shadow-xl hover:shadow-[#E55503]/10">
+                  <div className="flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-[#f0f0f0]">
                     <img src={rel.image} alt={rel.name}
-                      className="w-[80%] h-[80%] object-contain group-hover:scale-110 transition-transform duration-300" />
+                      className="h-[80%] w-[80%] object-contain transition-transform duration-300 group-hover:scale-110" />
                   </div>
                   <div className="min-w-0">
-                    <p className="text-[10px] text-[#E55503] font-bold uppercase tracking-wider mb-0.5">{rel.model}</p>
-                    <h4 className="text-sm font-extrabold text-[#002253] group-hover:text-[#E55503] transition-colors leading-tight mb-1 truncate">
+                    <p className="mb-0.5 text-[10px] font-bold uppercase tracking-wider text-[#E55503]">{rel.model}</p>
+                    <h4 className="mb-1 truncate text-sm font-extrabold leading-tight text-[#002253] transition-colors group-hover:text-[#E55503]">
                       {rel.name}
                     </h4>
-                    <p className="text-sm font-bold text-[#002253]">{rel.price}</p>
+                    <p className="flex items-center gap-1.5 text-sm font-bold text-[#002253]">
+                      {rel.price}
+                      <span className="text-[#E55503] opacity-0 transition-all duration-300 group-hover:translate-x-1 group-hover:opacity-100">
+                        <ArrowRightIcon />
+                      </span>
+                    </p>
                   </div>
                 </Link>
               ))}
@@ -195,39 +261,11 @@ export default function ProductDetailPage() {
         )}
       </div>
 
-      {/* ── Inquiry Modal ───────────────────────────────────────────────────── */}
-      {inquiryOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
-          onClick={() => setInquiryOpen(false)}>
-          <div className="bg-white rounded-2xl p-6 w-full max-w-md shadow-2xl"
-            onClick={(e) => e.stopPropagation()}>
-            <h3 className="text-lg font-extrabold text-[#002253] mb-1">Request a Quote</h3>
-            <p className="text-xs text-gray-400 mb-5">
-              {product.name} ({product.model})
-            </p>
-            <div className="space-y-3">
-              <input type="text" placeholder="Your Name"
-                className="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-[#E55503] transition-colors" />
-              <input type="email" placeholder="Email Address"
-                className="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-[#E55503] transition-colors" />
-              <input type="tel" placeholder="Phone Number"
-                className="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-[#E55503] transition-colors" />
-              <textarea placeholder="Additional requirements..."
-                rows={3}
-                className="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-[#E55503] transition-colors resize-none" />
-            </div>
-            <div className="flex gap-3 mt-5">
-              <button onClick={() => setInquiryOpen(false)}
-                className="flex-1 border border-gray-200 text-gray-500 py-3 rounded-xl text-sm font-bold hover:bg-gray-50 transition-colors">
-                Cancel
-              </button>
-              <button className="flex-1 bg-[#E55503] text-white py-3 rounded-xl text-sm font-extrabold uppercase tracking-wider hover:bg-[#FF8B28] transition-colors">
-                Send Inquiry
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      {/* ── Inquiry Modal — shared Request-a-Quote form ─────────────────────── */}
+      <RequestQuoteModal
+        isOpen={inquiryOpen}
+        onClose={() => setInquiryOpen(false)}
+      />
 
     </main>
   );
