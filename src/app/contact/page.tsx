@@ -159,9 +159,7 @@ export default function ContactPage() {
         </div>
       </div>
 
-      {/* =========================
-          MAIN CONTENT SECTION
-          ========================= */}
+          {/* MAIN CONTENT SECTION */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-20 lg:py-28 -mt-16 relative z-20">
         <div className="info-grid grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8">
           {/* --- LEFT COLUMN --- */}
@@ -431,6 +429,7 @@ export default function ContactPage() {
               Open in Maps <ArrowRight size={12} />
             </a>
           </div>
+
 
           {/* Map Iframe */}
           <div className="relative w-full h-[350px] sm:h-[450px] bg-slate-100">
