@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import Link from "next/link";
 import Image from "next/image";
 import { products } from "./productsData";
@@ -163,3 +164,16 @@ export default function ProductsPage() {
     </main>
   );
 }
+=======
+import React from 'react';
+
+const ProductPage = () => {
+    return (
+        <div>
+            
+        </div>
+    );
+};
+
+export default ProductPage;
+>>>>>>> d08188852f800dc3bd813d5231bc65ce6395ead0

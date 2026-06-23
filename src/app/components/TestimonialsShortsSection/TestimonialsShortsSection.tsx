@@ -38,15 +38,6 @@ const testimonials = [
     rating: 5,
     quote: "Excellent team, They build my dream home with great quality and on time. Highly recommended.",
   },
-
-   {
-    id: 5,
-    name: "Ahmed Sakib",
-    role: "Home Owner, Dhaka",
-    videoId: "aircAruvnKk",
-    rating: 5,
-    quote: "Excellent team, They build my dream home with great quality and on time. Highly recommended.",
-  },
 ];
 
 export default function TestimonialsShortsSection() {

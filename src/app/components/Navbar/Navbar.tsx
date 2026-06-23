@@ -26,7 +26,7 @@ const getLinkHref = (link: string) => {
     case "Projects":
       return "/ourWorks";
     case "Blog":
-      return "/blog";
+      return "/blogs";
     case "Contact":
       return "/contact";
     default:
