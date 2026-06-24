@@ -119,11 +119,253 @@ export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
                 {section.title}
               </p>
 
+<<<<<<< HEAD
               {/* Section Links */}
               <div className="space-y-1">
                 {section.links.map((link) => {
                   const isActive = pathname === link.href;
                   const Icon = link.icon;
+=======
+        <div
+          className="
+          hidden
+          md:block
+
+          p-6
+
+          border-b
+          border-white/10
+          "
+        >
+
+          <h2
+            className="
+            text-2xl
+            font-bold
+            "
+          >
+            CPL Admin
+          </h2>
+
+          <p
+            className="
+            text-sm
+            text-blue-200
+            mt-1
+            "
+          >
+            Management System
+          </p>
+
+        </div>
+
+        {/* Navigation */}
+
+        <nav className="p-4 space-y-2">
+
+          <Link
+            href="/admin/dashboard"
+            onClick={closeSidebar}
+            className="
+            flex
+            items-center
+            gap-3
+
+            px-4
+            py-3
+
+            rounded-xl
+
+            hover:bg-white/10
+
+            transition-all
+            "
+          >
+            <Home size={20} />
+            Dashboard
+          </Link>
+
+          <Link
+            href="/admin/products"
+            onClick={closeSidebar}
+            className="
+            flex
+            items-center
+            gap-3
+
+            px-4
+            py-3
+
+            rounded-xl
+
+            hover:bg-white/10
+
+            transition-all
+            "
+          >
+            <Boxes size={20} />
+            Product Management
+          </Link>
+
+ <Link
+            href="/admin/services"
+            onClick={closeSidebar}
+            className="
+            flex
+            items-center
+            gap-3
+
+            px-4
+            py-3
+
+            rounded-xl
+
+            hover:bg-white/10
+
+            transition-all
+            "
+          >
+            <Boxes size={20} />
+          Service Management
+          </Link>
+
+          <Link
+            href="/admin/inquiries"
+            onClick={closeSidebar}
+            className="
+            flex
+            items-center
+            gap-3
+
+            px-4
+            py-3
+
+            rounded-xl
+
+            hover:bg-white/10
+
+            transition-all
+            "
+          >
+            <ClipboardList size={20} />
+            Inquiry & Lead Management
+          </Link>
+          <Link
+            href="/admin/messages"
+            onClick={closeSidebar}
+            className="
+            flex
+            items-center
+            gap-3
+
+            px-4
+            py-3
+
+            rounded-xl
+
+            hover:bg-white/10
+
+            transition-all
+            "
+          >
+            <MessageSquare size={20} />
+            Contact Messages
+          </Link>
+          <Link
+            href="/admin/categories"
+            onClick={closeSidebar}
+            className="
+            flex
+            items-center
+            gap-3
+
+            px-4
+            py-3
+
+            rounded-xl
+
+            hover:bg-white/10
+
+            transition-all
+            "
+          >
+            <Users size={20} />
+         Category Management
+          </Link>
+          <Link
+            href="/admin/manage-estimates"
+            onClick={closeSidebar}
+            className="
+            flex
+            items-center
+            gap-3
+
+            px-4
+            py-3
+
+            rounded-xl
+
+            hover:bg-white/10
+
+            transition-all
+            "
+          >
+            <Users size={20} />
+         Estimate Management
+          </Link>
+
+          <Link
+  href="/admin/settings"
+  onClick={closeSidebar}
+  className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/10 transition-all"
+>
+  <Settings size={20} />
+  Site Content
+</Link>
+          <Link
+            href="/admin/users"
+            onClick={closeSidebar}
+            className="
+            flex
+            items-center
+            gap-3
+
+            px-4
+            py-3
+
+            rounded-xl
+
+            hover:bg-white/10
+
+            transition-all
+            "
+          >
+            <Users size={20} />
+            Users
+          </Link>
+
+          <Link
+            href="/admin/analytics"
+            onClick={closeSidebar}
+            className="
+            flex
+            items-center
+            gap-3
+
+            px-4
+            py-3
+
+            rounded-xl
+
+            hover:bg-white/10
+
+            transition-all
+            "
+          >
+            <LineChart size={20} />
+            Analytics
+          </Link>
+>>>>>>> 2fb456311ba253f83c71c80ae7be615387b92698
 
                   return (
                     <Link
