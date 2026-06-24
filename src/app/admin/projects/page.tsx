@@ -147,8 +147,6 @@ export default function ProjectsPage() {
   const [projects, setProjects] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
-
-  // FIX 1: Changed setEditingProduct to setEditingProject
   const [editingProject, setEditingProject] = useState<any>(null);
 
   const sensors = useSensors(
@@ -173,13 +171,11 @@ export default function ProjectsPage() {
   }, [fetchProjects]);
 
   const handleAdd = () => {
-    // FIX 2: Changed setEditingProduct to setEditingProject
     setEditingProject(null);
     setModalOpen(true);
   };
 
   const handleEdit = (project: any) => {
-    // FIX 3: Changed setEditingProduct to setEditingProject
     setEditingProject(project);
     setModalOpen(true);
   };
@@ -230,8 +226,6 @@ export default function ProjectsPage() {
     const newIndex = projects.findIndex((p) => p._id === over.id);
 
     const reordered = arrayMove(projects, oldIndex, newIndex);
-
-    // FIX 4: Changed setProducts to setProjects
     setProjects(reordered);
     toast.success("Visual order updated");
   };
@@ -257,8 +251,8 @@ export default function ProjectsPage() {
         </button>
       </div>
 
-      {/* Table Container */}
-      <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+      {/* Table Container - FIX: Removed 'overflow-hidden' here */}
+      <div className="bg-white rounded-2xl shadow-sm border border-slate-200">
         {loading ? (
           <div className="p-12 text-center text-gray-400">
             Loading projects...
@@ -324,7 +318,6 @@ export default function ProjectsPage() {
       {/* Modal Render */}
       {modalOpen && (
         <ProjectFormModal
-          // FIX 5: Changed editingProduct to editingProject
           initialData={editingProject}
           onClose={() => setModalOpen(false)}
           onSaved={fetchProjects}

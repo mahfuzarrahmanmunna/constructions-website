@@ -1,20 +1,21 @@
-import type { NextConfig } from "next";
-
-const nextConfig: NextConfig = {
+/** @type {import('next').NextConfig} */
+const nextConfig = {
   images: {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "sanyglobal-img.sany.com.cn",
-        pathname: "/**",
+        hostname: "i.ibb.co",
       },
       {
         protocol: "https",
-        hostname: "images.unsplash.com",
-        pathname: "/**",
+        hostname: "storage.googleapis.com", // Kept in case you use Firebase Storage later
+      },
+      {
+        protocol: "https",
+        hostname: "localhost",
       },
     ],
   },
 };
 
-export default nextConfig;
+module.exports = nextConfig;

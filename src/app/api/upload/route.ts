@@ -1,7 +1,4 @@
 import { NextResponse } from "next/server";
-import { writeFile, mkdir } from "fs/promises";
-import path from "path";
-import { existsSync } from "fs";
 
 export async function POST(req: Request) {
   try {
@@ -11,31 +8,34 @@ export async function POST(req: Request) {
     if (!file) {
       return NextResponse.json(
         { message: "No file uploaded" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
-    const bytes = await file.arrayBuffer();
-    const buffer = Buffer.from(bytes);
+    // Prepare data for ImgBB
+    const imgBbForm = new FormData();
+    imgBbForm.append("image", file);
 
-    const ext = file.name.split(".").pop();
-    const filename = `${Date.now()}-${Math.random()
-      .toString(36)
-      .slice(2)}.${ext}`;
+    // Send to ImgBB API
+    const response = await fetch(
+      `https://api.imgbb.com/1/upload?key=f2f3f75de26957d089ecdb402788644c`,
+      {
+        method: "POST",
+        body: imgBbForm,
+      },
+    );
 
-    // ✅ uploads folder না থাকলে বানিয়ে দেবে
-    const uploadDir = path.join(process.cwd(), "public", "uploads");
+    const data = await response.json();
 
-    if (!existsSync(uploadDir)) {
-      await mkdir(uploadDir, { recursive: true });
+    // If successful, return the direct image URL
+    if (data.success) {
+      return NextResponse.json({ url: data.data.display_url });
+    } else {
+      throw new Error(data.error?.message || "ImgBB upload failed");
     }
-
-    await writeFile(path.join(uploadDir, filename), buffer);
-
-    return NextResponse.json({ url: `/uploads/${filename}` });
   } catch (error: unknown) {
-    const message =
-      error instanceof Error ? error.message : "Upload failed";
+    console.error("Upload Error:", error);
+    const message = error instanceof Error ? error.message : "Upload failed";
     return NextResponse.json({ message }, { status: 500 });
   }
 }
