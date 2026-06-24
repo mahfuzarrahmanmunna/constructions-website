@@ -175,9 +175,9 @@ export default function CategoryPage() {
               Our team is ready to help you find the right {categoryInfo.label.toLowerCase()} for your project.
             </p>
           </div>
-          <button className="bg-white text-[#E55503] px-8 py-3 rounded-full font-extrabold text-sm uppercase tracking-wider hover:bg-[#002253] hover:text-white transition-colors duration-300 shrink-0">
+          <Link href="/contact" className="bg-white text-[#E55503] px-8 py-3 rounded-full font-extrabold text-sm uppercase tracking-wider hover:bg-[#002253] hover:text-white transition-colors duration-300 shrink-0">
             Contact Us
-          </button>
+          </Link>
         </div>
       </section>
 

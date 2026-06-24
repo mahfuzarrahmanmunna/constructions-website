@@ -4,25 +4,12 @@ import Link from "next/link";
 import React, { useRef, useState, useEffect } from "react";
 
 interface Category {
+  _id: string;
   name: string;
-  image: string;
+  icon: string | null;
   slug: string;
+  order: number;
 }
-
-const categories: Category[] = [
-  { name: "Concrete Machinery",      image: "/category/1st.png",  slug: "concrete-machinery" },
-  { name: "Excavator",               image: "/category/2nd.png",  slug: "excavator" },
-  { name: "Crane",                   image: "/category/3rd.png",  slug: "crane" },
-  { name: "Port Machinery",          image: "/category/4th.png",  slug: "port-machinery" },
-  { name: "Road Machinery",          image: "/category/5th.png",  slug: "road-machinery" },
-  { name: "Mining & Tunneling",      image: "/category/6th.png",  slug: "mining-tunneling" },
-  { name: "Truck",                   image: "/category/7th.png",  slug: "truck" },
-  { name: "Piling Machinery",        image: "/category/8th.png",  slug: "piling-machinery" },
-  { name: "Fire-fighting Equipment", image: "/category/9th.png",  slug: "fire-fighting" },
-  { name: "Mobile Crusher",          image: "/category/10th.png", slug: "mobile-crusher" },
-  { name: "Hydrogen Energy",         image: "/category/11th.png", slug: "hydrogen-energy" },
-  { name: "Petroleum Equipment",     image: "/category/12th.png", slug: "petroleum-equipment" },
-];
 
 const ArrowRightIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
@@ -33,12 +20,25 @@ const ArrowRightIcon = () => (
 );
 
 export default function CategorySection() {
-  const displayCategories = categories.slice(0, 12);
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [loading, setLoading] = useState(true);
 
+  // ─── Fetch from API ───────────────────────────────────────────────
+  useEffect(() => {
+    fetch("/api/categories")
+      .then((res) => res.json())
+      .then((data) => {
+        setCategories(data.slice(0, 12));
+        setLoading(false);
+      })
+      .catch(() => setLoading(false));
+  }, []);
+
+  // ─── Scroll / touch state ─────────────────────────────────────────
   const chunkSize = 4;
   const mobileChunks: Category[][] = [];
-  for (let i = 0; i < displayCategories.length; i += chunkSize) {
-    mobileChunks.push(displayCategories.slice(i, i + chunkSize));
+  for (let i = 0; i < categories.length; i += chunkSize) {
+    mobileChunks.push(categories.slice(i, i + chunkSize));
   }
 
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -71,7 +71,7 @@ export default function CategorySection() {
     el.addEventListener("scroll", onScroll, { passive: true });
     requestAnimationFrame(() => requestAnimationFrame(onScroll));
     return () => { cancelAnimationFrame(raf); el.removeEventListener("scroll", onScroll); };
-  }, []);
+  }, [categories]); // re-attach when categories load
 
   const getMobileCardStyle = (name: string): React.CSSProperties => {
     if (touchedCard === name)
@@ -95,6 +95,28 @@ export default function CategorySection() {
     }`;
   };
 
+  // ─── Skeleton loader ──────────────────────────────────────────────
+  if (loading) {
+    return (
+      <section className="w-full py-20 md:py-24 bg-white px-4 md:px-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex flex-col items-center mb-10 gap-4">
+            <div className="h-4 w-24 bg-gray-200 rounded animate-pulse" />
+            <div className="h-8 w-48 bg-gray-200 rounded animate-pulse" />
+          </div>
+          <div className="hidden md:grid grid-cols-3 lg:grid-cols-6 gap-x-5 gap-y-10">
+            {Array.from({ length: 12 }).map((_, i) => (
+              <div key={i} className="flex flex-col items-center gap-3">
+                <div className="w-full aspect-[4/3] rounded-xl bg-gray-200 animate-pulse" />
+                <div className="h-3 w-3/4 bg-gray-200 rounded animate-pulse" />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section className="w-full py-20 md:py-24 bg-white px-4 md:px-8">
       <style jsx global>{`
@@ -115,7 +137,7 @@ export default function CategorySection() {
               Sale and Rental
             </h2>
           </div>
-          <Link href="/categories"
+          <Link href="/AllCategories"
             className="hidden md:flex group items-center gap-2 text-[#002253] font-bold text-sm uppercase tracking-wider hover:text-[#E55503] transition-colors duration-300 shrink-0">
             View All
             <span className="transform transition-transform duration-300 group-hover:translate-x-1">
@@ -131,8 +153,7 @@ export default function CategorySection() {
             <div key={chunkIndex}
               className="min-w-full grid grid-cols-2 grid-rows-2 gap-x-4 gap-y-8 snap-start px-2">
               {chunk.map((cat) => (
-                // ✅ Route: /products/concrete-machinery/
-                <Link key={cat.name}
+                <Link key={cat._id}
                   href={`/products/${cat.slug}`}
                   className="flex flex-col items-center text-center"
                   onTouchStart={() => setTouchedCard(cat.name)}
@@ -142,9 +163,13 @@ export default function CategorySection() {
                     ref={(el) => { if (el) cardRefs.current.set(cat.name, el); else cardRefs.current.delete(cat.name); }}
                     className="relative w-full aspect-[4/3] rounded-xl overflow-hidden flex items-center justify-center transition-all duration-300 border-2"
                     style={getMobileCardStyle(cat.name)}>
-                    <img src={cat.image} alt={cat.name}
-                      className={getMobileImageClass(cat.name)}
-                      loading="lazy" draggable={false} />
+                    {cat.icon ? (
+                      <img src={cat.icon} alt={cat.name}
+                        className={getMobileImageClass(cat.name)}
+                        loading="lazy" draggable={false} />
+                    ) : (
+                      <div className="w-[70%] h-[70%] flex items-center justify-center text-gray-400 text-4xl">🔧</div>
+                    )}
                   </div>
                   <h3 className={getMobileTextClass(cat.name)}>{cat.name}</h3>
                 </Link>
@@ -167,15 +192,18 @@ export default function CategorySection() {
 
         {/* ═══ DESKTOP VIEW ═══ */}
         <div className="hidden md:grid grid-cols-3 lg:grid-cols-6 gap-x-5 lg:gap-x-6 gap-y-10">
-          {displayCategories.map((cat, index) => (
-            // ✅ Route: /products/concrete-machinery/
-            <Link key={index}
+          {categories.map((cat) => (
+            <Link key={cat._id}
               href={`/products/${cat.slug}`}
               className="group flex flex-col items-center text-center">
               <div className="relative w-full aspect-[4/3] rounded-xl overflow-hidden flex items-center justify-center transition-all duration-300 bg-[#f0f0f0] border-2 border-transparent group-hover:bg-[#E55503] group-hover:border-[#E55503] group-hover:shadow-lg group-hover:shadow-[#E55503]/20">
-                <img src={cat.image} alt={cat.name}
-                  className="w-[70%] h-[70%] object-contain transition-all duration-500 ease-out group-hover:scale-110 group-hover:drop-shadow-lg"
-                  loading="lazy" />
+                {cat.icon ? (
+                  <img src={cat.icon} alt={cat.name}
+                    className="w-[70%] h-[70%] object-contain transition-all duration-500 ease-out group-hover:scale-110 group-hover:drop-shadow-lg"
+                    loading="lazy" />
+                ) : (
+                  <div className="text-gray-400 text-4xl">🔧</div>
+                )}
               </div>
               <h3 className="text-xs lg:text-[13px] font-bold text-[#002253] group-hover:text-[#E55503] transition-colors duration-300 uppercase tracking-wide leading-tight h-10 flex items-center justify-center px-1">
                 {cat.name}
@@ -186,7 +214,7 @@ export default function CategorySection() {
 
         {/* ═══ Mobile View All ═══ */}
         <div className="flex md:hidden justify-center mt-5">
-          <Link href="/categories"
+          <Link href="/AllCategories"
             className="group flex items-center gap-2 text-[#002253] font-bold text-sm uppercase tracking-wider hover:text-[#E55503] transition-colors duration-300">
             View All
             <span className="transform transition-transform duration-300 group-hover:translate-x-1">
