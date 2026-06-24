@@ -77,11 +77,16 @@ const GoogleIcon = () => (
   </svg>
 );
 
+
+
 function AuthForm() {
   const [isLogin, setIsLogin] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+
+
+
 
   const [formData, setFormData] = useState({
     name: "",
@@ -90,7 +95,9 @@ function AuthForm() {
     confirmPassword: "",
   });
   const router = useRouter();
-  const ADMIN_EMAIL = "azizurseu@gmail.com";
+  const ADMIN_EMAIL =
+    process.env.NEXT_PUBLIC_ADMIN_EMAIL ||
+    "azizurseu@gmail.com";
 
   const [focusedField, setFocusedField] = useState<string | null>(null);
 
@@ -107,27 +114,30 @@ const handleSubmit = async (
   setIsLoading(true);
 
   try {
-    if (isLogin) {
-      const userCredential =
-        await signInWithEmailAndPassword(
-          auth,
-          formData.email,
-          formData.password
-        );
+      if (isLogin) {
+        const userCredential =
+          await signInWithEmailAndPassword(
+            auth,
+            formData.email,
+            formData.password
+          );
 
-      if (userCredential.user.email !== ADMIN_EMAIL) {
-        await signOut(auth);
+        const email = userCredential.user.email?.toLowerCase();
 
-        toast.error(
-          "You are not authorized to access the admin panel."
-        );
+        if (email !== ADMIN_EMAIL.toLowerCase()) {
+          await signOut(auth);
 
-        return;
-      }
+          toast.error(
+            "You are not authorized to access the admin panel."
+          );
 
-      toast.success("Welcome back!");
+          return;
+        }
 
-      router.push("/admin/dashboard");
+        toast.success("Welcome Admin!");
+
+        router.push("/admin/dashboard");
+
     } else {
       if (formData.password !== formData.confirmPassword) {
         toast.error("Passwords do not match");
@@ -160,19 +170,32 @@ const handleSubmit = async (
     setIsLoading(false);
   }
 };
-  const handleGoogleLogin = async () => {
-    try {
-      setIsLoading(true);
+const handleGoogleLogin = async () => {
+  try {
+    setIsLoading(true);
 
-      const result = await signInWithPopup(
-        auth,
-        googleProvider
+    const result = await signInWithPopup(
+      auth,
+      googleProvider
+    );
+
+    if (result.user.email !== ADMIN_EMAIL) {
+      await signOut(auth);
+
+      toast.error(
+        "You are not authorized to access the admin panel."
       );
 
-      console.log(result.user);
+      return;
+    }
 
-      toast.success(`Welcome ${result.user.displayName}`);
-    } catch (error) {
+    toast.success(
+      `Welcome ${result.user.displayName || "Admin"}`
+    );
+
+    router.push("/admin/dashboard");
+
+  } catch (error) {
     console.error(error);
 
     if (error instanceof Error) {
@@ -180,10 +203,10 @@ const handleSubmit = async (
     } else {
       toast.error("Authentication failed");
     }
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  } finally {
+    setIsLoading(false);
+  }
+};
 
   const handleForgotPassword = async () => {
     if (!formData.email) {
@@ -214,6 +237,8 @@ const handleSubmit = async (
     setShowPassword(false);
     setShowConfirmPassword(false);
   };
+
+  
 
   return (
     <div className="auth-shell flex min-h-screen">

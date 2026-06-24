@@ -12,7 +12,6 @@ import {
   Globe,
 } from "lucide-react";
 import toast from "react-hot-toast";
-import AdminProfile from "@/components/admin/AdminProfile";
 import { auth } from "@/lib/firebase";
 
 export default function DashboardPage() {
@@ -44,18 +43,19 @@ useEffect(() => {
         Authorization: `Bearer ${token}`,
       },
     })
-      .then(async (res) => {
-        const data = await res.json();
+    .then(async (res) => {
+      console.log("Status:", res.status);
 
-        if (!data.success) {
-          throw new Error("Failed to load dashboard");
-        }
+      const data = await res.json();
 
-        setDashboardData(data);
+      console.log("Dashboard Response:", data);
 
-        return data;
-      });
+      if (!data.success) {
+        throw new Error("Failed to load dashboard");
+      }
 
+      setDashboardData(data);
+    })
     toast.promise(request, {
       loading: "Loading dashboard...",
       error: "Failed to load dashboard",
@@ -74,8 +74,6 @@ useEffect(() => {
         <h1 className="text-3xl text-black font-bold">
           Dashboard Overview
         </h1>
-
-        <AdminProfile />
       </div>
       <div className=" grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6">
 

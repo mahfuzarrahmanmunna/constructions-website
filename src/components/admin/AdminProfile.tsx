@@ -25,6 +25,7 @@ export default function AdminProfile() {
           w-11
           rounded-full
           bg-[#002253]
+          hover:bg-[#E55503]
           text-white
           flex
           items-center
