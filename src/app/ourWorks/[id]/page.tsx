@@ -1,6 +1,7 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
@@ -15,10 +16,8 @@ import {
   TrendingUp,
   AlertTriangle,
 } from "lucide-react";
-import { caseStudies } from "../casesData"; // Adjust path if your data file is elsewhere
 import { FaYoutube } from "react-icons/fa";
 
-// Colors match globals.css / color.md
 const PALETTE = {
   navy: "#002253",
   blue: "#224B88",
@@ -28,7 +27,6 @@ const PALETTE = {
   grayBg: "#F8FAFC",
 };
 
-// Animation Variants
 const fadeUp = {
   hidden: { opacity: 0, y: 40 },
   show: {
@@ -42,7 +40,6 @@ const fadeUp = {
     },
   },
 };
-
 const staggerContainer = {
   hidden: { opacity: 0 },
   show: {
@@ -53,11 +50,37 @@ const staggerContainer = {
 
 export default function CaseStudyDetailPage() {
   const params = useParams();
-  const id = params?.id;
+  const id = params?.id as string;
+  const [study, setStudy] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
 
-  const study = caseStudies.find((s) => s.id === Number(id));
+  useEffect(() => {
+    fetch("/api/projects?status=published")
+      .then((res) => res.json())
+      .then((data) => {
+        const items = data.projects || [];
+        const found = items.find((p: any) => p._id === id);
+        setStudy(found || null);
+        setLoading(false);
+      })
+      .catch(() => setLoading(false));
+  }, [id]);
 
-  // 404 Handling
+  const getYouTubeEmbedUrl = (url?: string) => {
+    if (!url) return null;
+    const regex =
+      /(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+    const match = url.match(regex);
+    return match ? `https://www.youtube.com/embed/${match[1]}` : null;
+  };
+
+  if (loading)
+    return (
+      <main className="min-h-screen flex items-center justify-center bg-slate-50">
+        <div className="w-12 h-12 border-4 border-slate-200 border-t-[#E55503] rounded-full animate-spin"></div>
+      </main>
+    );
+
   if (!study) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-slate-50 font-sans">
@@ -78,20 +101,10 @@ export default function CaseStudyDetailPage() {
     );
   }
 
-  // Extract YouTube Embed ID
-  const getYouTubeEmbedUrl = (url?: string) => {
-    if (!url) return null;
-    const regex =
-      /(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
-    const match = url.match(regex);
-    return match ? `https://www.youtube.com/embed/${match[1]}` : null;
-  };
-
   const embedUrl = getYouTubeEmbedUrl(study.youtubeUrl);
 
   return (
     <main className="w-full font-sans text-[#002253] bg-slate-50 min-h-screen pb-20">
-      {/* ── IMMERSIVE HERO SECTION ── */}
       <section className="relative w-full h-[55vh] min-h-[450px] flex flex-col justify-end overflow-hidden">
         <Image
           src={study.image}
@@ -101,8 +114,6 @@ export default function CaseStudyDetailPage() {
           priority
         />
         <div className="absolute inset-0 bg-gradient-to-t from-[#00122e] via-[#002253]/70 to-transparent z-[1]" />
-
-        {/* Subtle Grid Pattern Overlay */}
         <div
           className="absolute inset-0 z-[2] opacity-[0.03] pointer-events-none"
           style={{
@@ -110,9 +121,7 @@ export default function CaseStudyDetailPage() {
             backgroundSize: "60px 60px",
           }}
         />
-
         <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-12 pb-12 md:pb-16">
-          {/* Back Button */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
@@ -127,8 +136,6 @@ export default function CaseStudyDetailPage() {
               Back to Projects
             </Link>
           </motion.div>
-
-          {/* Hero Content */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -150,7 +157,6 @@ export default function CaseStudyDetailPage() {
                 {study.duration}
               </span>
             </div>
-
             <h1 className="text-3xl md:text-5xl lg:text-6xl font-black uppercase tracking-wide text-white leading-[1.1] max-w-5xl">
               {study.title}
             </h1>
@@ -158,7 +164,6 @@ export default function CaseStudyDetailPage() {
         </div>
       </section>
 
-      {/* ── MAIN CONTENT GRID ── */}
       <div className="max-w-7xl mx-auto px-6 md:px-12 -mt-8 relative z-20">
         <motion.div
           variants={staggerContainer}
@@ -167,9 +172,7 @@ export default function CaseStudyDetailPage() {
           viewport={{ once: true, amount: 0.05 }}
           className="grid grid-cols-1 lg:grid-cols-[1.5fr_1fr] gap-8 lg:gap-12"
         >
-          {/* ── LEFT COLUMN: DETAILS ── */}
           <div className="space-y-8">
-            {/* Project Overview */}
             <motion.div
               variants={fadeUp}
               className="bg-white rounded-2xl border border-slate-200/50 shadow-sm p-8 md:p-10"
@@ -187,8 +190,6 @@ export default function CaseStudyDetailPage() {
                 {study.description}
               </p>
             </motion.div>
-
-            {/* The Challenge */}
             <motion.div
               variants={fadeUp}
               className="bg-white rounded-2xl border border-slate-200/50 shadow-sm p-8 md:p-10"
@@ -205,8 +206,6 @@ export default function CaseStudyDetailPage() {
                 </p>
               </div>
             </motion.div>
-
-            {/* CPL Solution */}
             <motion.div
               variants={fadeUp}
               className="bg-white rounded-2xl border border-slate-200/50 shadow-sm p-8 md:p-10"
@@ -228,8 +227,6 @@ export default function CaseStudyDetailPage() {
                 projected timeline by 15%.
               </p>
             </motion.div>
-
-            {/* Machinery & Equipment Deployed */}
             <motion.div
               variants={fadeUp}
               className="rounded-2xl p-8 md:p-10 text-white shadow-lg"
@@ -252,8 +249,6 @@ export default function CaseStudyDetailPage() {
                 </span>
               </div>
             </motion.div>
-
-            {/* YouTube Video Embed */}
             {embedUrl && (
               <motion.div
                 variants={fadeUp}
@@ -278,14 +273,11 @@ export default function CaseStudyDetailPage() {
             )}
           </div>
 
-          {/* ── RIGHT COLUMN: STICKY SIDEBAR ── */}
           <div className="lg:sticky lg:top-24 lg:self-start space-y-6">
-            {/* Key Metric Card */}
             <motion.div
               variants={fadeUp}
               className="bg-white rounded-2xl border border-slate-200/50 shadow-sm overflow-hidden"
             >
-              {/* Metric Header */}
               <div
                 className="p-6 text-white text-center"
                 style={{
@@ -300,8 +292,6 @@ export default function CaseStudyDetailPage() {
                   {study.stats}
                 </span>
               </div>
-
-              {/* Meta Details */}
               <div className="p-6 space-y-5">
                 <div className="flex items-start gap-3.5">
                   <div className="w-9 h-9 rounded-lg bg-slate-50 flex items-center justify-center flex-shrink-0 border border-slate-100">
@@ -316,7 +306,6 @@ export default function CaseStudyDetailPage() {
                     </span>
                   </div>
                 </div>
-
                 <div className="border-t border-slate-100 pt-5 flex items-start gap-3.5">
                   <div className="w-9 h-9 rounded-lg bg-slate-50 flex items-center justify-center flex-shrink-0 border border-slate-100">
                     <Building2 className="w-4 h-4 text-[#E55503]" />
@@ -330,7 +319,6 @@ export default function CaseStudyDetailPage() {
                     </span>
                   </div>
                 </div>
-
                 <div className="border-t border-slate-100 pt-5 flex items-start gap-3.5">
                   <div className="w-9 h-9 rounded-lg bg-slate-50 flex items-center justify-center flex-shrink-0 border border-slate-100">
                     <Calendar className="w-4 h-4 text-[#E55503]" />
@@ -346,8 +334,6 @@ export default function CaseStudyDetailPage() {
                 </div>
               </div>
             </motion.div>
-
-            {/* CTA Card */}
             <motion.div
               variants={fadeUp}
               className="rounded-2xl p-6 text-white text-center shadow-lg"
@@ -368,12 +354,9 @@ export default function CaseStudyDetailPage() {
                   boxShadow: `0 6px 20px ${PALETTE.orange}35`,
                 }}
               >
-                Start a Project
-                <ArrowRight className="w-4 h-4" />
+                Start a Project <ArrowRight className="w-4 h-4" />
               </Link>
             </motion.div>
-
-            {/* Mobile Only: Back to Projects */}
             <div className="lg:hidden">
               <Link
                 href="/ourWorks"

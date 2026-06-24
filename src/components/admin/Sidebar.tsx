@@ -13,6 +13,7 @@ import {
   Settings,
   Users,
   BarChart3,
+  Wrench,
   X,
 } from "lucide-react";
 
@@ -34,6 +35,7 @@ const navSections = [
     links: [
       { name: "Projects", href: "/admin/projects", icon: FolderKanban },
       { name: "Product Management", href: "/admin/products", icon: Boxes },
+      { name: "Service Management", href: "/admin/services", icon: Wrench }, // Added from your old code
       {
         name: "Inquiries & Leads",
         href: "/admin/inquiries",
@@ -49,11 +51,11 @@ const navSections = [
   {
     title: "CONFIGURATION",
     links: [
-      { name: "Categories", href: "/admin/categories", icon: Tags },
-      { name: "Estimates", href: "/admin/manage-estimates", icon: FileText },
+      { name: "Categories", href: "/admin/categories", icon: Tags }, // Fixed icon (was Users)
+      { name: "Estimates", href: "/admin/manage-estimates", icon: FileText }, // Fixed icon (was Users)
       { name: "Site Content", href: "/admin/settings", icon: Settings },
       { name: "Users", href: "/admin/users", icon: Users },
-      { name: "Analytics", href: "/admin/analytics", icon: BarChart3 },
+      { name: "Analytics", href: "/admin/analytics", icon: BarChart3 }, // Fixed icon (was LineChart)
     ],
   },
 ];
@@ -87,7 +89,6 @@ export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-white/10 shrink-0">
           <div className="flex items-center gap-3">
-            {/* Optional: Add a small logo/icon here */}
             <div className="w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center shadow-lg shadow-blue-500/30 font-bold text-white text-lg">
               C
             </div>
@@ -119,253 +120,11 @@ export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
                 {section.title}
               </p>
 
-<<<<<<< HEAD
               {/* Section Links */}
               <div className="space-y-1">
                 {section.links.map((link) => {
                   const isActive = pathname === link.href;
                   const Icon = link.icon;
-=======
-        <div
-          className="
-          hidden
-          md:block
-
-          p-6
-
-          border-b
-          border-white/10
-          "
-        >
-
-          <h2
-            className="
-            text-2xl
-            font-bold
-            "
-          >
-            CPL Admin
-          </h2>
-
-          <p
-            className="
-            text-sm
-            text-blue-200
-            mt-1
-            "
-          >
-            Management System
-          </p>
-
-        </div>
-
-        {/* Navigation */}
-
-        <nav className="p-4 space-y-2">
-
-          <Link
-            href="/admin/dashboard"
-            onClick={closeSidebar}
-            className="
-            flex
-            items-center
-            gap-3
-
-            px-4
-            py-3
-
-            rounded-xl
-
-            hover:bg-white/10
-
-            transition-all
-            "
-          >
-            <Home size={20} />
-            Dashboard
-          </Link>
-
-          <Link
-            href="/admin/products"
-            onClick={closeSidebar}
-            className="
-            flex
-            items-center
-            gap-3
-
-            px-4
-            py-3
-
-            rounded-xl
-
-            hover:bg-white/10
-
-            transition-all
-            "
-          >
-            <Boxes size={20} />
-            Product Management
-          </Link>
-
- <Link
-            href="/admin/services"
-            onClick={closeSidebar}
-            className="
-            flex
-            items-center
-            gap-3
-
-            px-4
-            py-3
-
-            rounded-xl
-
-            hover:bg-white/10
-
-            transition-all
-            "
-          >
-            <Boxes size={20} />
-          Service Management
-          </Link>
-
-          <Link
-            href="/admin/inquiries"
-            onClick={closeSidebar}
-            className="
-            flex
-            items-center
-            gap-3
-
-            px-4
-            py-3
-
-            rounded-xl
-
-            hover:bg-white/10
-
-            transition-all
-            "
-          >
-            <ClipboardList size={20} />
-            Inquiry & Lead Management
-          </Link>
-          <Link
-            href="/admin/messages"
-            onClick={closeSidebar}
-            className="
-            flex
-            items-center
-            gap-3
-
-            px-4
-            py-3
-
-            rounded-xl
-
-            hover:bg-white/10
-
-            transition-all
-            "
-          >
-            <MessageSquare size={20} />
-            Contact Messages
-          </Link>
-          <Link
-            href="/admin/categories"
-            onClick={closeSidebar}
-            className="
-            flex
-            items-center
-            gap-3
-
-            px-4
-            py-3
-
-            rounded-xl
-
-            hover:bg-white/10
-
-            transition-all
-            "
-          >
-            <Users size={20} />
-         Category Management
-          </Link>
-          <Link
-            href="/admin/manage-estimates"
-            onClick={closeSidebar}
-            className="
-            flex
-            items-center
-            gap-3
-
-            px-4
-            py-3
-
-            rounded-xl
-
-            hover:bg-white/10
-
-            transition-all
-            "
-          >
-            <Users size={20} />
-         Estimate Management
-          </Link>
-
-          <Link
-  href="/admin/settings"
-  onClick={closeSidebar}
-  className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/10 transition-all"
->
-  <Settings size={20} />
-  Site Content
-</Link>
-          <Link
-            href="/admin/users"
-            onClick={closeSidebar}
-            className="
-            flex
-            items-center
-            gap-3
-
-            px-4
-            py-3
-
-            rounded-xl
-
-            hover:bg-white/10
-
-            transition-all
-            "
-          >
-            <Users size={20} />
-            Users
-          </Link>
-
-          <Link
-            href="/admin/analytics"
-            onClick={closeSidebar}
-            className="
-            flex
-            items-center
-            gap-3
-
-            px-4
-            py-3
-
-            rounded-xl
-
-            hover:bg-white/10
-
-            transition-all
-            "
-          >
-            <LineChart size={20} />
-            Analytics
-          </Link>
->>>>>>> 2fb456311ba253f83c71c80ae7be615387b92698
 
                   return (
                     <Link
@@ -399,7 +158,7 @@ export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
           ))}
         </nav>
 
-        {/* Footer / Bottom Info (Optional but looks professional) */}
+        {/* Footer / Bottom Info */}
         <div className="p-4 border-t border-white/5 shrink-0">
           <div className="bg-blue-500/10 border border-blue-500/20 rounded-xl p-4 text-center">
             <p className="text-xs text-blue-300 font-medium">Need Help?</p>

@@ -100,10 +100,15 @@ export default function InquiryChart({
             <Tooltip
               contentStyle={CustomTooltipStyle}
               itemStyle={{ color: "#fff", fontSize: "14px", fontWeight: "500" }}
-              formatter={(value: number, name: string) => [
-                `${value} (${((value / total) * 100).toFixed(1)}%)`,
-                name,
-              ]}
+              // FIX: Removed strict types to satisfy Recharts ValueType
+              formatter={(value, name) => {
+                const val = Number(value) || 0;
+                const totalVal = total || 1;
+                return [
+                  `${val} (${((val / totalVal) * 100).toFixed(1)}%)`,
+                  name,
+                ];
+              }}
             />
 
             <Legend
