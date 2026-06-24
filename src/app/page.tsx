@@ -11,10 +11,10 @@ import CTASection1 from './components/CtaSection/CTASection1'
 
 export default function Home() {
   return (
-    <main className="">
+    <main className="bg-white">
       <HeroBanner1 />
       <ProjectStoriesSection />
-      <CTASection1/>
+      {/* <CTASection1/> */}
 {/* <RecentProjectsSection/> */}
       <ServicesSection />
       <CostEstimatorSection />

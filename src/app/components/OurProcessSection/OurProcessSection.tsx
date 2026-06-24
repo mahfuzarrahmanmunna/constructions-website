@@ -7,7 +7,6 @@ import {
   Calculator,
   HardHat,
   KeyRound,
-  ArrowRight,
   ChevronRight,
 } from "lucide-react";
 import gsap from "gsap";
@@ -60,7 +59,6 @@ export default function OurProcessSection() {
   const headerRef = useRef<HTMLDivElement>(null);
   const desktopRef = useRef<HTMLDivElement>(null);
   const mobileRef = useRef<HTMLDivElement>(null);
-  const ctaRef = useRef<HTMLDivElement>(null);
 
   const hLineRef = useRef<HTMLDivElement>(null);
   const hFillRef = useRef<HTMLDivElement>(null);
@@ -83,7 +81,6 @@ export default function OurProcessSection() {
     idx: number;
   } | null>(null);
 
-  /* ── 3D card tilt + spotlight ── */
   const onCardEnter = useCallback((idx: number) => setActiveStep(idx), []);
 
   const onCardMove = useCallback(
@@ -124,7 +121,7 @@ export default function OurProcessSection() {
   /* ══════════════ GSAP ══════════════ */
   useEffect(() => {
     const ctx = gsap.context(() => {
-      /* ── floating orbs ── */
+      /* floating orbs */
       if (orb1Ref.current && orb2Ref.current) {
         gsap.to(orb1Ref.current, {
           x: 50,
@@ -144,170 +141,183 @@ export default function OurProcessSection() {
         });
       }
 
-      /* ── header ── */
+      /* header */
       const hEls = headerRef.current?.querySelectorAll(".ha") || [];
-      gsap.fromTo(
-        hEls,
-        { y: 52, opacity: 0, rotateX: -12 },
-        {
-          y: 0,
-          opacity: 1,
-          rotateX: 0,
-          duration: 1,
-          stagger: 0.14,
-          ease: "power4.out",
-          scrollTrigger: { trigger: sectionRef.current, start: "top 86%" },
-        },
-      );
-
-      /* ═══ DESKTOP ═══ */
-
-      /* base line */
-      if (hLineRef.current) {
+      if (hEls.length) {
         gsap.fromTo(
-          hLineRef.current,
-          { opacity: 0, scaleX: 0 },
+          hEls,
+          { y: 52, opacity: 0, rotateX: -12 },
           {
+            y: 0,
             opacity: 1,
-            scaleX: 1,
-            duration: 0.9,
-            ease: "power3.out",
-            scrollTrigger: { trigger: desktopRef.current, start: "top 84%" },
-          },
-        );
-      }
-
-      /* scroll-scrubbed fill + traveling dot */
-      if (hFillRef.current && hDotRef.current && desktopRef.current) {
-        const tl = gsap.timeline({
-          scrollTrigger: {
-            trigger: desktopRef.current,
-            start: "top 80%",
-            end: "bottom 28%",
-            scrub: 0.5,
-          },
-        });
-        tl.fromTo(
-          hFillRef.current,
-          { scaleX: 0 },
-          { scaleX: 1, ease: "none" },
-          0,
-        ).fromTo(
-          hDotRef.current,
-          { left: "0%", opacity: 1 },
-          { left: "100%", opacity: 1, ease: "none" },
-          0,
-        );
-      }
-
-      /* icons */
-      gsap.fromTo(
-        hIconRefs.current.filter(Boolean),
-        { scale: 0, opacity: 0, rotation: -60 },
-        {
-          scale: 1,
-          opacity: 1,
-          rotation: 0,
-          duration: 0.7,
-          stagger: 0.14,
-          ease: "back.out(2.4)",
-          scrollTrigger: { trigger: desktopRef.current, start: "top 78%" },
-        },
-      );
-
-      /* arrows */
-      gsap.fromTo(
-        hArrowRefs.current.filter(Boolean),
-        { scale: 0, opacity: 0 },
-        {
-          scale: 1,
-          opacity: 1,
-          duration: 0.55,
-          stagger: 0.13,
-          ease: "elastic.out(1,0.5)",
-          scrollTrigger: { trigger: desktopRef.current, start: "top 76%" },
-        },
-      );
-
-      /* cards 3D rise */
-      gsap.fromTo(
-        hCardRefs.current.filter(Boolean),
-        { y: 60, opacity: 0, rotateX: 10 },
-        {
-          y: 0,
-          opacity: 1,
-          rotateX: 0,
-          duration: 0.85,
-          stagger: 0.12,
-          ease: "power3.out",
-          transformPerspective: 800,
-          scrollTrigger: { trigger: desktopRef.current, start: "top 74%" },
-        },
-      );
-
-      /* ═══ MOBILE ═══ */
-
-      /* base line */
-      if (vLineRef.current) {
-        gsap.fromTo(
-          vLineRef.current,
-          { scaleY: 0 },
-          {
-            scaleY: 1,
-            duration: 0.8,
-            ease: "power3.out",
-            scrollTrigger: { trigger: mobileRef.current, start: "top 86%" },
-          },
-        );
-      }
-
-      /* scrubbed fill */
-      if (vFillRef.current && mobileRef.current) {
-        gsap.fromTo(
-          vFillRef.current,
-          { scaleY: 0 },
-          {
-            scaleY: 1,
-            ease: "none",
+            rotateX: 0,
+            duration: 1,
+            stagger: 0.14,
+            ease: "power4.out",
             scrollTrigger: {
-              trigger: mobileRef.current,
-              start: "top 82%",
-              end: "bottom 38%",
-              scrub: 0.5,
+              trigger: sectionRef.current,
+              start: "top 86%",
             },
           },
         );
       }
 
-      /* per-item reveal */
-      vItemRefs.current.filter(Boolean).forEach((item) => {
-        gsap.fromTo(
-          item,
-          { x: -36, opacity: 0 },
-          {
-            x: 0,
-            opacity: 1,
-            duration: 0.65,
-            ease: "power3.out",
-            scrollTrigger: { trigger: item, start: "top 88%" },
-          },
-        );
-      });
+      /* ═══ DESKTOP ═══ */
+      if (desktopRef.current) {
+        /* base line */
+        if (hLineRef.current) {
+          gsap.fromTo(
+            hLineRef.current,
+            { opacity: 0, scaleX: 0 },
+            {
+              opacity: 1,
+              scaleX: 1,
+              duration: 0.9,
+              ease: "power3.out",
+              scrollTrigger: {
+                trigger: desktopRef.current,
+                start: "top 84%",
+              },
+            },
+          );
+        }
 
-      /* ── CTA ── */
-      const cEls = ctaRef.current?.querySelectorAll(".ca") || [];
-      gsap.fromTo(
-        cEls,
-        { y: 28, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 0.7,
-          stagger: 0.12,
-          ease: "power3.out",
-          scrollTrigger: { trigger: ctaRef.current, start: "top 92%" },
-        },
-      );
+        /* scroll-scrubbed fill + traveling dot */
+        if (hFillRef.current && hDotRef.current) {
+          const tl = gsap.timeline({
+            scrollTrigger: {
+              trigger: desktopRef.current,
+              start: "top 80%",
+              end: "bottom 28%",
+              scrub: 0.5,
+            },
+          });
+          tl.fromTo(
+            hFillRef.current,
+            { scaleX: 0 },
+            { scaleX: 1, ease: "none" },
+            0,
+          ).fromTo(
+            hDotRef.current,
+            { left: "0%", opacity: 1 },
+            { left: "100%", opacity: 1, ease: "none" },
+            0,
+          );
+        }
+
+        /* icons */
+        const validIcons = hIconRefs.current.filter(Boolean);
+        if (validIcons.length) {
+          gsap.fromTo(
+            validIcons,
+            { scale: 0, opacity: 0, rotation: -60 },
+            {
+              scale: 1,
+              opacity: 1,
+              rotation: 0,
+              duration: 0.7,
+              stagger: 0.14,
+              ease: "back.out(2.4)",
+              scrollTrigger: {
+                trigger: desktopRef.current,
+                start: "top 78%",
+              },
+            },
+          );
+        }
+
+        /* arrows */
+        const validArrows = hArrowRefs.current.filter(Boolean);
+        if (validArrows.length) {
+          gsap.fromTo(
+            validArrows,
+            { scale: 0, opacity: 0 },
+            {
+              scale: 1,
+              opacity: 1,
+              duration: 0.55,
+              stagger: 0.13,
+              ease: "elastic.out(1,0.5)",
+              scrollTrigger: {
+                trigger: desktopRef.current,
+                start: "top 76%",
+              },
+            },
+          );
+        }
+
+        /* cards 3D rise */
+        const validCards = hCardRefs.current.filter(Boolean);
+        if (validCards.length) {
+          gsap.fromTo(
+            validCards,
+            { y: 60, opacity: 0, rotateX: 10 },
+            {
+              y: 0,
+              opacity: 1,
+              rotateX: 0,
+              duration: 0.85,
+              stagger: 0.12,
+              ease: "power3.out",
+              transformPerspective: 800,
+              scrollTrigger: {
+                trigger: desktopRef.current,
+                start: "top 74%",
+              },
+            },
+          );
+        }
+      }
+
+      /* ═══ MOBILE ═══ */
+      if (mobileRef.current) {
+        if (vLineRef.current) {
+          gsap.fromTo(
+            vLineRef.current,
+            { scaleY: 0 },
+            {
+              scaleY: 1,
+              duration: 0.8,
+              ease: "power3.out",
+              scrollTrigger: {
+                trigger: mobileRef.current,
+                start: "top 86%",
+              },
+            },
+          );
+        }
+
+        if (vFillRef.current) {
+          gsap.fromTo(
+            vFillRef.current,
+            { scaleY: 0 },
+            {
+              scaleY: 1,
+              ease: "none",
+              scrollTrigger: {
+                trigger: mobileRef.current,
+                start: "top 82%",
+                end: "bottom 38%",
+                scrub: 0.5,
+              },
+            },
+          );
+        }
+
+        vItemRefs.current.filter(Boolean).forEach((item) => {
+          gsap.fromTo(
+            item,
+            { x: -36, opacity: 0 },
+            {
+              x: 0,
+              opacity: 1,
+              duration: 0.65,
+              ease: "power3.out",
+              scrollTrigger: { trigger: item, start: "top 88%" },
+            },
+          );
+        });
+      }
 
       ScrollTrigger.refresh();
     }, sectionRef);
@@ -319,10 +329,10 @@ export default function OurProcessSection() {
   return (
     <section
       ref={sectionRef}
-      className="relative w-full py-24 md:py-32 lg:py-40 px-4 md:px-6 lg:px-8 overflow-hidden"
-      style={{ backgroundColor: "#fafbfd" }}
+      className="relative w-full  px-4 md:px-6 lg:px-8 overflow-hidden"
+      style={{ backgroundColor: "#ffffff" }}
     >
-      {/* ── background layers ── */}
+      {/* background layers */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         <div
           ref={orb1Ref}
@@ -359,43 +369,21 @@ export default function OurProcessSection() {
           className="text-center mb-20 md:mb-24 lg:mb-28"
           style={{ perspective: "600px" }}
         >
-          <div
-            className="ha inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full mb-7"
-            style={{
-              backgroundColor: "rgba(229,85,3,0.06)",
-              border: "1px solid rgba(229,85,3,0.1)",
-              backdropFilter: "blur(10px)",
-            }}
+          <p
+            className="text-xs sm:text-sm font-bold text-[#E55503] uppercase tracking-widest"
+            style={{ fontFamily: "'Inter', sans-serif" }}
           >
-            <span className="relative flex h-2 w-2">
-              <span
-                className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-50"
-                style={{ backgroundColor: COLORS.orange }}
-              />
-              <span
-                className="relative inline-flex rounded-full h-2 w-2"
-                style={{ backgroundColor: COLORS.orange }}
-              />
-            </span>
-            <span
-              className="text-[10px] font-bold tracking-[0.25em] uppercase"
-              style={{ color: COLORS.orange }}
-            >
-              How It Works
-            </span>
-          </div>
+            Equipment
+          </p>
 
-          <h2
-            className="ha text-[2rem] sm:text-4xl md:text-5xl lg:text-[3.4rem] font-extrabold tracking-tight leading-[1.1] mb-6"
-            style={{ color: COLORS.navy }}
-          >
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#002253] leading-tight">
             Our Streamlined{" "}
             <span
               className="relative inline-block"
               style={{ color: COLORS.orange }}
             >
               Process
-              <svg
+              {/* <svg
                 className="absolute -bottom-2 left-0 w-full"
                 viewBox="0 0 200 8"
                 fill="none"
@@ -408,7 +396,7 @@ export default function OurProcessSection() {
                   strokeLinecap="round"
                   opacity="0.4"
                 />
-              </svg>
+              </svg> */}
             </span>
           </h2>
 
@@ -422,14 +410,21 @@ export default function OurProcessSection() {
         </div>
 
         {/* ══════════ DESKTOP HORIZONTAL ══════════ */}
-        <div ref={desktopRef} className="hidden lg:block">
-          {/* connector line */}
-          <div className="relative mx-[10%] xl:mx-[12%]">
+        <div ref={desktopRef} className="hidden lg:block relative">
+          {/* ── Connector line: absolutely positioned at icon center ── */}
+          {/* Icon height = 78px → center at 39px. xl: 84px → center at 42px */}
+          <div
+            className="absolute left-0 right-0 z-0 pointer-events-none"
+            style={{ top: "39px" }}
+          >
+            {/* base gray line */}
             <div
               ref={hLineRef}
               className="w-full h-[2px] origin-left rounded-full"
               style={{ backgroundColor: "#e2e5ea" }}
             />
+
+            {/* orange fill that scrubs with scroll */}
             <div
               ref={hFillRef}
               className="absolute top-0 left-0 w-full h-[2px] origin-left rounded-full"
@@ -438,6 +433,8 @@ export default function OurProcessSection() {
                 transform: "scaleX(0)",
               }}
             />
+
+            {/* traveling glow dot */}
             <div
               ref={hDotRef}
               className="absolute top-1/2 w-3.5 h-3.5 rounded-full opacity-0 pointer-events-none"
@@ -450,9 +447,18 @@ export default function OurProcessSection() {
             />
           </div>
 
-          {/* 9-column grid */}
+          {/* xl override: icon center at 42px */}
+          <style>{`
+            @media (min-width: 1280px) {
+              .connector-line-layer {
+                top: 42px !important;
+              }
+            }
+          `}</style>
+
+          {/* ── 9-column grid: icon / arrow / icon / arrow / … ── */}
           <div
-            className="grid items-start mt-[-1px]"
+            className="grid items-start relative z-10"
             style={{
               gridTemplateColumns: "1fr 28px 1fr 28px 1fr 28px 1fr 28px 1fr",
             }}
@@ -466,7 +472,7 @@ export default function OurProcessSection() {
                 <React.Fragment key={i}>
                   {/* ── step column ── */}
                   <div className="flex flex-col items-center text-center">
-                    {/* icon */}
+                    {/* icon circle */}
                     <div
                       ref={(el) => {
                         hIconRefs.current[i] = el;
@@ -475,6 +481,7 @@ export default function OurProcessSection() {
                       onMouseEnter={() => onCardEnter(i)}
                       onMouseLeave={() => onCardLeave(i)}
                     >
+                      {/* hover glow ring */}
                       <div
                         className="absolute inset-[-12px] rounded-full transition-all duration-500"
                         style={{
@@ -483,6 +490,7 @@ export default function OurProcessSection() {
                             : "transparent",
                         }}
                       />
+                      {/* circle */}
                       <div
                         className="w-[78px] h-[78px] xl:w-[84px] xl:h-[84px] rounded-full flex items-center justify-center relative"
                         style={{
@@ -509,6 +517,7 @@ export default function OurProcessSection() {
                           }}
                         />
                       </div>
+                      {/* step number badge */}
                       <span
                         className="absolute -bottom-2.5 left-1/2 w-[26px] h-[26px] rounded-full flex items-center justify-center text-[11px] font-extrabold z-20"
                         style={{
@@ -549,7 +558,7 @@ export default function OurProcessSection() {
                       onMouseLeave={() => onCardLeave(i)}
                       onMouseMove={(e) => onCardMove(e, i)}
                     >
-                      {/* spotlight */}
+                      {/* mouse spotlight */}
                       {sp && (
                         <div
                           className="absolute inset-0 pointer-events-none rounded-2xl"
@@ -597,14 +606,14 @@ export default function OurProcessSection() {
                     </div>
                   </div>
 
-                  {/* ── arrow ── */}
+                  {/* ── arrow connector ── */}
                   {i < steps.length - 1 && (
                     <div
                       ref={(el) => {
                         hArrowRefs.current[i] = el;
                       }}
                       className="flex items-center justify-center"
-                      style={{ paddingTop: "28px" }}
+                      style={{ paddingTop: "25px" }}
                     >
                       <div
                         className="w-7 h-7 xl:w-8 xl:h-8 rounded-full flex items-center justify-center shrink-0"
@@ -616,7 +625,10 @@ export default function OurProcessSection() {
                         <ChevronRight
                           size={12}
                           strokeWidth={2.5}
-                          style={{ color: COLORS.orange, opacity: 0.65 }}
+                          style={{
+                            color: COLORS.orange,
+                            opacity: 0.65,
+                          }}
                         />
                       </div>
                     </div>
@@ -756,38 +768,6 @@ export default function OurProcessSection() {
               </div>
             );
           })}
-        </div>
-
-        {/* ══════════ CTA ══════════ */}
-        <div ref={ctaRef} className="mt-16 md:mt-20 lg:mt-24 text-center">
-          <p
-            className="ca text-sm md:text-[15px] font-medium mb-6"
-            style={{ color: "#4b5563" }}
-          >
-            Ready to start your project with confidence?
-          </p>
-          <button
-            className="ca group relative inline-flex items-center gap-2.5 px-8 py-4 rounded-full text-[12px] font-bold tracking-[0.15em] uppercase text-white overflow-hidden"
-            style={{
-              background: `linear-gradient(135deg, ${COLORS.orange}, ${COLORS.orangeLight})`,
-              boxShadow: "0 8px 28px rgba(229,85,3,0.3)",
-            }}
-          >
-            <span
-              className="absolute inset-0 pointer-events-none"
-              style={{
-                background:
-                  "linear-gradient(105deg, transparent 38%, rgba(255,255,255,0.22) 50%, transparent 62%)",
-                animation: "shimmer 3.2s ease-in-out infinite",
-              }}
-            />
-            <span className="relative z-10">Get a Free Quote</span>
-            <ArrowRight
-              size={14}
-              strokeWidth={2.5}
-              className="relative z-10 transition-transform duration-300 group-hover:translate-x-1"
-            />
-          </button>
         </div>
       </div>
 

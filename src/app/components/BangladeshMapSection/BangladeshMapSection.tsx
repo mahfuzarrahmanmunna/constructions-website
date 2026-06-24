@@ -48,17 +48,11 @@ export default function BangladeshMapSection() {
       style={{ backgroundColor: "#ffffff" }}
     >
       {/* subtle top border accent */}
-      <div
-        className="absolute top-0 left-0 right-0 h-px"
-        style={{
-          background: `linear-gradient(to right, transparent, ${COLORS.orange}30, transparent)`,
-        }}
-      />
 
       <div className="max-w-7xl mx-auto">
         {/* ═══ HEADER ═══ */}
-        <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-12 md:mb-16">
-          <div className="max-w-xl">
+        <div className=" md:mb-16 text-center">
+          <div className="max-w-2xl mx-auto">
             <span
               className="inline-block text-[11px] font-bold tracking-[0.3em] uppercase mb-4"
               style={{ color: COLORS.orange }}
@@ -80,63 +74,6 @@ export default function BangladeshMapSection() {
               We provide nationwide service and support. Explore our operational
               bases across all major divisions and districts.
             </p>
-          </div>
-
-          {/* legend — clean, no shadow */}
-          <div
-            className="flex flex-wrap items-center gap-5 lg:gap-6 pb-1"
-            style={{ borderBottom: `1px solid rgba(0,34,83,0.08)` }}
-          >
-            <div className="flex items-center gap-2.5">
-              <span
-                className="w-3 h-3 rounded-full"
-                style={{ backgroundColor: COLORS.orange }}
-              />
-              <span
-                className="text-xs font-semibold uppercase tracking-wider"
-                style={{ color: "rgba(0,34,83,0.6)" }}
-              >
-                Active Division
-              </span>
-            </div>
-            <div
-              className="w-px h-5"
-              style={{ backgroundColor: "rgba(0,34,83,0.1)" }}
-            />
-            <div className="flex items-center gap-2.5">
-              <span
-                className="w-3 h-3 rounded-full border-2"
-                style={{
-                  backgroundColor: "#ffffff",
-                  borderColor: COLORS.navy,
-                }}
-              />
-              <span
-                className="text-xs font-semibold uppercase tracking-wider"
-                style={{ color: "rgba(0,34,83,0.6)" }}
-              >
-                Regional Office
-              </span>
-            </div>
-            <div
-              className="w-px h-5"
-              style={{ backgroundColor: "rgba(0,34,83,0.1)" }}
-            />
-            <div className="flex items-center gap-2.5">
-              <span
-                className="w-3 h-3 rounded-sm"
-                style={{
-                  backgroundColor: "rgba(34,75,136,0.15)",
-                  border: `1px solid rgba(34,75,136,0.2)`,
-                }}
-              />
-              <span
-                className="text-xs font-semibold uppercase tracking-wider"
-                style={{ color: "rgba(0,34,83,0.6)" }}
-              >
-                Project Zone
-              </span>
-            </div>
           </div>
         </div>
 

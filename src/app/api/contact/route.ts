@@ -37,10 +37,32 @@ export async function POST(
 ) {
   try {
 
-    await connectDB();
-
     const body = await req.json();
 
+    // Server-side validation — required fields must be present.
+    // Returns 400 with success:false so the frontend never treats a
+    // bad submission as a success.
+    const { name, email, subject, message } = body ?? {};
+    if (
+      !name?.trim() ||
+      !email?.trim() ||
+      !subject?.trim() ||
+      !message?.trim()
+    ) {
+      return NextResponse.json(
+        {
+          success: false,
+          message:
+            "Please provide your name, email, subject and message.",
+        },
+        { status: 400 }
+      );
+    }
+
+    await connectDB();
+
+    // TODO: in addition to persisting, optionally email the team
+    // (nodemailer is already installed) once a mechanism is chosen.
     const contact =
       await Contact.create(body);
 

@@ -20,15 +20,14 @@ export default function AboutPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* ── HERO SECTION ── */}
-      <div className="relative h-[400px] md:h-[500px] flex items-center justify-center overflow-hidden">
+      <div className="relative h-[400px] md:h-[550px] flex items-center justify-center overflow-hidden">
         <div
           className="absolute inset-0 bg-cover bg-center"
           style={{
-            backgroundImage:
-              "url(/images/cases-photos/case-hero.webp)",
+            backgroundImage: "url(/background/about.jpg)",
           }}
         />
-        <div className="absolute inset-0 bg-gradient-to-b from via-[#002253]/80 to-white" />
+        {/* <div className="absolute inset-0 bg-gradient-to-b from via-[#002253]/80 to-white" /> */}
 
         <div className="relative z-10 text-center px-4 max-w-4xl">
           <div className="inline-flex items-center gap-2 rounded-full border border-[#FF8B28]/30 bg-[#FF8B28]/10 px-4 py-2 mb-6">
@@ -37,11 +36,12 @@ export default function AboutPage() {
               About Us
             </span>
           </div>
-          <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 tracking-tight leading-tight">
-            Stronger Together: The Story of CPL
+          <h1 className="text-4xl text-[#002253] md:text-6xl  font-bold  mb-6 tracking-tight leading-tight bg-clip-text">
+            Stronger Together: <br />{" "}
+            <span className="text-[#FF8B28]"> The Story of CPL</span>
           </h1>
           <p className="text-gray-200 text-lg md:text-xl max-w-2xl mx-auto">
-            Constructive Partners Limited (CPL) is Bangladesh's trusted
+            Constructive Partners Limited (CPL) is Bangladesh&apos;s trusted
             one-stop solution for civil construction, materials supply, and
             equipment services.
           </p>
@@ -111,11 +111,11 @@ export default function AboutPage() {
             <div className="w-16 h-1 bg-[#E55503] rounded-full mb-8"></div>
 
             <p className="text-gray-600 text-base leading-relaxed mb-6">
-              Based in Dhaka, Constructive Partners Limited (CPL) was created
-              by bringing specialized engineering, rental, and logistics teams
+              Based in Dhaka, Constructive Partners Limited (CPL) was created by
+              bringing specialized engineering, rental, and logistics teams
               together under one strong name. We chose this brand name because
-              we want to build a construction community for complete construction
-              solutions.
+              we want to build a construction community for complete
+              construction solutions.
             </p>
 
             <p className="text-gray-600 text-base leading-relaxed mb-8">
@@ -208,8 +208,8 @@ export default function AboutPage() {
               <div className="w-12 h-1 bg-[#E55503] rounded-full mb-6"></div>
               <p className="text-gray-600 leading-relaxed">
                 We deliver top-tier building projects, flexible machinery
-                leasing, and punctual supply logistics through unified
-                teamwork and forward-thinking ideas.
+                leasing, and punctual supply logistics through unified teamwork
+                and forward-thinking ideas.
               </p>
             </div>
 
@@ -268,9 +268,9 @@ export default function AboutPage() {
                 driving the rapid growth of infrastructure across Bangladesh. By
                 bringing building materials, heavy machinery, and master
                 engineering under one single contract, we remove the usual
-                multi-vendor delays that slow down massive industrial projects. We
-                do not just build structures; we create the strong foundation that
-                powers our nation&rsquo;s future.
+                multi-vendor delays that slow down massive industrial projects.
+                We do not just build structures; we create the strong foundation
+                that powers our nation&rsquo;s future.
               </p>
             </div>
           </div>
@@ -347,7 +347,17 @@ export default function AboutPage() {
                   description:
                     "Providing dependable services with clear, honest communication to build lasting corporate relationships.",
                   icon: (
-                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="28"
+                      height="28"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
                       <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
                       <path d="M9 12l2 2 4-4" />
                     </svg>
@@ -358,7 +368,17 @@ export default function AboutPage() {
                   description:
                     "Delivering exceptional engineering and premium materials to ensure every structure is durable and safe.",
                   icon: (
-                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="28"
+                      height="28"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
                       <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
                     </svg>
                   ),
@@ -368,7 +388,17 @@ export default function AboutPage() {
                   description:
                     "Working closely alongside our clients, partners, and units to achieve seamless success on every project.",
                   icon: (
-                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="28"
+                      height="28"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
                       <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
                       <circle cx="9" cy="7" r="4" />
                       <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
@@ -418,7 +448,17 @@ export default function AboutPage() {
             <div className="bg-white rounded-2xl p-8 md:p-10 border border-gray-100 shadow-sm">
               <div className="flex items-center gap-3 mb-8">
                 <div className="w-12 h-12 rounded-xl bg-[#E55503]/10 flex items-center justify-center text-[#E55503]">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
                     <circle cx="12" cy="12" r="10" />
                     <polyline points="12 6 12 12 16 14" />
                   </svg>
@@ -479,7 +519,17 @@ export default function AboutPage() {
             <div className="bg-white rounded-2xl p-8 md:p-10 border border-gray-100 shadow-sm">
               <div className="flex items-center gap-3 mb-8">
                 <div className="w-12 h-12 rounded-xl bg-[#002253]/10 flex items-center justify-center text-[#002253]">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
                     <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
                     <polyline points="22 4 12 14.01 9 11.01" />
                   </svg>
@@ -557,7 +607,17 @@ export default function AboutPage() {
                 description:
                   "We actively scout and source the finest raw construction materials and high-specification machinery from trusted global and local manufacturers.",
                 icon: (
-                  <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="28"
+                    height="28"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
                     <circle cx="11" cy="11" r="8" />
                     <line x1="21" y1="21" x2="16.65" y2="16.65" />
                   </svg>
@@ -569,7 +629,17 @@ export default function AboutPage() {
                 description:
                   "We enforce a strict vetting process to partner only with highly skilled, certified subcontractors and technicians who meet our premium engineering standards.",
                 icon: (
-                  <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="28"
+                    height="28"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
                     <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
                     <circle cx="8.5" cy="7" r="4" />
                     <polyline points="17 11 19 13 23 9" />
@@ -582,7 +652,17 @@ export default function AboutPage() {
                 description:
                   "We precisely coordinate the delivery of materials and equipment to ensure they arrive on site safely, smoothly, and exactly when your project needs them.",
                 icon: (
-                  <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="28"
+                    height="28"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
                     <rect x="1" y="3" width="15" height="13" />
                     <polygon points="16 8 20 8 23 11 23 16 16 16 16 8" />
                     <circle cx="5.5" cy="18.5" r="2.5" />
@@ -596,7 +676,17 @@ export default function AboutPage() {
                 description:
                   "We manage all financial transactions and vendor payouts with absolute transparency and speed through secure corporate channels to maintain strong market trust.",
                 icon: (
-                  <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="28"
+                    height="28"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
                     <line x1="12" y1="1" x2="12" y2="23" />
                     <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
                   </svg>
@@ -608,7 +698,17 @@ export default function AboutPage() {
                 description:
                   "We conduct rigorous field inspections on every phase of development to guarantee that the final infrastructure is durable, safe, and built to last.",
                 icon: (
-                  <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="28"
+                    height="28"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
                     <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
                     <path d="M9 12l2 2 4-4" />
                   </svg>
@@ -670,7 +770,17 @@ export default function AboutPage() {
                 description:
                   "We partner directly with premium cement factories, steel mills, and aggregate plants to secure bulk building materials at the best prices for our clients.",
                 icon: (
-                  <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="28"
+                    height="28"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
                     <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
                     <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
                     <line x1="12" y1="22.08" x2="12" y2="12" />
@@ -682,7 +792,17 @@ export default function AboutPage() {
                 description:
                   "We collaborate with top international machinery brands to ensure our rental fleet always features modern, high-performance excavators and industrial cranes.",
                 icon: (
-                  <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="28"
+                    height="28"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
                     <circle cx="12" cy="12" r="3" />
                     <path d="M12 1v4" />
                     <path d="M12 19v4" />
@@ -700,7 +820,17 @@ export default function AboutPage() {
                 description:
                   "We work hand-in-hand with leading blueprint designers and structural engineers to turn creative concepts into safe, buildable realities.",
                 icon: (
-                  <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="28"
+                    height="28"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
                     <polygon points="12 2 2 7 12 12 22 7 12 2" />
                     <polyline points="2 17 12 22 22 17" />
                     <polyline points="2 12 12 17 22 12" />
@@ -712,7 +842,17 @@ export default function AboutPage() {
                 description:
                   "We team up with certified electrical, plumbing, and deep-piling specialists to maintain flawless technical standards across all project phases.",
                 icon: (
-                  <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="28"
+                    height="28"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
                     <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
                   </svg>
                 ),
@@ -722,7 +862,17 @@ export default function AboutPage() {
                 description:
                   "We maintain strong alliances with heavy freight and shipping companies to guarantee your materials arrive on site on time, every time.",
                 icon: (
-                  <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="28"
+                    height="28"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
                     <rect x="1" y="3" width="15" height="13" />
                     <polygon points="16 8 20 8 23 11 23 16 16 16 16 8" />
                     <circle cx="5.5" cy="18.5" r="2.5" />
@@ -781,7 +931,17 @@ export default function AboutPage() {
                 description:
                   "We align our civil divisions with Bangladesh's national development plans to actively support high-stakes public contracts like airports, rail networks, and deep sea ports.",
                 icon: (
-                  <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="28"
+                    height="28"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
                     <path d="M3 21h18" />
                     <path d="M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16" />
                     <path d="M9 21v-4h6v4" />
@@ -795,7 +955,17 @@ export default function AboutPage() {
                 description:
                   "We study raw material market shifts and price volatility to build bulk sourcing strategies that save our clients from sudden, unexpected construction cost increases.",
                 icon: (
-                  <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="28"
+                    height="28"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
                     <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
                     <path d="M9 12l2 2 4-4" />
                   </svg>
@@ -806,7 +976,17 @@ export default function AboutPage() {
                 description:
                   "We analyze the growing market preference for green building practices, allowing us to offer sustainable materials and energy-efficient building blueprints.",
                 icon: (
-                  <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="28"
+                    height="28"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
                     <path d="M17 8C8 10 5.9 16.17 3.82 21.34l1.89.66L7 18" />
                     <path d="M17 8c3 0 7-1 7-1s-1 4-1 7c0 2-1 3-2 4" />
                     <path d="M17 8C10 10 8.5 15 7 21" />
@@ -861,79 +1041,130 @@ export default function AboutPage() {
             {/* Chairman */}
             <div className="flex flex-col items-center mb-4">
               <div className="bg-[#002253] text-white rounded-xl px-6 py-4 text-center shadow-md w-full max-w-sm">
-                <div className="text-[10px] font-bold text-[#FF8B28] uppercase tracking-widest mb-1">Chairman</div>
-                <h3 className="text-base font-bold mb-0.5">Mr. Kazi Ahsanullah</h3>
-                <p className="text-white/50 text-xs">Head of Corporate Vision</p>
+                <div className="text-[10px] font-bold text-[#FF8B28] uppercase tracking-widest mb-1">
+                  Chairman
+                </div>
+                <h3 className="text-base font-bold mb-0.5">
+                  Mr. Kazi Ahsanullah
+                </h3>
+                <p className="text-white/50 text-xs">
+                  Head of Corporate Vision
+                </p>
               </div>
             </div>
 
-            <div className="flex justify-center mb-4"><div className="w-px h-5 bg-[#E55503]/30"></div></div>
+            <div className="flex justify-center mb-4">
+              <div className="w-px h-5 bg-[#E55503]/30"></div>
+            </div>
 
             {/* Board of Directors */}
             <div className="flex flex-col items-center mb-4">
               <div className="bg-white border border-[#E55503]/20 rounded-xl px-5 py-4 text-center w-full max-w-lg">
-                <div className="text-[10px] font-bold text-[#E55503] uppercase tracking-widest mb-2">Board of Directors</div>
+                <div className="text-[10px] font-bold text-[#E55503] uppercase tracking-widest mb-2">
+                  Board of Directors
+                </div>
                 <div className="grid grid-cols-3 gap-2">
                   {[
-                    { name: "Ms. Farhana Chowdhury", role: "Strategic Advisor" },
-                    { name: "Mr. Asif Anam", role: "Infrastructure Specialist" },
+                    {
+                      name: "Ms. Farhana Chowdhury",
+                      role: "Strategic Advisor",
+                    },
+                    {
+                      name: "Mr. Asif Anam",
+                      role: "Infrastructure Specialist",
+                    },
                     { name: "Mr. Tariqul Islam", role: "Public Policy Expert" },
                   ].map((member, i) => (
                     <div key={i} className="bg-gray-50 rounded-lg px-2 py-2">
-                      <p className="text-xs font-bold text-[#002253] leading-tight">{member.name}</p>
-                      <p className="text-[10px] text-gray-500 mt-0.5">{member.role}</p>
+                      <p className="text-xs font-bold text-[#002253] leading-tight">
+                        {member.name}
+                      </p>
+                      <p className="text-[10px] text-gray-500 mt-0.5">
+                        {member.role}
+                      </p>
                     </div>
                   ))}
                 </div>
               </div>
             </div>
 
-            <div className="flex justify-center mb-4"><div className="w-px h-5 bg-[#E55503]/30"></div></div>
+            <div className="flex justify-center mb-4">
+              <div className="w-px h-5 bg-[#E55503]/30"></div>
+            </div>
 
             {/* Managing Director */}
             <div className="flex flex-col items-center mb-4">
               <div className="bg-[#002253] text-white rounded-xl px-6 py-4 text-center shadow-md w-full max-w-sm">
-                <div className="text-[10px] font-bold text-[#FF8B28] uppercase tracking-widest mb-1">Managing Director</div>
-                <h3 className="text-sm font-bold mb-0.5">Mr. Syed Kamal Ahmed</h3>
-                <p className="text-white/50 text-xs">Chief Executive Operations</p>
+                <div className="text-[10px] font-bold text-[#FF8B28] uppercase tracking-widest mb-1">
+                  Managing Director
+                </div>
+                <h3 className="text-sm font-bold mb-0.5">
+                  Mr. Syed Kamal Ahmed
+                </h3>
+                <p className="text-white/50 text-xs">
+                  Chief Executive Operations
+                </p>
               </div>
             </div>
 
-            <div className="flex justify-center mb-4"><div className="w-px h-5 bg-[#E55503]/30"></div></div>
+            <div className="flex justify-center mb-4">
+              <div className="w-px h-5 bg-[#E55503]/30"></div>
+            </div>
 
             {/* Top Management */}
             <div className="flex flex-col items-center mb-4">
               <div className="bg-white border border-[#002253]/10 rounded-xl px-5 py-4 text-center w-full max-w-lg">
-                <div className="text-[10px] font-bold text-[#002253] uppercase tracking-widest mb-2">Top Management</div>
+                <div className="text-[10px] font-bold text-[#002253] uppercase tracking-widest mb-2">
+                  Top Management
+                </div>
                 <div className="grid grid-cols-2 gap-2">
                   <div className="bg-gray-50 rounded-lg px-3 py-2">
-                    <div className="text-[10px] font-bold text-[#E55503] uppercase tracking-widest mb-0.5">Finance Division</div>
-                    <p className="text-xs font-bold text-[#002253]">Md. Azizur Rahman</p>
-                    <p className="text-[10px] text-gray-500">Director Finance</p>
+                    <div className="text-[10px] font-bold text-[#E55503] uppercase tracking-widest mb-0.5">
+                      Finance Division
+                    </div>
+                    <p className="text-xs font-bold text-[#002253]">
+                      Md. Azizur Rahman
+                    </p>
+                    <p className="text-[10px] text-gray-500">
+                      Director Finance
+                    </p>
                   </div>
                   <div className="bg-gray-50 rounded-lg px-3 py-2">
-                    <div className="text-[10px] font-bold text-[#E55503] uppercase tracking-widest mb-0.5">Operations Division</div>
-                    <p className="text-xs font-bold text-[#002253]">Engr. Rafiqul Ali</p>
+                    <div className="text-[10px] font-bold text-[#E55503] uppercase tracking-widest mb-0.5">
+                      Operations Division
+                    </div>
+                    <p className="text-xs font-bold text-[#002253]">
+                      Engr. Rafiqul Ali
+                    </p>
                     <p className="text-[10px] text-gray-500">Director Works</p>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="flex justify-center mb-4"><div className="w-px h-5 bg-[#E55503]/30"></div></div>
+            <div className="flex justify-center mb-4">
+              <div className="w-px h-5 bg-[#E55503]/30"></div>
+            </div>
 
             {/* Project Teams */}
             <div className="flex flex-col items-center">
               <div className="bg-gray-50 border border-gray-100 rounded-xl px-5 py-4 text-center w-full max-w-lg">
-                <div className="text-[10px] font-bold text-[#002253] uppercase tracking-widest mb-2">Project Teams</div>
+                <div className="text-[10px] font-bold text-[#002253] uppercase tracking-widest mb-2">
+                  Project Teams
+                </div>
                 <div className="grid grid-cols-3 gap-2">
                   {[
                     "Site Engineers & Certified Equipment Operators",
                     "Procurement Officers & Logistics Coordinators",
                     "Skilled Labor Supervisors & Field Technicians",
                   ].map((team, i) => (
-                    <div key={i} className="bg-white rounded-lg px-2 py-2 border border-gray-100">
-                      <p className="text-[10px] font-semibold text-[#002253] leading-tight">{team}</p>
+                    <div
+                      key={i}
+                      className="bg-white rounded-lg px-2 py-2 border border-gray-100"
+                    >
+                      <p className="text-[10px] font-semibold text-[#002253] leading-tight">
+                        {team}
+                      </p>
                     </div>
                   ))}
                 </div>

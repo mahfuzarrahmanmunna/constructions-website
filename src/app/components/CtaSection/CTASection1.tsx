@@ -32,7 +32,7 @@ export default function CTASection() {
 
   return (
     <section ref={sectionRef} className="bg-[#ffffff]">
-      <div className="mx-auto w-full max-w-[1320px] px-4 sm:px-6 lg:px-8 pb-8">
+      <div className="mx-auto w-full max-w-[1320px] px-4 my-8 sm:px-6 lg:px-8 pb-8">
         <div
           className="cta-content relative rounded-2xl bg-white border border-slate-100 shadow-[0_1px_3px_rgba(0,0,0,0.04)] overflow-hidden"
           style={{ height: "96px" }}
