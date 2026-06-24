@@ -1,20 +1,19 @@
-import { headers } from "next/headers";
-import { getAdminAuth } from "./firebase-admin";
+import { getAdminAuth } from "@/lib/firebase-admin";
 
-export async function verifyAdmin() {
-  const authorization = (await headers()).get("authorization");
+export async function verifyAdmin(token: string) {
+  const auth = getAdminAuth();
 
-  if (!authorization?.startsWith("Bearer ")) {
-    throw new Error("Unauthorized");
+  // If Firebase admin isn't configured, block access
+  if (!auth) {
+    console.error("Admin auth is not configured.");
+    return null;
   }
 
-  const token = authorization.split("Bearer ")[1];
-
-  const decodedToken = await getAdminAuth().verifyIdToken(token);
-
-  if (decodedToken.email !== process.env.ADMIN_EMAIL) {
-    throw new Error("Forbidden");
+  try {
+    const decodedToken = await auth.verifyIdToken(token);
+    return decodedToken;
+  } catch (error) {
+    console.error("Token verification failed:", error);
+    return null;
   }
-
-  return decodedToken;
 }

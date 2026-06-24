@@ -1,7 +1,7 @@
 import { getApps, initializeApp, cert, type App } from "firebase-admin/app";
 import { getAuth, type Auth } from "firebase-admin/auth";
 
-function getAdminApp(): App {
+function getAdminApp(): App | null {
   if (getApps().length > 0) {
     return getApps()[0];
   }
@@ -11,7 +11,8 @@ function getAdminApp(): App {
   const clientEmail = process.env.FIREBASE_CLIENT_EMAIL;
 
   if (!projectId || !clientEmail || !privateKey) {
-    throw new Error("Firebase Admin credentials are not configured");
+    console.warn("⚠️ Firebase Admin credentials are missing");
+    return null;
   }
 
   return initializeApp({
@@ -23,6 +24,8 @@ function getAdminApp(): App {
   });
 }
 
-export function getAdminAuth(): Auth {
-  return getAuth(getAdminApp());
+export function getAdminAuth(): Auth | null {
+  const adminApp = getAdminApp();
+  if (!adminApp) return null;
+  return getAuth(adminApp);
 }
