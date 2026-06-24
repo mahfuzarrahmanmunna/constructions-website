@@ -32,7 +32,7 @@ export async function POST(req: Request) {
     const message =
       error instanceof Error ? error.message : "Server Error";
 
-    // ✅ duplicate slug error ধরা
+    // ✅ duplicate slug error handling
     if ((error as any)?.code === 11000) {
       return NextResponse.json(
         { message: "Slug already exists. Please use a unique slug." },

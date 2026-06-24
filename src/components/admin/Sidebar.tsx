@@ -201,6 +201,28 @@ export default function Sidebar({
             Product Management
           </Link>
 
+ <Link
+            href="/admin/services"
+            onClick={closeSidebar}
+            className="
+            flex
+            items-center
+            gap-3
+
+            px-4
+            py-3
+
+            rounded-xl
+
+            hover:bg-white/10
+
+            transition-all
+            "
+          >
+            <Boxes size={20} />
+          Service Management
+          </Link>
+
           <Link
             href="/admin/inquiries"
             onClick={closeSidebar}
