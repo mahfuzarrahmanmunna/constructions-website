@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { connectDB } from "@/lib/mongodb";
 import Project from "@/models/Project";
 
-// GET ALL PROJECTS (with optional filtering)
+// GET ALL PROJECTS
 export async function GET(req: Request) {
   try {
     await connectDB();
@@ -10,14 +10,20 @@ export async function GET(req: Request) {
     const { searchParams } = new URL(req.url);
     const category = searchParams.get("category");
     const featured = searchParams.get("featured");
-    const status = searchParams.get("status") || "published";
+    const status = searchParams.get("status");
 
-    // Build dynamic filter object
-    const filter: Record<string, unknown> = { status };
+    // Build filter - ONLY filter if params are explicitly passed
+    const filter: Record<string, unknown> = {};
+
+    // Only filter by status if ?status=published is in the URL
+    if (status && status !== "all") {
+      filter.status = status;
+    }
 
     if (category && category !== "all") {
       filter.category = category;
     }
+
     if (featured === "true") {
       filter.isFeatured = true;
     }
@@ -45,10 +51,7 @@ export async function POST(req: Request) {
 
     const project = await Project.create(body);
 
-    return NextResponse.json(
-      { success: true, project },
-      { status: 201 }, // 201 Created is best practice for POST
-    );
+    return NextResponse.json({ success: true, project }, { status: 201 });
   } catch (error: unknown) {
     const message =
       error instanceof Error ? error.message : "Failed to create project";

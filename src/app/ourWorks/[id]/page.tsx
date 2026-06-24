@@ -55,7 +55,7 @@ export default function CaseStudyDetailPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("/api/projects?status=published")
+    fetch("/api/projects")
       .then((res) => res.json())
       .then((data) => {
         const items = data.projects || [];

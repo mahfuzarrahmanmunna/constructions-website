@@ -44,8 +44,8 @@ export async function PATCH(
     const body = await req.json();
 
     const project = await Project.findByIdAndUpdate(id, body, {
-      new: true, // Return the updated document
-      runValidators: true, // Ensure updates follow schema rules (e.g., enum status)
+      new: true,
+      runValidators: true,
     });
 
     if (!project) {

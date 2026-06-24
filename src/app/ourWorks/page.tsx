@@ -74,7 +74,7 @@ export default function OurWorksPage() {
   const [selectedCase, setSelectedCase] = useState<Project | null>(null);
 
   useEffect(() => {
-    fetch("/api/projects?status=published")
+    fetch("/api/projects")
       .then((res) => res.json())
       .then((data) => {
         const items = data.projects || [];
@@ -363,7 +363,7 @@ export default function OurWorksPage() {
                     );
                   }
 
-                  // 3. TWO-COLUMN GRID CARDS (Skip indexes 2 and 6 to stagger)
+                  // 3. TWO-COLUMN GRID CARDS
                   if (index === 2 || index === 6) return null;
 
                   const nextStudy = filteredCases[index + 1];

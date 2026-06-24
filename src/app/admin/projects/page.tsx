@@ -156,7 +156,8 @@ export default function ProjectsPage() {
   const fetchProjects = useCallback(async () => {
     setLoading(true);
     try {
-      const res = await fetch("/api/projects");
+      // ✅ FIX: Fetch ALL projects for admin (no status filter)
+      const res = await fetch("/api/projects?admin=true");
       const data = await res.json();
       setProjects(Array.isArray(data.projects) ? data.projects : []);
     } catch {
@@ -251,7 +252,7 @@ export default function ProjectsPage() {
         </button>
       </div>
 
-      {/* Table Container - FIX: Removed 'overflow-hidden' here */}
+      {/* Table Container */}
       <div className="bg-white rounded-2xl shadow-sm border border-slate-200">
         {loading ? (
           <div className="p-12 text-center text-gray-400">
@@ -259,7 +260,7 @@ export default function ProjectsPage() {
           </div>
         ) : projects.length === 0 ? (
           <div className="p-12 text-center text-gray-400">
-            No projects found. Click "Add New Project" to get started.
+            No projects found. Click &quot;Add New Project&quot; to get started.
           </div>
         ) : (
           <div className="overflow-x-auto">
