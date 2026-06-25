@@ -1,3 +1,4 @@
+// src/app/products/[category]/[productName]/[id]/page.tsx
 "use client";
 
 import Link from "next/link";
@@ -9,6 +10,14 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import RequestQuoteModal from "@/app/components/RequestQuoteForm/RequestQuoteForm";
 
 if (typeof window !== "undefined") gsap.registerPlugin(ScrollTrigger);
+
+// Consistent slug generator
+const slugify = (text: string) =>
+  text
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
 
 const CheckIcon = () => (
   <svg
@@ -56,6 +65,23 @@ const MailIcon = () => (
     <polyline points="22,6 12,13 2,6" />
   </svg>
 );
+const DownloadIcon = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="16"
+    height="16"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+    <polyline points="7 10 12 15 17 10" />
+    <line x1="12" y1="15" x2="12" y2="3" />
+  </svg>
+);
 const ArrowRightIcon = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -73,14 +99,17 @@ const ArrowRightIcon = () => (
   </svg>
 );
 
-const nameToSlug = (name: string) => name.trim().replace(/\s+/g, "-");
-const catToSlug = (cat: string) =>
-  cat ? cat.trim().replace(/\s+/g, "-").toLowerCase() : "uncategorized";
+// Helper for YouTube URLs
+const getYouTubeEmbedUrl = (url: string) => {
+  const regex =
+    /(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+  const match = url.match(regex);
+  return match ? `https://www.youtube.com/embed/${match[1]}` : null;
+};
 
 export default function ProductDetailPage() {
   const params = useParams();
   const id = params.id as string;
-  const categorySlug = params.category as string;
   const pageRef = useRef<HTMLDivElement>(null);
 
   const [product, setProduct] = useState<any>(null);
@@ -97,7 +126,6 @@ export default function ProductDetailPage() {
 
         if (current) {
           setProduct(current);
-          // Get related products from same category, excluding current
           const related = items
             .filter((p: any) => p.category === current.category && p._id !== id)
             .slice(0, 3);
@@ -153,7 +181,7 @@ export default function ProductDetailPage() {
     <main ref={pageRef} className="min-h-screen bg-[#f8f9fb] font-sans">
       <div className="mx-auto max-w-7xl px-4 pb-8 pt-24 md:px-8 md:pb-12 md:pt-32">
         <Link
-          href={`/products/${categorySlug}`}
+          href={`/products/${slugify(product.category)}`}
           className="group mb-8 inline-flex items-center gap-2 text-sm font-semibold text-[#002253] transition-colors hover:text-[#E55503]"
         >
           <span className="transition-transform duration-300 group-hover:-translate-x-1">
@@ -214,7 +242,7 @@ export default function ProductDetailPage() {
                 "No detailed description provided for this product yet."}
             </p>
 
-            {/* Price */}
+            {/* Price Banner */}
             <div className="relative mb-6 flex items-center justify-between overflow-hidden rounded-xl bg-[#002253] px-6 py-4">
               <div className="pointer-events-none absolute -right-10 -top-10 h-32 w-32 rounded-full bg-[#E55503]/20 blur-2xl" />
               <span className="relative text-sm font-semibold text-gray-300">
@@ -227,7 +255,33 @@ export default function ProductDetailPage() {
               </span>
             </div>
 
-            {/* Specs (if available) */}
+            {/* Dynamic Features Section */}
+            {product.features && product.features.length > 0 && (
+              <div className="mb-6 rounded-xl border border-slate-100 bg-white p-5 shadow-sm">
+                <h3 className="mb-4 text-xs font-bold uppercase tracking-widest text-[#002253]">
+                  Key Features
+                </h3>
+                <ul className="space-y-2.5">
+                  {product.features.map((feat: any, i: number) => (
+                    <li
+                      key={i}
+                      className="flex items-start gap-2.5 text-sm text-gray-600"
+                    >
+                      <span className="mt-0.5 text-[#E55503]">
+                        <CheckIcon />
+                      </span>
+                      <span>
+                        {typeof feat === "string"
+                          ? feat
+                          : feat.text || feat.name || JSON.stringify(feat)}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {/* Dynamic Specs Section */}
             {product.specs && product.specs.length > 0 && (
               <div className="mb-6 rounded-xl border border-slate-100 bg-white p-5 shadow-sm">
                 <h3 className="mb-4 text-xs font-bold uppercase tracking-widest text-[#002253]">
@@ -278,6 +332,70 @@ export default function ProductDetailPage() {
           </div>
         </div>
 
+        {/* Dynamic Gallery Images Section */}
+        {product.galleryImages && product.galleryImages.length > 0 && (
+          <div className="detail-reveal mb-10 rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+            <h3 className="mb-5 text-xs font-bold uppercase tracking-widest text-[#002253]">
+              Product Gallery
+            </h3>
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+              {product.galleryImages.map((img: string, i: number) => (
+                <div
+                  key={i}
+                  className="group/img relative aspect-square overflow-hidden rounded-xl bg-[#f0f0f0] border border-slate-50"
+                >
+                  <img
+                    src={img}
+                    alt={`${product.title} gallery ${i + 1}`}
+                    className="h-full w-full object-cover transition-transform duration-500 group-hover/img:scale-110"
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Dynamic Gallery Videos Section */}
+        {product.galleryVideos && product.galleryVideos.length > 0 && (
+          <div className="detail-reveal mb-10 rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+            <h3 className="mb-5 text-xs font-bold uppercase tracking-widest text-[#002253]">
+              Video Walkthrough
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {product.galleryVideos.map((vid: string, i: number) => {
+                const embedUrl = getYouTubeEmbedUrl(vid);
+                return embedUrl ? (
+                  <div
+                    key={i}
+                    className="relative w-full pb-[56.25%] h-0 overflow-hidden rounded-xl bg-slate-900 shadow-inner"
+                  >
+                    <iframe
+                      src={embedUrl}
+                      title={`Video ${i + 1}`}
+                      allowFullScreen
+                      className="absolute top-0 left-0 w-full h-full"
+                    />
+                  </div>
+                ) : null;
+              })}
+            </div>
+          </div>
+        )}
+
+        {/* Dynamic Brochure Download Section */}
+        {product.brochure && (
+          <div className="detail-reveal mb-10">
+            <a
+              href={product.brochure}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex w-full items-center justify-center gap-3 rounded-xl border-2 border-dashed border-[#224B88] bg-white py-5 text-sm font-bold uppercase tracking-wider text-[#224B88] transition-all duration-300 hover:bg-[#224B88] hover:text-white hover:shadow-lg"
+            >
+              <DownloadIcon /> Download Product Brochure (PDF)
+            </a>
+          </div>
+        )}
+
         {/* Related Products */}
         {relatedProducts.length > 0 && (
           <section>
@@ -294,7 +412,7 @@ export default function ProductDetailPage() {
               {relatedProducts.map((rel) => (
                 <Link
                   key={rel._id}
-                  href={`/products/${catToSlug(rel.category)}/${nameToSlug(rel.title)}/${rel._id}`}
+                  href={`/products/${slugify(rel.category)}/${slugify(rel.title)}/${rel._id}`}
                   className="related-reveal group flex items-center gap-4 rounded-2xl border border-slate-100 bg-white p-4 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#E55503] hover:shadow-xl hover:shadow-[#E55503]/10"
                 >
                   <div className="flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-[#f0f0f0]">

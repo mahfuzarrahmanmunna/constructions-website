@@ -4,6 +4,14 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Search } from "lucide-react";
 
+// Consistent slug generator for clean URLs
+const slugify = (text: string) =>
+  text
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+
 const ArrowRightIcon = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -25,7 +33,7 @@ interface CategoryGroup {
   name: string;
   slug: string;
   count: number;
-  image: string; // We'll just grab the first product's image for the card
+  image: string;
   description: string;
 }
 
@@ -40,11 +48,11 @@ export default function ProductsPage() {
       .then((data) => {
         const items = Array.isArray(data) ? data : data.products || [];
 
-        // Dynamically group products by category
         const map = new Map<string, CategoryGroup>();
         items.forEach((p: any) => {
           const catName = p.category || "Uncategorized";
-          const slug = catName.trim().replace(/\s+/g, "-").toLowerCase();
+          const slug = slugify(catName);
+
           if (!map.has(catName)) {
             map.set(catName, {
               name: catName,
@@ -97,10 +105,7 @@ export default function ProductsPage() {
       <section className="max-w-7xl mx-auto px-4 md:px-8 py-20">
         <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-12">
           <div>
-            <p
-              className="text-xs sm:text-sm font-bold text-[#E55503] uppercase tracking-widest"
-              style={{ fontFamily: "'Inter', sans-serif" }}
-            >
+            <p className="text-xs sm:text-sm font-bold text-[#E55503] uppercase tracking-widest">
               Equipment
             </p>
             <div className="h-[3px] w-10 bg-[#E55503] mt-1.5 mb-2" />

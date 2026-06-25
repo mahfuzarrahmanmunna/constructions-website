@@ -9,7 +9,13 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 if (typeof window !== "undefined") gsap.registerPlugin(ScrollTrigger);
 
-const nameToSlug = (name: string) => name.trim().replace(/\s+/g, "-");
+// Consistent slug generator
+const slugify = (text: string) =>
+  text
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
 
 const ArrowRightIcon = () => (
   <svg
@@ -27,21 +33,6 @@ const ArrowRightIcon = () => (
     <polyline points="12 5 19 12 12 19" />
   </svg>
 );
-const CheckIcon = () => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="14"
-    height="14"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2.5"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <polyline points="20 6 9 17 4 12" />
-  </svg>
-);
 
 export default function CategoryPage() {
   const params = useParams();
@@ -57,13 +48,10 @@ export default function CategoryPage() {
       .then((res) => res.json())
       .then((data) => {
         const items = Array.isArray(data) ? data : data.products || [];
-        // Find products matching the URL slug
+
+        // Match category using the exact same slugify logic
         const filtered = items.filter(
-          (p: any) =>
-            (p.category || "uncategorized")
-              .trim()
-              .replace(/\s+/g, "-")
-              .toLowerCase() === categorySlug,
+          (p: any) => slugify(p.category || "uncategorized") === categorySlug,
         );
 
         if (filtered.length > 0) {
@@ -163,7 +151,7 @@ export default function CategoryPage() {
           {products.map((product) => (
             <Link
               key={product._id}
-              href={`/products/${categorySlug}/${nameToSlug(product.title)}/${product._id}`}
+              href={`/products/${categorySlug}/${slugify(product.title)}/${product._id}`}
               className="product-card group flex flex-col overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#E55503] hover:shadow-xl hover:shadow-[#E55503]/10"
             >
               <div className="relative flex h-52 items-center justify-center overflow-hidden bg-[#f0f0f0]">
@@ -191,7 +179,6 @@ export default function CategoryPage() {
                   {product.description || "No description available."}
                 </p>
 
-                {/* Price + CTA */}
                 <div className="mt-auto flex items-center justify-between border-t border-gray-100 pt-4">
                   <p className="text-lg font-extrabold text-[#002253]">
                     {product.price
