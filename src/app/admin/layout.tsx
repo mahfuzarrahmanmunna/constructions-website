@@ -6,6 +6,7 @@ import { useRouter, usePathname } from "next/navigation";
 import { auth } from "@/lib/firebase";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import Sidebar from "@/components/admin/Sidebar";
+import AdminProfile from "@/components/admin/AdminProfile";
 
 const ADMIN_EMAIL = "azizurseu@gmail.com";
 
@@ -107,8 +108,8 @@ export default function AdminLayout({
             </button>
 
             {/* User Avatar */}
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-orange-500 to-orange-600 flex items-center justify-center text-white font-bold shadow-lg shadow-orange-500/20 cursor-pointer">
-              {userEmail?.charAt(0).toUpperCase()}
+            <div className="w-10 h-10 rounded-xl e-500 flex items-center justify-center text-white font-bold shadow-lg shadow-orange-500/20 cursor-pointer">
+              <AdminProfile/>
             </div>
           </div>
         </header>
