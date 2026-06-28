@@ -21,7 +21,8 @@ export async function GET() {
         contactInfo: {
           phone: "+880 1XXX-XXXXXX",
           email: "info@example.com",
-          address: "Chittagong, Bangladesh",
+          address: "Dhaka, Bangladesh",
+          workingHours:"Sat – Thu: 8:00 AM – 6:00 PM",
         },
         socialMedia: {
           facebook: "",
@@ -30,9 +31,22 @@ export async function GET() {
           youtube: "",
         },
       });
+    }else {
+      
+      if (!settings.contactInfo?.workingHours) {
+        await SiteSettings.findByIdAndUpdate(settings._id, {
+          $set: { "contactInfo.workingHours": "" },
+        });
+        settings = await SiteSettings.findById(settings._id);
+      }
     }
 
-    return NextResponse.json(settings);
+    
+  return NextResponse.json(settings, {
+  headers: {
+    "Cache-Control": "no-store", 
+  },
+});
   } catch (error: unknown) {
     const message = error instanceof Error ? error.message : "Server Error";
     return NextResponse.json({ message }, { status: 500 });
@@ -43,7 +57,6 @@ export async function GET() {
 export async function PUT(req: Request) {
   try {
     await dbConnect();
-
     const body = await req.json();
 
     let settings = await SiteSettings.findOne({});
@@ -53,8 +66,8 @@ export async function PUT(req: Request) {
     } else {
       settings = await SiteSettings.findByIdAndUpdate(
         settings._id,
-        body,
-        { new: true, runValidators: true }
+        { $set: body }, 
+        { new: true, runValidators: false }
       );
     }
 

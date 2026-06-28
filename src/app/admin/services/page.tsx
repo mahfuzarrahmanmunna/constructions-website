@@ -1,10 +1,11 @@
 "use client";
-
 // app/admin/services/page.tsx
-// Admin panel — services add/edit/delete/toggle
 
-import { useEffect, useState } from "react";
-import { Pencil, Trash2, Plus, X, Check, ToggleLeft, ToggleRight, GripVertical } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import {
+  Pencil, Trash2, Plus, X, Check,
+  ToggleLeft, ToggleRight, GripVertical,
+} from "lucide-react";
 
 type ServiceType = "primary" | "secondary";
 
@@ -30,20 +31,23 @@ export default function AdminServicesPage() {
   const [services, setServices] = useState<Service[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<ServiceType>("primary");
-
-  // Modal state
   const [showModal, setShowModal] = useState(false);
   const [editingService, setEditingService] = useState<Service | null>(null);
   const [form, setForm] = useState(EMPTY_FORM);
   const [saving, setSaving] = useState(false);
   const [deleteId, setDeleteId] = useState<number | null>(null);
   const [error, setError] = useState("");
+  const [reordering, setReordering] = useState(false);
+
+  // drag state
+  const dragItem = useRef<number | null>(null);
+  const dragOver = useRef<number | null>(null);
 
   // ── Fetch ──
   const fetchServices = async () => {
     setLoading(true);
     try {
-      const res = await fetch(" /api/admin/services");
+      const res = await fetch("/api/admin/services?admin=true");
       const data = await res.json();
       setServices(data);
     } catch {
@@ -53,15 +57,70 @@ export default function AdminServicesPage() {
     }
   };
 
-  useEffect(() => {
-    fetchServices();
-  }, []);
+  useEffect(() => { fetchServices(); }, []);
 
   const filtered = services
     .filter((s) => s.type === activeTab)
     .sort((a, b) => a.order - b.order);
 
-  // ── Open modal ──
+  // ── Drag handlers ──
+  const handleDragStart = (index: number) => {
+    dragItem.current = index;
+  };
+
+  const handleDragEnter = (index: number) => {
+    dragOver.current = index;
+
+    // live preview swap
+    setServices((prev) => {
+      const tabItems = prev
+        .filter((s) => s.type === activeTab)
+        .sort((a, b) => a.order - b.order);
+      const others = prev.filter((s) => s.type !== activeTab);
+
+      const from = dragItem.current!;
+      const to = index;
+      if (from === to) return prev;
+
+      const reordered = [...tabItems];
+      const [moved] = reordered.splice(from, 1);
+      reordered.splice(to, 0, moved);
+
+      // reassign order values
+      const updated = reordered.map((s, i) => ({ ...s, order: i + 1 }));
+      dragItem.current = to; // keep in sync
+
+      return [...others, ...updated];
+    });
+  };
+
+  const handleDragEnd = async () => {
+    dragItem.current = null;
+    dragOver.current = null;
+
+    // persist to DB
+    const tabItems = services
+      .filter((s) => s.type === activeTab)
+      .sort((a, b) => a.order - b.order);
+
+    const payload = tabItems.map((s) => ({ _id: s._id, order: s.order }));
+
+    setReordering(true);
+    try {
+      await fetch("/api/admin/services/reorder", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+    } catch {
+      setError("Failed to save order. Please try again.");
+      fetchServices(); // rollback
+    } finally {
+      setReordering(false);
+    }
+  };
+
+  // ── Modal ──
   const openAdd = () => {
     setEditingService(null);
     setForm({ ...EMPTY_FORM, type: activeTab });
@@ -76,17 +135,16 @@ export default function AdminServicesPage() {
     setError("");
   };
 
-  // ── Save (add or edit) ──
+  // ── Save ──
   const handleSave = async () => {
     if (!form.title.trim() || !form.description.trim() || !form.image.trim()) {
-      setError("please fill all required fields");
+      setError("Please fill all required fields");
       return;
     }
     setSaving(true);
     setError("");
     try {
       if (editingService) {
-        // PUT
         const res = await fetch(`/api/admin/services/${editingService.id}`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
@@ -94,7 +152,6 @@ export default function AdminServicesPage() {
         });
         if (!res.ok) throw new Error("Update failed");
       } else {
-        // POST
         const res = await fetch("/api/admin/services", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -118,11 +175,11 @@ export default function AdminServicesPage() {
       setDeleteId(null);
       fetchServices();
     } catch {
-      setError("Failed to delete service. Please try again.");
+      setError("Failed to delete service.");
     }
   };
 
-  // ── Toggle active ──
+  // ── Toggle ──
   const handleToggle = async (s: Service) => {
     await fetch(`/api/admin/services/${s.id}`, {
       method: "PUT",
@@ -138,7 +195,9 @@ export default function AdminServicesPage() {
       <div className="bg-[#002253] text-white px-8 py-6 flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-black uppercase tracking-wide">Services Manager</h1>
-          <p className="text-blue-300 text-sm mt-0.5">Add, edit, or remove services shown on the frontend</p>
+          <p className="text-blue-300 text-sm mt-0.5">
+            Drag rows to reorder · Toggle visibility · Add, edit, or remove services
+          </p>
         </div>
         <button
           onClick={openAdd}
@@ -168,6 +227,14 @@ export default function AdminServicesPage() {
         </div>
       </div>
 
+      {/* Reorder saving indicator */}
+      {reordering && (
+        <div className="bg-blue-50 border-b border-blue-100 px-8 py-2 text-sm text-blue-600 font-medium flex items-center gap-2">
+          <span className="w-3 h-3 border-2 border-blue-400 border-t-transparent rounded-full animate-spin inline-block" />
+          Saving new order...
+        </div>
+      )}
+
       {/* Content */}
       <div className="max-w-6xl mx-auto px-8 py-8">
         {loading ? (
@@ -176,20 +243,31 @@ export default function AdminServicesPage() {
           <div className="text-center py-20 text-gray-400">
             <p className="text-lg">No services available.</p>
             <button onClick={openAdd} className="mt-4 text-[#E55503] font-bold hover:underline">
-                Add your first service
+              Add your first service
             </button>
           </div>
         ) : (
-          <div className="grid gap-4">
-            {filtered.map((s) => (
+          <div className="grid gap-3">
+            {filtered.map((s, index) => (
               <div
                 key={s._id}
-                className={`bg-white rounded-2xl border ${
-                  s.isActive ? "border-gray-100" : "border-dashed border-gray-300 opacity-60"
-                } shadow-sm flex items-center gap-5 p-4 group`}
+                draggable
+                onDragStart={() => handleDragStart(index)}
+                onDragEnter={() => handleDragEnter(index)}
+                onDragEnd={handleDragEnd}
+                onDragOver={(e) => e.preventDefault()}
+                className={`bg-white rounded-2xl border shadow-sm flex items-center gap-5 p-4 
+                  transition-all duration-150 select-none
+                  ${s.isActive ? "border-gray-100" : "border-dashed border-gray-300 opacity-60"}
+                  cursor-grab active:cursor-grabbing active:shadow-xl active:scale-[1.01] active:z-10 active:border-[#002253]/30`}
               >
-                {/* Drag handle (visual only) */}
-                <GripVertical className="w-4 h-4 text-gray-300 flex-shrink-0" />
+                {/* Drag handle */}
+                <GripVertical className="w-4 h-4 text-gray-300 flex-shrink-0 hover:text-gray-500 transition-colors" />
+
+                {/* Order badge */}
+                <span className="text-xs font-black text-gray-300 w-5 text-center flex-shrink-0">
+                  {s.order}
+                </span>
 
                 {/* Image */}
                 <div className="w-20 h-16 rounded-xl overflow-hidden bg-gray-100 flex-shrink-0">
@@ -198,7 +276,8 @@ export default function AdminServicesPage() {
                     alt={s.title}
                     className="w-full h-full object-cover"
                     onError={(e) => {
-                      (e.target as HTMLImageElement).src = "https://placehold.co/80x64/f3f4f6/9ca3af?text=IMG";
+                      (e.target as HTMLImageElement).src =
+                        "https://placehold.co/80x64/f3f4f6/9ca3af?text=IMG";
                     }}
                   />
                 </div>
@@ -221,20 +300,16 @@ export default function AdminServicesPage() {
 
                 {/* Actions */}
                 <div className="flex items-center gap-2 flex-shrink-0">
-                  {/* Toggle active */}
                   <button
                     onClick={() => handleToggle(s)}
                     className="text-gray-400 hover:text-[#002253] transition-colors"
                     title={s.isActive ? "Hide from frontend" : "Show on frontend"}
                   >
-                    {s.isActive ? (
-                      <ToggleRight className="w-6 h-6 text-green-500" />
-                    ) : (
-                      <ToggleLeft className="w-6 h-6" />
-                    )}
+                    {s.isActive
+                      ? <ToggleRight className="w-6 h-6 text-green-500" />
+                      : <ToggleLeft className="w-6 h-6" />}
                   </button>
 
-                  {/* Edit */}
                   <button
                     onClick={() => openEdit(s)}
                     className="w-8 h-8 rounded-lg bg-[#224B88]/10 hover:bg-[#224B88]/20 flex items-center justify-center transition-colors"
@@ -242,7 +317,6 @@ export default function AdminServicesPage() {
                     <Pencil className="w-3.5 h-3.5 text-[#224B88]" />
                   </button>
 
-                  {/* Delete */}
                   {deleteId === s.id ? (
                     <div className="flex items-center gap-1">
                       <button
@@ -273,11 +347,10 @@ export default function AdminServicesPage() {
         )}
       </div>
 
-      {/* ── Modal ── */}
+      {/* Modal */}
       {showModal && (
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
           <div className="bg-white rounded-2xl w-full max-w-lg shadow-2xl">
-            {/* Modal header */}
             <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100">
               <h2 className="font-black text-[#002253] text-lg">
                 {editingService ? "Edit Service" : "Add New Service"}
@@ -290,13 +363,11 @@ export default function AdminServicesPage() {
               </button>
             </div>
 
-            {/* Modal body */}
             <div className="px-6 py-5 flex flex-col gap-4">
               {error && (
                 <p className="text-red-500 text-sm bg-red-50 px-4 py-2 rounded-lg">{error}</p>
               )}
 
-              {/* Type */}
               <div>
                 <label className="text-xs font-bold text-gray-500 uppercase tracking-wide mb-1.5 block">
                   Service Type
@@ -318,7 +389,6 @@ export default function AdminServicesPage() {
                 </div>
               </div>
 
-              {/* Title */}
               <div>
                 <label className="text-xs font-bold text-gray-500 uppercase tracking-wide mb-1.5 block">
                   Title *
@@ -328,11 +398,10 @@ export default function AdminServicesPage() {
                   value={form.title}
                   onChange={(e) => setForm((f) => ({ ...f, title: e.target.value }))}
                   placeholder="e.g. Road Construction"
-                  className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm text-gray-700 focus:outline-none focus:border-[#224B88] transition-colors "
+                  className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm text-gray-700 focus:outline-none focus:border-[#224B88] transition-colors"
                 />
               </div>
 
-              {/* Description */}
               <div>
                 <label className="text-xs font-bold text-gray-500 uppercase tracking-wide mb-1.5 block">
                   Description *
@@ -346,7 +415,6 @@ export default function AdminServicesPage() {
                 />
               </div>
 
-              {/* Image path */}
               <div>
                 <label className="text-xs font-bold text-gray-500 uppercase tracking-wide mb-1.5 block">
                   Image Path *
@@ -374,7 +442,6 @@ export default function AdminServicesPage() {
               </div>
             </div>
 
-            {/* Modal footer */}
             <div className="px-6 py-4 border-t border-gray-100 flex gap-3 justify-end">
               <button
                 onClick={() => setShowModal(false)}

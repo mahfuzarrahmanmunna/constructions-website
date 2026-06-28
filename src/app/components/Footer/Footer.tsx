@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FaFacebook, FaLinkedin, FaTwitter, FaYoutube } from "react-icons/fa";
 
 const COLORS = {
@@ -15,14 +15,46 @@ const COLORS = {
   borderHover: "rgba(0, 34, 83, 0.2)",
 };
 
-const socialLinks = [
-  { icon: FaFacebook, href: "#", label: "Facebook" },
-  { icon: FaTwitter, href: "#", label: "Twitter" },
-  { icon: FaLinkedin, href: "#", label: "LinkedIn" },
-  { icon: FaYoutube, href: "#", label: "YouTube" },
-];
+type SocialUrls = {
+  facebook: string;
+  twitter: string;
+  linkedin: string;
+  youtube: string;
+};
+
+const DEFAULT_SOCIALS: SocialUrls = {
+  facebook: "#",
+  twitter: "#",
+  linkedin: "#",
+  youtube: "#",
+};
 
 export default function Footer() {
+  const [socialUrls, setSocialUrls] = useState<SocialUrls>(DEFAULT_SOCIALS);
+
+  useEffect(() => {
+    fetch("/api/settings")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.socialMedia) {
+          setSocialUrls({
+            facebook: data.socialMedia.facebook || "#",
+            twitter:  data.socialMedia.twitter  || "#",
+            linkedin: data.socialMedia.linkedin || "#",
+            youtube:  data.socialMedia.youtube  || "#",
+          });
+        }
+      })
+      .catch(console.error);
+  }, []);
+
+  const socialLinks = [
+    { icon: FaFacebook, href: socialUrls.facebook, label: "Facebook" },
+    { icon: FaTwitter,  href: socialUrls.twitter,  label: "Twitter"  },
+    { icon: FaLinkedin, href: socialUrls.linkedin, label: "LinkedIn" },
+    { icon: FaYoutube,  href: socialUrls.youtube,  label: "YouTube"  },
+  ];
+
   return (
     <footer
       className="relative bg-white pt-12 overflow-hidden"
@@ -45,44 +77,33 @@ export default function Footer() {
       />
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-12 lg:px-20">
-        {/* ═══ DESKTOP: full 4-column footer ═══ */}
+
+        {/* ═══ DESKTOP ═══ */}
         <div className="hidden md:block pt-16 pb-8">
           <div className="grid grid-cols-4 gap-8 mb-14">
-            {/* brand */}
+
+            {/* Brand */}
             <div>
               <figure className="w-24">
-                <Image
-                  src="/finallogo.png"
-                  alt="CPL LOGO"
-                  width={150}
-                  height={50}
-                />
+                <Image src="/finallogo.png" alt="CPL LOGO" width={150} height={50} />
               </figure>
               <div
                 className="w-10 h-0.5 rounded-full mb-5"
-                style={{
-                  background: `linear-gradient(to right, ${COLORS.orange}, ${COLORS.orangeLight})`,
-                }}
+                style={{ background: `linear-gradient(to right, ${COLORS.orange}, ${COLORS.orangeLight})` }}
               />
-              <p
-                className="text-sm leading-relaxed max-w-xs"
-                style={{ color: COLORS.textMuted }}
-              >
+              <p className="text-sm leading-relaxed max-w-xs" style={{ color: COLORS.textMuted }}>
                 Leading global manufacturer of heavy machinery and construction
                 equipment. Engineering excellence for a sustainable future.
               </p>
             </div>
 
-            {/* products */}
+            {/* Products */}
             <div>
               <h3
                 className="text-[11px] font-bold uppercase tracking-[0.2em] mb-6 flex items-center gap-2"
                 style={{ color: COLORS.navy }}
               >
-                <span
-                  className="w-1.5 h-1.5 rounded-full"
-                  style={{ backgroundColor: COLORS.orange }}
-                />
+                <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: COLORS.orange }} />
                 Products
               </h3>
               <ul className="space-y-2.5">
@@ -117,16 +138,13 @@ export default function Footer() {
               </ul>
             </div>
 
-            {/* company */}
+            {/* Company */}
             <div>
               <h3
                 className="text-[11px] font-bold uppercase tracking-[0.2em] mb-6 flex items-center gap-2"
                 style={{ color: COLORS.navy }}
               >
-                <span
-                  className="w-1.5 h-1.5 rounded-full"
-                  style={{ backgroundColor: COLORS.orange }}
-                />
+                <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: COLORS.orange }} />
                 Company
               </h3>
               <ul className="space-y-2.5">
@@ -161,16 +179,13 @@ export default function Footer() {
               </ul>
             </div>
 
-            {/* help */}
+            {/* Help */}
             <div>
               <h3
                 className="text-[11px] font-bold uppercase tracking-[0.2em] mb-6 flex items-center gap-2"
                 style={{ color: COLORS.navy }}
               >
-                <span
-                  className="w-1.5 h-1.5 rounded-full"
-                  style={{ backgroundColor: COLORS.orange }}
-                />
+                <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: COLORS.orange }} />
                 Help
               </h3>
               <ul className="space-y-2.5">
@@ -205,14 +220,13 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* desktop bottom bar */}
+          {/* Desktop bottom bar */}
           <div
             className="pt-6 flex items-center justify-between"
             style={{ borderTop: `1px solid ${COLORS.borderLight}` }}
           >
             <p className="text-xs" style={{ color: COLORS.textMuted }}>
-              © {new Date().getFullYear()} CPL Heavy Industry Science &
-              Technology Co., Ltd. All rights reserved.
+              © {new Date().getFullYear()} CPL Heavy Industry Science &amp; Technology Co., Ltd. All rights reserved.
             </p>
             <div className="flex items-center gap-3">
               {socialLinks.map((social) => (
@@ -220,6 +234,8 @@ export default function Footer() {
                   key={social.label}
                   href={social.href}
                   aria-label={social.label}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="w-9 h-9 rounded-full flex items-center justify-center transition-all duration-300"
                   style={{
                     backgroundColor: "transparent",
@@ -246,9 +262,8 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* ═══ MOBILE: logo + socials + copyright ═══ */}
+        {/* ═══ MOBILE ═══ */}
         <div className="md:hidden py-10 flex flex-col items-center text-center gap-6">
-          {/* logo */}
           <div>
             <h2
               className="text-2xl font-bold tracking-[0.15em] uppercase mb-1.5"
@@ -258,19 +273,18 @@ export default function Footer() {
             </h2>
             <div
               className="w-8 h-0.5 rounded-full mx-auto"
-              style={{
-                background: `linear-gradient(to right, ${COLORS.orange}, ${COLORS.orangeLight})`,
-              }}
+              style={{ background: `linear-gradient(to right, ${COLORS.orange}, ${COLORS.orangeLight})` }}
             />
           </div>
 
-          {/* social icons */}
           <div className="flex items-center gap-3">
             {socialLinks.map((social) => (
               <a
                 key={social.label}
                 href={social.href}
                 aria-label={social.label}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300"
                 style={{
                   backgroundColor: "transparent",
@@ -295,13 +309,8 @@ export default function Footer() {
             ))}
           </div>
 
-          {/* copyright */}
-          <p
-            className="text-[11px] leading-relaxed max-w-[280px]"
-            style={{ color: COLORS.textMuted }}
-          >
-            © {new Date().getFullYear()} CPL Heavy Industry Science & Technology
-            Co., Ltd. All rights reserved.
+          <p className="text-[11px] leading-relaxed max-w-[280px]" style={{ color: COLORS.textMuted }}>
+            © {new Date().getFullYear()} CPL Heavy Industry Science &amp; Technology Co., Ltd. All rights reserved.
           </p>
         </div>
       </div>
