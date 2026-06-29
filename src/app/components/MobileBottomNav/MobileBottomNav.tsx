@@ -2,7 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import { Home, LayoutGrid, Calculator, Phone, Menu } from "lucide-react";
+import { Home, LayoutGrid, Briefcase, Phone, Menu } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
 export default function MobileBottomNav() {
@@ -25,12 +25,13 @@ export default function MobileBottomNav() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // ✅ Updated with your exact route paths
   const navItems = [
     { name: "Home", href: "/", icon: Home },
-    { name: "Products", href: "/exploreproduct", icon: LayoutGrid },
-    { name: "Estimate", href: "#estimate", icon: Calculator, isMain: true },
+    { name: "Products", href: "/products", icon: LayoutGrid },
+    { name: "Services", href: "/service", icon: Briefcase, isMain: true }, // Center main button
     { name: "Contact", href: "/contact", icon: Phone },
-    { name: "Menu", href: "#", icon: Menu },
+    { name: "Menu", href: "#", icon: Menu }, // Can be used to open a sidebar for About, Projects, Blog
   ];
 
   const isActive = (href: string) => {
