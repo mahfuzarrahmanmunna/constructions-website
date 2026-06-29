@@ -13,17 +13,7 @@ const InquirySchema =
         required: true,
       },
 
-      equipmentModel: {
-        type: String,
-        required: true,
-      },
-
       projectLocation: {
-        type: String,
-        required: true,
-      },
-
-      purchaseTimeframe: {
         type: String,
         required: true,
       },

@@ -107,9 +107,7 @@ export default function RequestQuoteModal({
   const [formData, setFormData] = useState({
     productCategory: "",
     productType: "",
-    equipmentModel: "",
     projectLocation: "",
-    purchaseTimeframe: "",
     specifics: "",
     name: "",
     companyName: "",
@@ -157,9 +155,7 @@ export default function RequestQuoteModal({
         setFormData({
           productCategory: "",
           productType: "",
-          equipmentModel: "",
           projectLocation: "",
-          purchaseTimeframe: "",
           specifics: "",
           name: "",
           companyName: "",
@@ -221,7 +217,7 @@ export default function RequestQuoteModal({
                 <span className="w-1.5 h-1.5 rounded-full bg-[#E55503]"></span>
                 Equipment
               </h3>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <FormField
                   label="Product Category"
                   name="productCategory"
@@ -250,18 +246,6 @@ export default function RequestQuoteModal({
                     <option value="compact">Compact</option>
                   </Select>
                 </FormField>
-                <FormField
-                  label="Equipment Model"
-                  name="equipmentModel"
-                  required
-                >
-                  <Input
-                    name="equipmentModel"
-                    value={formData.equipmentModel}
-                    onChange={handleChange}
-                    placeholder="e.g. ZE215E"
-                  />
-                </FormField>
               </div>
             </div>
 
@@ -270,39 +254,20 @@ export default function RequestQuoteModal({
                 <span className="w-1.5 h-1.5 rounded-full bg-[#E55503]"></span>
                 Project & Timing
               </h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <FormField
-                  label="Project Location"
+              <FormField
+                label="Project Location"
+                name="projectLocation"
+                required
+                icon={MapPin}
+              >
+                <Input
                   name="projectLocation"
-                  required
-                  icon={MapPin}
-                >
-                  <Input
-                    name="projectLocation"
-                    value={formData.projectLocation}
-                    onChange={handleChange}
-                    placeholder="City, Country"
-                    hasIcon
-                  />
-                </FormField>
-                <FormField
-                  label="Purchase Timeframe"
-                  name="purchaseTimeframe"
-                  required
-                >
-                  <Select
-                    name="purchaseTimeframe"
-                    value={formData.purchaseTimeframe}
-                    onChange={handleChange}
-                  >
-                    <option value="">Select Timeframe</option>
-                    <option value="immediate">Immediately</option>
-                    <option value="1-3months">1-3 Months</option>
-                    <option value="3-6months">3-6 Months</option>
-                    <option value="6+months">More than 6 Months</option>
-                  </Select>
-                </FormField>
-              </div>
+                  value={formData.projectLocation}
+                  onChange={handleChange}
+                  placeholder="City, Country"
+                  hasIcon
+                />
+              </FormField>
               <div className="mt-6">
                 <FormField
                   label="More Specifics"

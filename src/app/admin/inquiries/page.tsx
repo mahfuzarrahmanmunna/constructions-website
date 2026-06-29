@@ -813,11 +813,6 @@ return (
                               <strong>Type:</strong>{" "}
                               {selectedInquiry.productType}
                             </p>
-
-                            <p className="text-[#002253]">
-                              <strong>Equipment:</strong>{" "}
-                              {selectedInquiry.equipmentModel}
-                            </p>
                           </div>
                         </div>
 
@@ -828,30 +823,15 @@ return (
                           Project Information
                         </h3>
 
-                        <div className="grid md:grid-cols-2 gap-4">
-
-                          <div>
-                            <p className="text-gray-500">
-                              Project Location
-                            </p>
-                            <p className="text-black">
-                              {
-                                selectedInquiry.projectLocation
-                              }
-                            </p>
-                          </div>
-
-                          <div>
-                            <p className="text-gray-500">
-                              Purchase Timeframe
-                            </p>
-                            <p className="text-black">
-                              {
-                                selectedInquiry.purchaseTimeframe
-                              }
-                            </p>
-                          </div>
-
+                        <div>
+                          <p className="text-gray-500">
+                            Project Location
+                          </p>
+                          <p className="text-black">
+                            {
+                              selectedInquiry.projectLocation
+                            }
+                          </p>
                         </div>
                       </div>
 
