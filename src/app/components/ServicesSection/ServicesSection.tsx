@@ -34,12 +34,7 @@ const ServiceCard = ({ title, description, image }: Service) => {
         <div className="absolute bottom-0 left-0 p-8 text-white">
           <h3 className="mb-2 text-2xl font-bold">{title}</h3>
 
-          <p className="mb-4 max-w-md text-sm text-white/90">{description}</p>
-
-          <button className="flex items-center gap-2 hover:bg-[#E55503] hover:text-white rounded-full bg-white px-5 py-2 text-sm font-medium text-black transition">
-            Learn More
-            <ArrowRight size={16} />
-          </button>
+          <p className="mb-4 max-w-md text-sm text-white/90 line-clamp-3">{description}</p>
         </div>
       </div>
     </div>
@@ -66,11 +61,13 @@ const SecondaryServiceCard = ({ title, description, image }: Service) => {
         <p className="mb-6 text-sm leading-relaxed text-slate-500 line-clamp-3">
           {description}
         </p>
-
+        <Link
+          href="/service">
         <button className="flex border-1 items-center gap-2 hover:bg-[#E55503] hover:text-white rounded-full bg-white px-5 py-2 text-sm font-medium text-black transition">
-          Learn More
+            Learn More
           <ArrowRight size={16} />
         </button>
+        </Link>
       </div>
     </div>
   );
