@@ -29,7 +29,7 @@ export default function CtaSection() {
           <div
             className="absolute inset-0 z-0"
             style={{
-              backgroundImage: "url('/cta.PNG')",
+              backgroundImage: "url('/cta.png')",
               backgroundSize: "cover",
               backgroundPosition: "center",
               backgroundRepeat: "no-repeat",

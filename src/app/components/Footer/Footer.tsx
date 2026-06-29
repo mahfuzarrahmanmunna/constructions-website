@@ -62,7 +62,7 @@ export default function Footer() {
     >
       <div className="absolute bottom-0 left-0 w-full h-auto pointer-events-none z-0">
         <img
-          src="/footer/footer.PNG"
+          src="/footer/footer.png"
           alt=""
           className="w-full h-52 object-bottom"
         />

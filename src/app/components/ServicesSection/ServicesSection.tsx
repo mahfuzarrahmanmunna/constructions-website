@@ -1,14 +1,10 @@
 "use client";
 
-import { useRef, useLayoutEffect } from "react";
+import { useRef, useLayoutEffect, useState, useEffect } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
-import {
-  Service,
-  primaryServices,
-  secondaryServices,
-} from "@/app/service/servicesData";
+import { Service } from "@/app/service/servicesData";
 import { Autoplay, Pagination } from "swiper/modules";
 import { ArrowRight } from "lucide-react";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -36,29 +32,16 @@ const ServiceCard = ({ title, description, image }: Service) => {
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
 
         <div className="absolute bottom-0 left-0 p-8 text-white">
-          <h3 className="mb-2 text-2xl font-bold">
-            {title}
-          </h3>
+          <h3 className="mb-2 text-2xl font-bold">{title}</h3>
 
-          <p className="mb-4 max-w-md text-sm text-white/90">
-            {description}
-          </p>
-
-          <button className="flex items-center gap-2 hover:bg-[#E55503] hover:text-white rounded-full bg-white px-5 py-2 text-sm font-medium text-black transition">
-            Learn More
-            <ArrowRight size={16} />
-          </button>
+          <p className="mb-4 max-w-md text-sm text-white/90 line-clamp-3">{description}</p>
         </div>
       </div>
     </div>
   );
 };
 
-const SecondaryServiceCard = ({
-  title,
-  description,
-  image,
-}: Service) => {
+const SecondaryServiceCard = ({ title, description, image }: Service) => {
   return (
     <div className="group h-full overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
       {/* Image */}
@@ -73,19 +56,18 @@ const SecondaryServiceCard = ({
 
       {/* Content */}
       <div className="p-6">
-        <h3 className="mb-3 text-lg font-bold text-[#002253]">
-          {title}
-        </h3>
-
+        <h3 className="mb-3 text-lg font-bold text-[#002253]">{title}</h3>
 
         <p className="mb-6 text-sm leading-relaxed text-slate-500 line-clamp-3">
           {description}
         </p>
-
-          <button className="flex border-1 items-center gap-2 hover:bg-[#E55503] hover:text-white rounded-full bg-white px-5 py-2 text-sm font-medium text-black transition">
+        <Link
+          href="/service">
+        <button className="flex border-1 items-center gap-2 hover:bg-[#E55503] hover:text-white rounded-full bg-white px-5 py-2 text-sm font-medium text-black transition">
             Learn More
-            <ArrowRight size={16} />
+          <ArrowRight size={16} />
         </button>
+        </Link>
       </div>
     </div>
   );
@@ -95,6 +77,35 @@ export default function ServicesSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const primaryHeaderRef = useRef<HTMLDivElement>(null);
   const secondaryHeaderRef = useRef<HTMLDivElement>(null);
+
+  const [primaryServices, setPrimaryServices] = useState<Service[]>([]);
+  const [secondaryServices, setSecondaryServices] = useState<Service[]>([]);
+
+  useEffect(() => {
+    async function fetchServices() {
+      try {
+        const res = await fetch("/api/admin/services");
+        const data = await res.json();
+
+        const activeServices = data.filter((s: any) => s.isActive === true);
+
+        const primary = activeServices
+          .filter((s: any) => s.type === "primary")
+          .sort((a: any, b: any) => a.order - b.order);
+
+        const secondary = activeServices
+          .filter((s: any) => s.type === "secondary")
+          .sort((a: any, b: any) => a.order - b.order);
+
+        setPrimaryServices(primary);
+        setSecondaryServices(secondary);
+      } catch (error) {
+        console.error("Failed to fetch services:", error);
+      }
+    }
+
+    fetchServices();
+  }, []);
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
@@ -142,12 +153,11 @@ export default function ServicesSection() {
     }, sectionRef);
 
     return () => ctx.revert();
-  }, []);
+  }, [primaryServices, secondaryServices]);
 
   return (
     <section ref={sectionRef} className="bg-white text-slate-900">
       <div className="mx-auto w-full max-w-[1600px] px-4 lg:px-8">
-
         {/* Section Header */}
         <div
           ref={primaryHeaderRef}
@@ -176,79 +186,78 @@ export default function ServicesSection() {
         </div>
 
         {/* Primary Services Grid */}
-       
+
         <div className="primary-grid">
-        <Swiper
-          modules={[Autoplay, Pagination]}
-          centeredSlides
-          loop
-          grabCursor
-          spaceBetween={12}
-          slidesPerView={1.15}
-          autoplay={{
-            delay: 2500,
-            disableOnInteraction: false,
-          }}
-          pagination={{
-            clickable: true,
-          }}
-          breakpoints={{
-            768: {
-              slidesPerView: 1.4,
-            },
-            1024: {
-              slidesPerView: 1.8,
-            },
-            1280: {
-              slidesPerView: 2.3,
-            },
-          }}
-          className="w-full"
-        >
-          {primaryServices.map((service) => (
-            <SwiperSlide key={service.id}>
-              <div className="transition-all duration-500 swiper-slide-content">
-                <ServiceCard {...service} />
-              </div>
-            </SwiperSlide>
-          ))}
-        </Swiper>
-      </div>
-              
+          <Swiper
+            modules={[Autoplay, Pagination]}
+            centeredSlides
+            loop={primaryServices.length > 1}
+            grabCursor
+            spaceBetween={12}
+            slidesPerView={1.15}
+            autoplay={{
+              delay: 2500,
+              disableOnInteraction: false,
+            }}
+            pagination={{
+              clickable: true,
+            }}
+            breakpoints={{
+              768: {
+                slidesPerView: 1.4,
+              },
+              1024: {
+                slidesPerView: 1.8,
+              },
+              1280: {
+                slidesPerView: 2.3,
+              },
+            }}
+            className="w-full"
+          >
+            {primaryServices.map((service) => (
+              <SwiperSlide key={service.id}>
+                <div className="transition-all duration-500 swiper-slide-content">
+                  <ServiceCard {...service} />
+                </div>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </div>
 
         {/* Secondary Services Section */}
         <div className="secondary-grid relative">
-        <Swiper
-          className="secondary-swiper"
-          modules={[Autoplay, Pagination]}
-          autoplay={{
-            delay: 3000,
-            disableOnInteraction: false,
-          }}
-          pagination={{ clickable: true }}
-          spaceBetween={16}
-          loop={secondaryServices.length > 4}
-          breakpoints={{
-            0: {
-              slidesPerView: 1,
-            },
-            640: {
-              slidesPerView: 2,
-            },
-            768: {
-              slidesPerView: 3,
-            },
-            1280: {
-              slidesPerView: 4,
-            },
-          }}
-        >
-          {secondaryServices.map((service) => (
-            <SwiperSlide key={service.id}>
-              <SecondaryServiceCard {...service} />
-            </SwiperSlide>
-          ))}
-        </Swiper>
+          <Swiper
+            className="secondary-swiper"
+            modules={[Autoplay, Pagination]}
+            autoplay={{
+              delay: 3000,
+              disableOnInteraction: false,
+            }}
+            pagination={{ clickable: true }}
+            spaceBetween={16}
+            loop={secondaryServices.length > 4}
+            breakpoints={{
+              0: {
+                slidesPerView: 1,
+              },
+              640: {
+                slidesPerView: 2,
+              },
+              768: {
+                slidesPerView: 3,
+              },
+              1280: {
+                slidesPerView: 4,
+              },
+            }}
+          >
+            {secondaryServices.map((service) => (
+              <SwiperSlide key={service.id}>
+                <SecondaryServiceCard {...service} />
+              </SwiperSlide>
+            ))}
+          </Swiper>
         </div>
       </div>
     </section>

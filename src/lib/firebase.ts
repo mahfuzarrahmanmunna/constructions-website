@@ -1,4 +1,4 @@
-import { initializeApp } from "firebase/app";
+import { initializeApp, getApps } from "firebase/app";
 import { getAuth, GoogleAuthProvider } from "firebase/auth";
 
 const firebaseConfig = {
@@ -24,6 +24,4 @@ if (missingKeys.length > 0) {
 const app = initializeApp(firebaseConfig);
 
 export const auth = getAuth(app);
-
-export const googleProvider =
-  new GoogleAuthProvider();
+export const googleProvider = new GoogleAuthProvider();

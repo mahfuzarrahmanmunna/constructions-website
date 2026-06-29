@@ -22,7 +22,7 @@ export default function MetricCard({
         {icon}
       </div>
 
-      <h2 className="text-3xl text-center font-bold mt-2 text-[#002253]">
+      <h2 className="text-3xl text-center font-bold mt-2 text-[#E55503]">
         {value}
       </h2>
     </div>

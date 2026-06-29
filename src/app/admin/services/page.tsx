@@ -43,6 +43,11 @@ export default function AdminServicesPage() {
   const dragItem = useRef<number | null>(null);
   const dragOver = useRef<number | null>(null);
 
+  // Upload state
+  const [uploading, setUploading] = useState(false);
+  const [dragActive, setDragActive] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
   // ── Fetch ──
   const fetchServices = async () => {
     setLoading(true);
@@ -130,7 +135,12 @@ export default function AdminServicesPage() {
 
   const openEdit = (s: Service) => {
     setEditingService(s);
-    setForm({ title: s.title, description: s.description, image: s.image, type: s.type });
+    setForm({
+      title: s.title,
+      description: s.description,
+      image: s.image,
+      type: s.type,
+    });
     setShowModal(true);
     setError("");
   };
@@ -238,7 +248,9 @@ export default function AdminServicesPage() {
       {/* Content */}
       <div className="max-w-6xl mx-auto px-8 py-8">
         {loading ? (
-          <div className="flex items-center justify-center h-48 text-gray-400">Loading...</div>
+          <div className="flex items-center justify-center h-48 text-gray-400">
+            Loading...
+          </div>
         ) : filtered.length === 0 ? (
           <div className="text-center py-20 text-gray-400">
             <p className="text-lg">No services available.</p>
@@ -269,7 +281,6 @@ export default function AdminServicesPage() {
                   {s.order}
                 </span>
 
-                {/* Image */}
                 <div className="w-20 h-16 rounded-xl overflow-hidden bg-gray-100 flex-shrink-0">
                   <img
                     src={s.image}
@@ -282,7 +293,6 @@ export default function AdminServicesPage() {
                   />
                 </div>
 
-                {/* Info */}
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 mb-1">
                     <span className="text-[10px] font-bold text-[#E55503] uppercase tracking-widest">
@@ -294,16 +304,21 @@ export default function AdminServicesPage() {
                       </span>
                     )}
                   </div>
-                  <h3 className="font-bold text-[#002253] truncate">{s.title}</h3>
-                  <p className="text-gray-400 text-xs mt-0.5 line-clamp-1">{s.description}</p>
+                  <h3 className="font-bold text-[#002253] truncate">
+                    {s.title}
+                  </h3>
+                  <p className="text-gray-400 text-xs mt-0.5 line-clamp-1">
+                    {s.description}
+                  </p>
                 </div>
 
-                {/* Actions */}
                 <div className="flex items-center gap-2 flex-shrink-0">
                   <button
                     onClick={() => handleToggle(s)}
                     className="text-gray-400 hover:text-[#002253] transition-colors"
-                    title={s.isActive ? "Hide from frontend" : "Show on frontend"}
+                    title={
+                      s.isActive ? "Hide from frontend" : "Show on frontend"
+                    }
                   >
                     {s.isActive
                       ? <ToggleRight className="w-6 h-6 text-green-500" />
@@ -365,7 +380,9 @@ export default function AdminServicesPage() {
 
             <div className="px-6 py-5 flex flex-col gap-4">
               {error && (
-                <p className="text-red-500 text-sm bg-red-50 px-4 py-2 rounded-lg">{error}</p>
+                <p className="text-red-500 text-sm bg-red-50 px-4 py-2 rounded-lg">
+                  {error}
+                </p>
               )}
 
               <div>
@@ -396,7 +413,9 @@ export default function AdminServicesPage() {
                 <input
                   type="text"
                   value={form.title}
-                  onChange={(e) => setForm((f) => ({ ...f, title: e.target.value }))}
+                  onChange={(e) =>
+                    setForm((f) => ({ ...f, title: e.target.value }))
+                  }
                   placeholder="e.g. Road Construction"
                   className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm text-gray-700 focus:outline-none focus:border-[#224B88] transition-colors"
                 />
@@ -408,7 +427,9 @@ export default function AdminServicesPage() {
                 </label>
                 <textarea
                   value={form.description}
-                  onChange={(e) => setForm((f) => ({ ...f, description: e.target.value }))}
+                  onChange={(e) =>
+                    setForm((f) => ({ ...f, description: e.target.value }))
+                  }
                   placeholder="Service description..."
                   rows={3}
                   className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-[#224B88] transition-colors resize-none text-gray-700"
@@ -417,28 +438,73 @@ export default function AdminServicesPage() {
 
               <div>
                 <label className="text-xs font-bold text-gray-500 uppercase tracking-wide mb-1.5 block">
-                  Image Path *
+                  Service Image *
                 </label>
-                <input
-                  type="text"
-                  value={form.image}
-                  onChange={(e) => setForm((f) => ({ ...f, image: e.target.value }))}
-                  placeholder="/services/road.jpg or https://..."
-                  className="w-full border border-gray-200 rounded-xl text-gray-700 px-4 py-2.5 text-sm focus:outline-none focus:border-[#224B88] transition-colors font-mono"
-                />
-                {form.image && (
-                  <div className="mt-2 w-full h-24 rounded-xl overflow-hidden bg-gray-100">
+
+                {form.image ? (
+                  /* Preview State */
+                  <div className="relative w-full h-40 rounded-xl border border-gray-200 overflow-hidden bg-gray-50 group">
                     <img
                       src={form.image}
-                      alt="preview"
+                      alt="Preview"
                       className="w-full h-full object-cover"
                       onError={(e) => {
                         (e.target as HTMLImageElement).src =
                           "https://placehold.co/400x100/f3f4f6/9ca3af?text=Invalid+Image";
                       }}
                     />
+                    <button
+                      type="button"
+                      onClick={removeImage}
+                      className="absolute top-2 right-2 bg-red-500 text-white p-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity shadow-lg"
+                    >
+                      <X size={14} />
+                    </button>
+                  </div>
+                ) : (
+                  /* Dropzone State */
+                  <div
+                    onDragEnter={handleDrag}
+                    onDragLeave={handleDrag}
+                    onDragOver={handleDrag}
+                    onDrop={handleDrop}
+                    onClick={() => fileInputRef.current?.click()}
+                    className={`flex flex-col items-center justify-center w-full h-40 border-2 border-dashed rounded-xl cursor-pointer transition-colors ${
+                      dragActive
+                        ? "border-blue-500 bg-blue-50"
+                        : "border-gray-200 hover:border-gray-400 bg-gray-50"
+                    }`}
+                  >
+                    {uploading ? (
+                      <Loader2
+                        size={32}
+                        className="animate-spin text-blue-500"
+                      />
+                    ) : (
+                      <>
+                        <div className="p-3 bg-gray-200 rounded-full mb-3">
+                          <ImagePlus size={24} className="text-gray-500" />
+                        </div>
+                        <p className="text-sm font-medium text-gray-600">
+                          {dragActive
+                            ? "Drop image here"
+                            : "Drag & drop or click to upload"}
+                        </p>
+                        <p className="text-xs text-gray-400 mt-1">
+                          PNG, JPG, WEBP (Max 5MB)
+                        </p>
+                      </>
+                    )}
                   </div>
                 )}
+
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept="image/*"
+                  onChange={handleInputChange}
+                  className="hidden"
+                />
               </div>
             </div>
 
@@ -451,10 +517,15 @@ export default function AdminServicesPage() {
               </button>
               <button
                 onClick={handleSave}
-                disabled={saving}
-                className="px-6 py-2.5 rounded-xl bg-[#002253] hover:bg-[#001a40] text-white text-sm font-bold transition-colors disabled:opacity-50"
+                disabled={saving || uploading}
+                className="px-6 py-2.5 rounded-xl bg-[#002253] hover:bg-[#001a40] text-white text-sm font-bold transition-colors disabled:opacity-50 flex items-center gap-2"
               >
-                {saving ? "Saving..." : editingService ? "Update" : "Add Service"}
+                {saving && <Loader2 size={16} className="animate-spin" />}
+                {saving
+                  ? "Saving..."
+                  : editingService
+                    ? "Update"
+                    : "Add Service"}
               </button>
             </div>
           </div>
