@@ -13,6 +13,7 @@ const SiteSettingsSchema = new mongoose.Schema(
       phone: String,
       email: String,
       address: String,
+      workingHours: String, 
     },
 
     socialMedia: {
