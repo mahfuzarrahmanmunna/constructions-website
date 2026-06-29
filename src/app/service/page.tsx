@@ -146,9 +146,7 @@ export default function ServicePage() {
                     />
                   </div>
                   <div className="p-8">
-                    <span className="text-[#E55503] font-bold text-sm">
-                      Service {service.id}
-                    </span>
+                  
                     <h3 className="text-2xl font-black text-[#002253] mt-3">
                       {service.title}
                     </h3>

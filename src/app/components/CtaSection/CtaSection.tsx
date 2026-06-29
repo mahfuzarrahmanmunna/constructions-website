@@ -20,7 +20,7 @@ export default function CtaSection() {
       {/* =========================
           CTA SECTION
           ========================= */}
-      <section className="w-full py-0 px-4 md:px-8 select-none">
+      <section className="w-full py-0 px-4 md:px-8 select-none md:h-[180px] items-center justify-center flex ">
         <div
           className="max-w-7xl mx-auto rounded-2xl overflow-hidden relative"
           style={{ minHeight: "120px" }}

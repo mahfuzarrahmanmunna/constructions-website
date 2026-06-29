@@ -28,6 +28,7 @@ type Settings = {
     phone: string;
     email: string;
     address: string;
+    workingHours: string;
   };
   socialMedia: {
     facebook: string;
@@ -39,7 +40,7 @@ type Settings = {
 
 const defaultSettings: Settings = {
   navbarLinks: [],
-  contactInfo: { phone: "", email: "", address: "" },
+  contactInfo: { phone: "", email: "", address: "", workingHours: "" },
   socialMedia: { facebook: "", twitter: "", linkedin: "", youtube: "" },
 };
 
@@ -348,8 +349,24 @@ export default function SettingsPage() {
                 className="w-full border rounded-lg px-3 py-2 text-sm text-gray-500"
               />
             </div>
+
+             {/* <div>
+              <label className="block text-sm font-medium mb-1 text-[#002253] flex items-center gap-2">
+                < MapPin size={16} /> Working Hours
+              </label>
+              <textarea
+                rows={2}
+                placeholder="Mon-Fri: 9am - 6pm"
+                value={settings.contactInfo.workingHours}
+                onChange={(e) => updateContactInfo("workingHours", e.target.value)}
+                className="w-full border rounded-lg px-3 py-2 text-sm text-gray-500"
+              />
+            </div> */}
           </div>
         </div>
+          
+          </div>
+      
 
         {/* Social Media */}
         <div className="bg-white rounded-2xl shadow-lg border border-slate-200 p-6">
@@ -397,6 +414,7 @@ export default function SettingsPage() {
           </div>
         </div>
       </div>
-    </div>
+   
+
   );
 }
