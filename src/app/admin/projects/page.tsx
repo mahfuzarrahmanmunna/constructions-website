@@ -117,7 +117,13 @@ function SortableRow({
 
       <td className="px-1 py-3 text-center">
         <div className="flex justify-center items-center gap-1.5">
-
+          <button
+            onClick={() => onView(project._id)}
+            className="p-1.5 text-xs rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200 transition-colors"
+            title="View Live Page"
+          >
+            <Eye size={14} />
+          </button>
           <button
             onClick={() => onEdit(project)}
             className="px-2.5 py-1.5 text-xs rounded-lg bg-blue-50 text-blue-700 hover:bg-blue-100 transition-colors flex items-center gap-1"

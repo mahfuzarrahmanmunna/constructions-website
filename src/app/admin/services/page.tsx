@@ -3,8 +3,16 @@
 
 import { useEffect, useRef, useState } from "react";
 import {
-  Pencil, Trash2, Plus, X, Check,
-  ToggleLeft, ToggleRight, GripVertical,
+  Pencil,
+  Trash2,
+  Plus,
+  X,
+  Check,
+  ToggleLeft,
+  ToggleRight,
+  GripVertical,
+  Loader2,
+  ImagePlus,
 } from "lucide-react";
 
 type ServiceType = "primary" | "secondary";
@@ -62,13 +70,15 @@ export default function AdminServicesPage() {
     }
   };
 
-  useEffect(() => { fetchServices(); }, []);
+  useEffect(() => {
+    fetchServices();
+  }, []);
 
   const filtered = services
     .filter((s) => s.type === activeTab)
     .sort((a, b) => a.order - b.order);
 
-  // ── Drag handlers ──
+  // ── Drag handlers for reordering ──
   const handleDragStart = (index: number) => {
     dragItem.current = index;
   };
@@ -122,6 +132,76 @@ export default function AdminServicesPage() {
       fetchServices(); // rollback
     } finally {
       setReordering(false);
+    }
+  };
+
+  // ── Image Upload Handlers ──
+  const handleDrag = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (e.type === "dragenter" || e.type === "dragover") {
+      setDragActive(true);
+    } else if (e.type === "dragleave") {
+      setDragActive(false);
+    }
+  };
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setDragActive(false);
+
+    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+      uploadFile(e.dataTransfer.files[0]);
+    }
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      uploadFile(e.target.files[0]);
+    }
+  };
+
+  const uploadFile = async (file: File) => {
+    // Validate file type
+    if (!file.type.startsWith("image/")) {
+      setError("Please upload an image file");
+      return;
+    }
+
+    // Validate file size (5MB)
+    if (file.size > 5 * 1024 * 1024) {
+      setError("Image must be less than 5MB");
+      return;
+    }
+
+    setUploading(true);
+    setError("");
+
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+
+      const res = await fetch("/api/upload", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!res.ok) throw new Error("Upload failed");
+
+      const data = await res.json();
+      setForm((f) => ({ ...f, image: data.url }));
+    } catch {
+      setError("Failed to upload image. Please try again.");
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  const removeImage = () => {
+    setForm((f) => ({ ...f, image: "" }));
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
     }
   };
 
@@ -204,9 +284,12 @@ export default function AdminServicesPage() {
       {/* Header */}
       <div className="bg-[#002253] text-white px-8 py-6 flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-black uppercase tracking-wide">Services Manager</h1>
+          <h1 className="text-2xl font-black uppercase tracking-wide">
+            Services Manager
+          </h1>
           <p className="text-blue-300 text-sm mt-0.5">
-            Drag rows to reorder · Toggle visibility · Add, edit, or remove services
+            Drag rows to reorder · Toggle visibility · Add, edit, or remove
+            services
           </p>
         </div>
         <button
@@ -254,7 +337,10 @@ export default function AdminServicesPage() {
         ) : filtered.length === 0 ? (
           <div className="text-center py-20 text-gray-400">
             <p className="text-lg">No services available.</p>
-            <button onClick={openAdd} className="mt-4 text-[#E55503] font-bold hover:underline">
+            <button
+              onClick={openAdd}
+              className="mt-4 text-[#E55503] font-bold hover:underline"
+            >
               Add your first service
             </button>
           </div>
@@ -271,7 +357,7 @@ export default function AdminServicesPage() {
                 className={`bg-white rounded-2xl border shadow-sm flex items-center gap-5 p-4 
                   transition-all duration-150 select-none
                   ${s.isActive ? "border-gray-100" : "border-dashed border-gray-300 opacity-60"}
-                  cursor-grab active:cursor-grabbing active:shadow-xl active:scale-[1.01] active:z-10 active:border-[#002253]/30`}
+                  cursor-grab active:cursor-grabbing active:shadow-xl active:z-10 active:border-[#002253]/30`}
               >
                 {/* Drag handle */}
                 <GripVertical className="w-4 h-4 text-gray-300 flex-shrink-0 hover:text-gray-500 transition-colors" />
@@ -320,9 +406,11 @@ export default function AdminServicesPage() {
                       s.isActive ? "Hide from frontend" : "Show on frontend"
                     }
                   >
-                    {s.isActive
-                      ? <ToggleRight className="w-6 h-6 text-green-500" />
-                      : <ToggleLeft className="w-6 h-6" />}
+                    {s.isActive ? (
+                      <ToggleRight className="w-6 h-6 text-green-500" />
+                    ) : (
+                      <ToggleLeft className="w-6 h-6" />
+                    )}
                   </button>
 
                   <button
